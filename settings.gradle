@@ -1,0 +1,4 @@
+rootProject.name = 'HotaruFX'
+include 'app'
+findProject(':app')?.name = 'com.annimon.hotarufx'
+
