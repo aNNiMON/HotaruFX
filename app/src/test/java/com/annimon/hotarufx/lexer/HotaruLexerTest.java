@@ -76,14 +76,17 @@ class HotaruLexerTest {
 
     @Test
     void testTokenizeOperators() {
-        assertThat(t("(){}=,."), contains(
+        assertThat(t("(){}=+-,.:"), contains(
                 tokenId(HotaruTokenId.LPAREN),
                 tokenId(HotaruTokenId.RPAREN),
                 tokenId(HotaruTokenId.LBRACE),
                 tokenId(HotaruTokenId.RBRACE),
                 tokenId(HotaruTokenId.EQ),
+                tokenId(HotaruTokenId.PLUS),
+                tokenId(HotaruTokenId.MINUS),
                 tokenId(HotaruTokenId.COMMA),
-                tokenId(HotaruTokenId.DOT)
+                tokenId(HotaruTokenId.DOT),
+                tokenId(HotaruTokenId.COLON)
         ));
     }
 
@@ -118,11 +121,16 @@ class HotaruLexerTest {
 
     @Test
     void testStatements() {
-        assertThat(t("A = node()"), contains(
+        assertThat(t("A = node({x : 10})"), contains(
                 tokenId(HotaruTokenId.WORD),
                 tokenId(HotaruTokenId.EQ),
                 tokenId(HotaruTokenId.WORD),
                 tokenId(HotaruTokenId.LPAREN),
+                tokenId(HotaruTokenId.LBRACE),
+                tokenId(HotaruTokenId.WORD),
+                tokenId(HotaruTokenId.COLON),
+                tokenId(HotaruTokenId.NUMBER),
+                tokenId(HotaruTokenId.RBRACE),
                 tokenId(HotaruTokenId.RPAREN)
         ));
         assertThat(t("B.x = 100"), contains(

@@ -11,10 +11,13 @@ public enum HotaruTokenId {
     TEXT(Category.STRING),
 
     EQ(Category.OPERATOR),
+    PLUS(Category.OPERATOR),
+    MINUS(Category.OPERATOR),
     LPAREN(Category.OPERATOR),
     RPAREN(Category.OPERATOR),
     LBRACE(Category.OPERATOR),
     RBRACE(Category.OPERATOR),
+    COLON(Category.OPERATOR),
     COMMA(Category.OPERATOR),
     DOT(Category.OPERATOR),
 
