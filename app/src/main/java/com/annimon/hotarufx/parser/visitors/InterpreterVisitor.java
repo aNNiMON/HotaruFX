@@ -2,11 +2,14 @@ package com.annimon.hotarufx.parser.visitors;
 
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lib.Context;
+import com.annimon.hotarufx.lib.MapValue;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.ast.*;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.val;
 
 public class InterpreterVisitor implements ResultVisitor<Value, Context> {
@@ -38,7 +41,11 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(MapNode node, Context context) {
-        return NumberValue.ZERO;
+        Map<String, Value> map = new HashMap<>(node.elements.size());
+        for (Map.Entry<String, Node> entry : node.elements.entrySet()) {
+            map.put(entry.getKey(), entry.getValue().accept(this, context));
+        }
+        return new MapValue(map);
     }
 
     @Override

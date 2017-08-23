@@ -3,13 +3,17 @@ package com.annimon.hotarufx.parser.visitors;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
+import com.annimon.hotarufx.lib.MapValue;
 import com.annimon.hotarufx.lib.NumberValue;
+import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.HotaruParser;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -42,6 +46,19 @@ class InterpreterVisitorTest {
     @Test
     void testUnaryOps() {
         assertThat(eval("A = -1").asInt(), is(-1));
+    }
+
+    @Test
+    void testMap() {
+        Value value = eval("A = {x: 0, y: 1, text: 'hello'}");
+        assertThat(value, instanceOf(MapValue.class));
+
+        Map<String, Value> map = ((MapValue) value).getMap();
+        assertThat(map, allOf(
+                hasEntry("x", NumberValue.of(0)),
+                hasEntry("y", NumberValue.of(1))
+        ));
+        assertThat(map, hasEntry("text", new StringValue("hello")));
     }
 
     @Test
