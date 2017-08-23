@@ -3,6 +3,8 @@ package com.annimon.hotarufx.parser.visitors;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.NumberValue;
+import com.annimon.hotarufx.lib.StringValue;
+import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.ast.*;
 import lombok.val;
@@ -41,7 +43,30 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(UnaryNode node, Context context) {
-        return NumberValue.ZERO;
+        switch (node.operator) {
+            case NEGATE:
+                val value = node.node.accept(this, context);
+                if (value.type() == Types.STRING) {
+                    final StringBuilder sb = new StringBuilder(value.asString());
+                    return new StringValue(sb.reverse().toString());
+                }
+                if (value.type() == Types.NUMBER) {
+                    final Number number = (Number) value.raw();
+                    if (number instanceof Double) {
+                        return NumberValue.of(-number.doubleValue());
+                    }
+                    if (number instanceof Float) {
+                        return NumberValue.of(-number.floatValue());
+                    }
+                    if (number instanceof Long) {
+                        return NumberValue.of(-number.longValue());
+                    }
+                }
+                return NumberValue.of(-value.asInt());
+
+            default:
+                return NumberValue.ZERO;
+        }
     }
 
     @Override

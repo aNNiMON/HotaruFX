@@ -40,6 +40,11 @@ class InterpreterVisitorTest {
     }
 
     @Test
+    void testUnaryOps() {
+        assertThat(eval("A = -1").asInt(), is(-1));
+    }
+
+    @Test
     void testRuntimeErrors() {
         assertThrows(VariableNotFoundException.class, () -> eval("A = B"));
     }
