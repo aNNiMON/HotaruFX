@@ -4,7 +4,7 @@ import com.annimon.hotarufx.lib.Value;
 
 public interface Accessible extends Node {
 
-    Value get();
+    <T> Value get(ResultVisitor<Value, T> visitor, T input);
 
-    Value set(Value value);
+    <T> Value set(ResultVisitor<Value, T> visitor, Value value, T input);
 }

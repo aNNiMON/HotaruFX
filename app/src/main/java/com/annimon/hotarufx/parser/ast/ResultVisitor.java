@@ -1,5 +1,7 @@
 package com.annimon.hotarufx.parser.ast;
 
+import com.annimon.hotarufx.lib.Value;
+
 public interface ResultVisitor<R, T> {
 
     R visit(AccessNode node, T t);
@@ -11,4 +13,8 @@ public interface ResultVisitor<R, T> {
     R visit(ValueNode node, T t);
     R visit(VariableNode node, T t);
 
+    Value get(AccessNode node, T t);
+    Value set(AccessNode node, Value value, T t);
+    Value get(VariableNode node, T t);
+    Value set(VariableNode node, Value value, T t);
 }
