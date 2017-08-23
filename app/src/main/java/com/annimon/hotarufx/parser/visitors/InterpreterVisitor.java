@@ -1,8 +1,10 @@
 package com.annimon.hotarufx.parser.visitors;
 
+import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
 import com.annimon.hotarufx.exceptions.TypeException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lib.Context;
+import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.MapValue;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
@@ -40,7 +42,14 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(FunctionNode node, Context context) {
-        return NumberValue.ZERO;
+        val functionName = node.functionNode.accept(this, context).asString();
+        val function = context.functions().get(functionName);
+        if (function == null)
+            throw new FunctionNotFoundException(functionName, node.start(), node.end());
+        val args = node.arguments.stream()
+                .map(n -> n.accept(this, context))
+                .toArray(Value[]::new);
+        return function.execute(args);
     }
 
     @Override

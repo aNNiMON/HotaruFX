@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class Context {
 
     private final Map<String, Value> variables;
-    private final Map<String, Value> functions;
+    private final Map<String, Function> functions;
 
     public Context() {
         variables = new ConcurrentHashMap<>();
@@ -17,7 +17,7 @@ public final class Context {
         return variables;
     }
 
-    public Map<String, Value> functions() {
+    public Map<String, Function> functions() {
         return functions;
     }
 }

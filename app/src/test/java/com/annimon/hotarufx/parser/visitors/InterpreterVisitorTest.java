@@ -1,5 +1,6 @@
 package com.annimon.hotarufx.parser.visitors;
 
+import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
@@ -8,6 +9,7 @@ import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.HotaruParser;
+import java.util.Arrays;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -85,7 +87,26 @@ class InterpreterVisitorTest {
     }
 
     @Test
+    void testFunction() {
+        Context context = new Context();
+        context.functions().put("ten", args -> NumberValue.of(10));
+        context.functions().put("adder", args -> NumberValue.of(
+                Arrays.stream(args).mapToInt(Value::asInt).sum() ));
+        Value value;
+
+        value = eval("y = ten(10)", context);
+        assertThat(value, is(NumberValue.of(10)));
+
+        value = eval("x = adder(1, 2, 3, 4, 5)", context);
+        assertThat(value, is(NumberValue.of(15)));
+
+        value = eval("adder(ten(), ten())", context);
+        assertThat(value, is(NumberValue.of(20)));
+    }
+
+    @Test
     void testRuntimeErrors() {
         assertThrows(VariableNotFoundException.class, () -> eval("A = B"));
+        assertThrows(FunctionNotFoundException.class, () -> eval("test()"));
     }
 }
