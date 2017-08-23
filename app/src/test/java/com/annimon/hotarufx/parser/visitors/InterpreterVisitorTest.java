@@ -62,6 +62,29 @@ class InterpreterVisitorTest {
     }
 
     @Test
+    void testMapAccess() {
+        Context context = new Context();
+        eval("A = {x: 0, y: 22, z: 0, text: 'hello'}\n" +
+                "A.x = 20\n" +
+                "A.z = A.y\n" +
+                "A.newKey = 'newValue'", context);
+        Value value = context.variables().get("A");
+
+        assertThat(value, instanceOf(MapValue.class));
+
+        Map<String, Value> map = ((MapValue) value).getMap();
+        assertThat(map, allOf(
+                hasEntry("x", NumberValue.of(20)),
+                hasEntry("y", NumberValue.of(22)),
+                hasEntry("z", NumberValue.of(22))
+        ));
+        assertThat(map, allOf(
+                hasEntry("text", new StringValue("hello")),
+                hasEntry("newKey", new StringValue("newValue"))
+        ));
+    }
+
+    @Test
     void testRuntimeErrors() {
         assertThrows(VariableNotFoundException.class, () -> eval("A = B"));
     }

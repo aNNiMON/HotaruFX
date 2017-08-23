@@ -1,5 +1,6 @@
 package com.annimon.hotarufx.parser.visitors;
 
+import com.annimon.hotarufx.exceptions.TypeException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.MapValue;
@@ -9,14 +10,17 @@ import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.ast.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
 import lombok.val;
 
 public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(AccessNode node, Context context) {
-        return NumberValue.ZERO;
+        return node.get(this, context);
     }
 
     @Override
@@ -88,12 +92,42 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value get(AccessNode node, Context context) {
-        return null;
+        Value container = node.root.accept(this, context);
+        return getContainer(node.indices, context, container)
+                .orElseThrow(() -> new TypeException("Map expected", node.start(), node.end()));
     }
 
     @Override
     public Value set(AccessNode node, Value value, Context context) {
-        return null;
+        Value container = node.root.accept(this, context);
+        int lastIndex = node.indices.size() - 1;
+        Supplier<TypeException> exceptionSupplier = () ->
+                new TypeException("Map expected", node.start(), node.end());
+        container = getContainer(node.indices.subList(0, lastIndex), context, container)
+                .orElseThrow(exceptionSupplier);
+        switch (container.type()) {
+            case Types.MAP:
+                val key = node.indices.get(lastIndex).accept(this, context).asString();
+                ((MapValue) container).getMap().put(key, value);
+                break;
+            default:
+                throw exceptionSupplier.get();
+        }
+        return value;
+    }
+
+    private Optional<Value> getContainer(List<Node> nodes, Context context, Value container) {
+        for (Node index : nodes) {
+            switch (container.type()) {
+                case Types.MAP:
+                    val key = index.accept(this, context).asString();
+                    container = ((MapValue) container).getMap().get(key);
+                    break;
+                default:
+                    return Optional.empty();
+            }
+        }
+        return Optional.of(container);
     }
 
     @Override
