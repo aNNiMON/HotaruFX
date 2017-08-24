@@ -1,9 +1,8 @@
 package com.annimon.hotarufx.visual.objects;
 
-import com.annimon.hotarufx.visual.Composition;
+import com.annimon.hotarufx.visual.VirtualScene;
 import javafx.scene.shape.Circle;
 import lombok.Getter;
-import lombok.val;
 
 public class CircleNode implements ObjectNode {
 
@@ -15,7 +14,7 @@ public class CircleNode implements ObjectNode {
     }
 
     @Override
-    public void render(Composition composition) {
-        composition.add(circle);
+    public void render(VirtualScene scene) {
+        scene.add(circle);
     }
 }

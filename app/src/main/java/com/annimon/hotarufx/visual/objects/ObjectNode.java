@@ -1,8 +1,8 @@
 package com.annimon.hotarufx.visual.objects;
 
-import com.annimon.hotarufx.visual.Composition;
+import com.annimon.hotarufx.visual.VirtualScene;
 
 public interface ObjectNode {
 
-    void render(Composition composition);
+    void render(VirtualScene scene);
 }

@@ -1,24 +1,26 @@
 package com.annimon.hotarufx;
 
 import com.annimon.hotarufx.visual.Composition;
+import com.annimon.hotarufx.visual.KeyFrame;
 import com.annimon.hotarufx.visual.objects.CircleNode;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.val;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        val group = new Group();
-        val composition = new Composition(1280, 720, Color.WHITE, group);
+        val composition = new Composition(1280, 720, 30);
+        val scene = composition.newScene(KeyFrame.of(0));
 
         val colors = new Paint[] {Color.GREEN, Color.RED};
-        val halfWidth = composition.getVirtualWidth() / 2;
-        val halfHeight = composition.getVirtualHeight() / 2;
+        val halfWidth = scene.getVirtualWidth() / 2;
+        val halfHeight = scene.getVirtualHeight() / 2;
         for (int y = -1; y <= 1; y++) {
             for (int x = -1; x <= 1; x++) {
                 val circle = new CircleNode();
@@ -26,13 +28,9 @@ public class Main extends Application {
                 circle.getCircle().setCenterX(x * halfWidth);
                 circle.getCircle().setCenterY(y * halfHeight);
                 circle.getCircle().setRadius(50);
-                circle.render(composition);
+                circle.render(scene);
             }
         }
-
-        primaryStage.setTitle("HotaruFX");
-        primaryStage.setScene(composition.getScene());
-        primaryStage.show();
     }
 
     public static void main(String[] args) {
