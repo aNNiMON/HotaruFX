@@ -15,13 +15,24 @@ public class Composition {
     private final Scene scene;
 
     @Getter
-    private final int width, height;
+    private final int
+            virtualWidth, virtualHeight,
+            sceneWidth, sceneHeight;
+    @Getter
+    private final double factor;
 
-    public Composition(int width, int height, Paint background, Group group) {
-        this.width = width;
-        this.height = height;
+    public Composition(int sceneWidth, int sceneHeight, Paint background, Group group) {
+        this.sceneWidth = sceneWidth;
+        this.sceneHeight = sceneHeight;
+        virtualHeight = 1080;
+        factor = virtualHeight / (double) sceneHeight;
+        virtualWidth = (int) (sceneWidth * factor);
+        group.setScaleX(1d / factor);
+        group.setScaleY(1d / factor);
+        group.setTranslateX(sceneWidth / 2);
+        group.setTranslateY(sceneHeight / 2);
         this.group = group;
-        this.scene = new Scene(group, width, height, background);
+        this.scene = new Scene(group, sceneWidth, sceneHeight, background);
     }
 
     public void add(Node node) {

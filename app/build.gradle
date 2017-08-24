@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.18'
+    testCompileOnly 'org.projectlombok:lombok:1.16.18'
     testRuntime 'org.junit.platform:junit-platform-launcher:1.0.0-RC2'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.0-RC2'
     testRuntime 'org.junit.vintage:junit-vintage-engine:4.12.0-RC2'
