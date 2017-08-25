@@ -1,8 +1,13 @@
 package com.annimon.hotarufx.visual.objects;
 
-import com.annimon.hotarufx.visual.VirtualScene;
+import com.annimon.hotarufx.visual.TimeLine;
+import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 
-public interface ObjectNode {
+public abstract class ObjectNode {
 
-    void render(VirtualScene scene);
+    public abstract <R, T> R accept(NodeVisitor<R, T> visitor, T input);
+
+    public void buildTimeline(TimeLine timeline) {
+        
+    }
 }

@@ -16,33 +16,31 @@ public class Composition {
     private final double factor;
 
     @Getter
-    private final double frameRate;
+    private final TimeLine timeline;
 
     @Getter
-    private final TimeLine timeLine;
+    private final VirtualScene scene;
 
     public Composition(int sceneWidth, int sceneHeight, double frameRate) {
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-        this.frameRate = frameRate;
         virtualHeight = 1080;
         factor = virtualHeight / (double) sceneHeight;
         virtualWidth = (int) (sceneWidth * factor);
-        timeLine = new TimeLine();
+        timeline = new TimeLine(frameRate);
+        scene = newScene();
     }
 
-    public VirtualScene newScene(KeyFrame keyFrame) {
+    private VirtualScene newScene() {
         val group = new Group();
         group.setScaleX(1d / factor);
         group.setScaleY(1d / factor);
         group.setTranslateX(sceneWidth / 2);
         group.setTranslateY(sceneHeight / 2);
-        val scene = new VirtualScene(group, virtualWidth, virtualHeight);
-        timeLine.add(keyFrame, scene);
-        return scene;
+        return new VirtualScene(group, virtualWidth, virtualHeight);
     }
 
-    public Scene produceAnimationScene(VirtualScene scene) {
+    public Scene produceAnimationScene() {
         return new Scene(scene.getGroup(), sceneWidth, sceneHeight, Color.WHITE);
     }
 }
