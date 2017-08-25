@@ -1,11 +1,9 @@
 package com.annimon.hotarufx.visual;
 
-import com.annimon.hotarufx.exceptions.KeyFrameDuplicationException;
 import java.util.Map;
 import java.util.TreeMap;
 import javafx.beans.value.WritableValue;
 import lombok.Getter;
-import lombok.val;
 
 @Getter
 public class PropertyTimeline<T> {
@@ -19,10 +17,7 @@ public class PropertyTimeline<T> {
     }
 
     public PropertyTimeline<T> add(KeyFrame keyFrame, T value) {
-        val previous = keyFrames.put(keyFrame, value);
-        if (previous != null) {
-            throw new KeyFrameDuplicationException(keyFrame);
-        }
+        keyFrames.put(keyFrame, value);
         return this;
     }
 }
