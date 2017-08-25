@@ -24,7 +24,8 @@ public class Main extends Application {
         for (int y = -1; y <= 1; y++) {
             for (int x = -1; x <= 1; x++) {
                 val node = new CircleNode();
-                node.circle.setFill(colors[Math.abs(x * y)]);
+                val colorIndex = Math.abs(x * y);
+                node.circle.setFill(colors[colorIndex]);
                 node.circle.setCenterX(x * halfWidth);
                 node.circle.setCenterY(y * halfHeight);
                 node.circle.setRadius(50);
@@ -32,6 +33,9 @@ public class Main extends Application {
                         .add(KeyFrame.of(30), 70)
                         .add(KeyFrame.of(90), 20)
                         .add(KeyFrame.of(300), 70);
+                node.fillProperty()
+                        .add(KeyFrame.of(150), colors[1 - colorIndex])
+                        .add(KeyFrame.of(300), colors[colorIndex]);
                 if (x == 0 && y == 0) {
                     node.centerXProperty()
                             .add(KeyFrame.of(60), 0)
@@ -45,6 +49,9 @@ public class Main extends Application {
                             .add(KeyFrame.of(300), 0);
                     node.radiusProperty()
                             .add(KeyFrame.of(320), 180);
+                    node.fillProperty()
+                            .add(KeyFrame.of(300), node.circle.getFill())
+                            .add(KeyFrame.of(320), Color.WHITE);
                 }
                 node.accept(renderVisitor, scene);
             }

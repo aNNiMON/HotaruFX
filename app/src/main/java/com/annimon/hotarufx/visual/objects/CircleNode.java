@@ -6,14 +6,19 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.shape.Circle;
 
-public class CircleNode extends ObjectNode {
+public class CircleNode extends ShapeNode {
 
     public final Circle circle;
 
     private PropertyTimelineHolder<Number> centerX, centerY, radius;
 
     public CircleNode() {
-        circle = new Circle();
+        this(new Circle());
+    }
+
+    private CircleNode(Circle circle) {
+        super(circle);
+        this.circle = circle;
         centerX = PropertyTimelineHolder.empty();
         centerY = PropertyTimelineHolder.empty();
         radius = PropertyTimelineHolder.empty();
