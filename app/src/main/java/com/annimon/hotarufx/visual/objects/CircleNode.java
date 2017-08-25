@@ -1,43 +1,34 @@
 package com.annimon.hotarufx.visual.objects;
 
+import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
-import java.util.Optional;
 import javafx.scene.shape.Circle;
 
 public class CircleNode extends ObjectNode {
 
     public final Circle circle;
 
-    private Optional<PropertyTimeline<Number>> centerX, centerY, radius;
+    private PropertyTimelineHolder<Number> centerX, centerY, radius;
 
     public CircleNode() {
         circle = new Circle();
-        centerX = Optional.empty();
-        centerY = Optional.empty();
-        radius = Optional.empty();
+        centerX = PropertyTimelineHolder.empty();
+        centerY = PropertyTimelineHolder.empty();
+        radius = PropertyTimelineHolder.empty();
     }
 
     public PropertyTimeline<Number> centerXProperty() {
-        if (!centerX.isPresent()) {
-            centerX = Optional.of(new PropertyTimeline<>(circle.centerXProperty()));
-        }
-        return centerX.get();
+        return centerX.setIfEmptyThenGet(circle::centerXProperty);
     }
 
     public PropertyTimeline<Number> centerYProperty() {
-        if (!centerY.isPresent()) {
-            centerY = Optional.of(new PropertyTimeline<>(circle.centerYProperty()));
-        }
-        return centerY.get();
+        return centerY.setIfEmptyThenGet(circle::centerYProperty);
     }
 
     public PropertyTimeline<Number> radiusProperty() {
-        if (!radius.isPresent()) {
-            radius = Optional.of(new PropertyTimeline<>(circle.radiusProperty()));
-        }
-        return radius.get();
+        return radius.setIfEmptyThenGet(circle::radiusProperty);
     }
 
     public void buildTimeline(TimeLine timeline) {
