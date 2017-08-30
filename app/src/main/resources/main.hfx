@@ -1,0 +1,10 @@
+composition(1280, 720, 30)
+
+A = circle({
+  centerX: 0,
+  centerY: 0,
+  radius: 50,
+  fill: "red"
+})
+
+render(A)
