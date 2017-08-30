@@ -8,5 +8,6 @@ public class Types {
             STRING = 2,
             MAP = 3,
             NODE = 4,
-            FUNCTION = 5;
+            PROPERTY = 5,
+            FUNCTION = 6;
 }
