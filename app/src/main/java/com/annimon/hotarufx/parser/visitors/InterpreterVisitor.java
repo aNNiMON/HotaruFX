@@ -3,13 +3,7 @@ package com.annimon.hotarufx.parser.visitors;
 import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
 import com.annimon.hotarufx.exceptions.TypeException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
-import com.annimon.hotarufx.lib.Context;
-import com.annimon.hotarufx.lib.MapValue;
-import com.annimon.hotarufx.lib.NodeValue;
-import com.annimon.hotarufx.lib.NumberValue;
-import com.annimon.hotarufx.lib.StringValue;
-import com.annimon.hotarufx.lib.Types;
-import com.annimon.hotarufx.lib.Value;
+import com.annimon.hotarufx.lib.*;
 import com.annimon.hotarufx.parser.ast.*;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +36,19 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(FunctionNode node, Context context) {
-        val functionName = node.functionNode.accept(this, context).asString();
-        val function = context.functions().get(functionName);
-        if (function == null)
-            throw new FunctionNotFoundException(functionName, node.start(), node.end());
+        val value = node.functionNode.accept(this, context);
+        final Function function;
+        switch (value.type()) {
+            case Types.FUNCTION:
+                function = ((FunctionValue) value).getValue();
+                break;
+            default:
+                val functionName = value.asString();
+                function = context.functions().get(functionName);
+                if (function == null)
+                    throw new FunctionNotFoundException(functionName, node.start(), node.end());
+                break;
+        }
         val args = node.arguments.stream()
                 .map(n -> n.accept(this, context))
                 .toArray(Value[]::new);
@@ -63,7 +66,12 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(PropertyNode node, Context context) {
-        return node.node.accept(this, context);
+        val value = node.node.accept(this, context);
+        if (value.type() != Types.NODE) {
+            throw new TypeException("Node value expected");
+        }
+        val nodeValue = (NodeValue) value;
+        return nodeValue.getProperty(node.property);
     }
 
     @Override
@@ -147,6 +155,12 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
                 case Types.NODE: {
                     val key = index.accept(this, context).asString();
                     container = ((NodeValue) container).get(key);
+                } break;
+
+                case Types.PROPERTY: {
+                    val key = index.accept(this, context).asString();
+                    val propertyValue = (PropertyValue) container;
+                    container = propertyValue.getField(key);
                 } break;
 
                 default:

@@ -9,4 +9,9 @@ A = circle({
 
 A.radius = 10
 
+A@radius
+  .add(10, 70)
+  .add(30, 20)
+
+
 render(A)

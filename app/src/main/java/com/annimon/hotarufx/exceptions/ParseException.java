@@ -8,6 +8,10 @@ public class ParseException extends RuntimeException {
         super();
     }
 
+    public ParseException(String string) {
+        super(string);
+    }
+
     public ParseException(String string, SourcePosition pos) {
         super(string + " at " + pos.toString());
     }

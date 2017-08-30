@@ -75,6 +75,14 @@ public class NodeValue implements Value {
         }
     }
 
+    public Value getProperty(String key) {
+        val property = bindings.get(key);
+        if (property == null) {
+            throw new HotaruRuntimeException("Unable to get property " + key + " from node value");
+        }
+        return new PropertyValue(property);
+    }
+
     @Override
     public int asInt() {
         throw new TypeException("Cannot cast node to integer");
