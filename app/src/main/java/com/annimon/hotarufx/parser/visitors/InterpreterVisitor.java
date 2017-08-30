@@ -5,6 +5,7 @@ import com.annimon.hotarufx.exceptions.TypeException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.MapValue;
+import com.annimon.hotarufx.lib.NodeValue;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Types;
@@ -102,7 +103,7 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     public Value get(AccessNode node, Context context) {
         Value container = node.root.accept(this, context);
         return getContainer(node.indices, context, container)
-                .orElseThrow(() -> new TypeException("Map expected", node.start(), node.end()));
+                .orElseThrow(() -> new TypeException("Unable to get property from non-accessible type", node.start(), node.end()));
     }
 
     @Override
@@ -110,14 +111,20 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
         Value container = node.root.accept(this, context);
         int lastIndex = node.indices.size() - 1;
         Supplier<TypeException> exceptionSupplier = () ->
-                new TypeException("Map expected", node.start(), node.end());
+                new TypeException("Unable to set property to non-accessible type", node.start(), node.end());
         container = getContainer(node.indices.subList(0, lastIndex), context, container)
                 .orElseThrow(exceptionSupplier);
         switch (container.type()) {
-            case Types.MAP:
+            case Types.MAP: {
                 val key = node.indices.get(lastIndex).accept(this, context).asString();
                 ((MapValue) container).getMap().put(key, value);
-                break;
+            } break;
+
+            case Types.NODE: {
+                val key = node.indices.get(lastIndex).accept(this, context).asString();
+                ((NodeValue) container).set(key, value);
+            } break;
+
             default:
                 throw exceptionSupplier.get();
         }
@@ -127,10 +134,16 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     private Optional<Value> getContainer(List<Node> nodes, Context context, Value container) {
         for (Node index : nodes) {
             switch (container.type()) {
-                case Types.MAP:
+                case Types.MAP: {
                     val key = index.accept(this, context).asString();
                     container = ((MapValue) container).getMap().get(key);
-                    break;
+                } break;
+
+                case Types.NODE: {
+                    val key = index.accept(this, context).asString();
+                    container = ((NodeValue) container).get(key);
+                } break;
+
                 default:
                     return Optional.empty();
             }

@@ -7,4 +7,6 @@ A = circle({
   fill: "red"
 })
 
+A.radius = 10
+
 render(A)

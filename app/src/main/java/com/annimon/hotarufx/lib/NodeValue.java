@@ -1,5 +1,6 @@
 package com.annimon.hotarufx.lib;
 
+import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
 import com.annimon.hotarufx.exceptions.TypeException;
 import com.annimon.hotarufx.visual.Property;
 import com.annimon.hotarufx.visual.PropertyBindings;
@@ -32,24 +33,46 @@ public class NodeValue implements Value {
         return node;
     }
 
-    @SuppressWarnings("unchecked")
     public void fill(MapValue map) {
-        map.getMap().forEach((key, value) -> {
-            if (!bindings.containsKey(key)) return;
-            final Property property = bindings.get(key);
-            val timeline = property.getProperty().get();
-            val type = property.getType();
-            switch (type) {
-                case NUMBER:
-                    ((PropertyTimeline<Number>) timeline).getProperty().setValue(
-                            type.<Number>getFromHFX().apply(value));
-                    break;
-                case PAINT:
-                    ((PropertyTimeline<Paint>) timeline).getProperty().setValue(
-                            type.<Paint>getFromHFX().apply(value));
-                    break;
-            }
-        });
+        map.getMap().forEach(this::set);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Value get(String key) {
+        if (!bindings.containsKey(key)) {
+            throw new HotaruRuntimeException("Unable to get property " + key + " from node value");
+        }
+        final Property property = bindings.get(key);
+        val timeline = property.getProperty().get();
+        val type = property.getType();
+        switch (type) {
+            case NUMBER:
+                return type.<Number>getToHFX().apply(
+                        ((PropertyTimeline<Number>) timeline).getProperty().getValue());
+            case PAINT:
+                return type.<Paint>getToHFX().apply(
+                        ((PropertyTimeline<Paint>) timeline).getProperty().getValue());
+            default:
+                throw new TypeException("Unknown type of node property");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void set(String key, Value value) {
+        if (!bindings.containsKey(key)) return;
+        final Property property = bindings.get(key);
+        val timeline = property.getProperty().get();
+        val type = property.getType();
+        switch (type) {
+            case NUMBER:
+                ((PropertyTimeline<Number>) timeline).getProperty().setValue(
+                        type.<Number>getFromHFX().apply(value));
+                break;
+            case PAINT:
+                ((PropertyTimeline<Paint>) timeline).getProperty().setValue(
+                        type.<Paint>getFromHFX().apply(value));
+                break;
+        }
     }
 
     @Override
