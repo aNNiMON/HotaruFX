@@ -62,6 +62,11 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     }
 
     @Override
+    public Value visit(PropertyNode node, Context context) {
+        return node.node.accept(this, context);
+    }
+
+    @Override
     public Value visit(UnaryNode node, Context context) {
         switch (node.operator) {
             case NEGATE:

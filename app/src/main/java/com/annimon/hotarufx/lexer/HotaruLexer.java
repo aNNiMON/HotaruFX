@@ -14,7 +14,7 @@ public class HotaruLexer extends Lexer {
     }
 
     private static final String TEXT_CHARS = "'\"";
-    private static final String OPERATOR_CHARS = "(){}:=+-.,";
+    private static final String OPERATOR_CHARS = "(){}:=+-.,@";
 
     private static final Map<String, HotaruTokenId> OPERATORS;
     static {
@@ -29,6 +29,7 @@ public class HotaruLexer extends Lexer {
         OPERATORS.put("-", HotaruTokenId.MINUS);
         OPERATORS.put(".", HotaruTokenId.DOT);
         OPERATORS.put(",", HotaruTokenId.COMMA);
+        OPERATORS.put("@", HotaruTokenId.AT);
     }
 
     public HotaruLexer(String input) {

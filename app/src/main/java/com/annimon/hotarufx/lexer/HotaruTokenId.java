@@ -20,6 +20,7 @@ public enum HotaruTokenId {
     COLON(Category.OPERATOR),
     COMMA(Category.OPERATOR),
     DOT(Category.OPERATOR),
+    AT(Category.OPERATOR),
 
     SINGLE_LINE_COMMENT(Category.COMMENT),
     MULTI_LINE_COMMENT(Category.COMMENT),

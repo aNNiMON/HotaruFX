@@ -16,7 +16,7 @@ public class HotaruParser extends Parser {
         val parser = new HotaruParser(tokens);
         val program = parser.parse();
         if (parser.getParseErrors().hasErrors()) {
-            throw new ParseException();
+            throw new ParseException(parser.getParseErrors().toString());
         }
         return program;
     }
@@ -58,9 +58,14 @@ public class HotaruParser extends Parser {
         if (lookMatch(0, HotaruTokenId.LPAREN)) {
             return functionChain(expr);
         }
+        return objectAccess(expr);
+    }
+
+    private Node objectAccess(Node expr) {
         if (lookMatch(0, HotaruTokenId.DOT)) {
-            final List<Node> indices = variableSuffix();
-            if (indices == null || indices.isEmpty()) return expr;
+            val indices = variableSuffix();
+            if (indices == null || indices.isEmpty())
+                return expr;
 
             if (lookMatch(0, HotaruTokenId.LPAREN)) {
                 // next function call
@@ -158,6 +163,12 @@ public class HotaruParser extends Parser {
             // variable(args) || arr["key"](args) || obj.key(args)
             if (lookMatch(0, HotaruTokenId.LPAREN)) {
                 return functionChain(qualifiedNameExpr);
+            }
+            // node@prop || map.node@prop
+            if (match(HotaruTokenId.AT)) {
+                val propName = consume(HotaruTokenId.WORD).getText();
+                val expr = new PropertyNode(qualifiedNameExpr, propName);
+                return objectAccess(expr);
             }
             return qualifiedNameExpr;
         }
