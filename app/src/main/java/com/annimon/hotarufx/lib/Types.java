@@ -7,5 +7,6 @@ public class Types {
             NUMBER = 1,
             STRING = 2,
             MAP = 3,
-            FUNCTION = 4;
+            NODE = 4,
+            FUNCTION = 5;
 }
