@@ -1,10 +1,12 @@
 package com.annimon.hotarufx.visual.objects;
 
+import com.annimon.hotarufx.visual.PropertyBindings;
 import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.TimeLine;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
+import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public abstract class ShapeNode extends ObjectNode {
 
@@ -27,9 +29,17 @@ public abstract class ShapeNode extends ObjectNode {
         return stroke.setIfEmptyThenGet(shape::strokeProperty);
     }
 
+    @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
         fill.ifPresent(PropertyConsumers.paintConsumer(timeline));
         stroke.ifPresent(PropertyConsumers.paintConsumer(timeline));
+    }
+
+    @Override
+    public PropertyBindings propertyBindings(PropertyBindings bindings) {
+        return super.propertyBindings(bindings)
+                .add("fill", PAINT, this::fillProperty)
+                .add("stroke", PAINT, this::strokeProperty);
     }
 }

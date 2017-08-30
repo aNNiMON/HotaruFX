@@ -1,10 +1,12 @@
 package com.annimon.hotarufx.visual.objects;
 
+import com.annimon.hotarufx.visual.PropertyBindings;
 import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.shape.Circle;
+import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public class CircleNode extends ShapeNode {
 
@@ -36,11 +38,22 @@ public class CircleNode extends ShapeNode {
         return radius.setIfEmptyThenGet(circle::radiusProperty);
     }
 
+    @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
         centerX.ifPresent(PropertyConsumers.numberConsumer(timeline));
         centerY.ifPresent(PropertyConsumers.numberConsumer(timeline));
         radius.ifPresent(PropertyConsumers.numberConsumer(timeline));
+    }
+
+    @Override
+    public PropertyBindings propertyBindings(PropertyBindings bindings) {
+        return super.propertyBindings(bindings)
+                .add("cx", NUMBER, this::centerXProperty)
+                .add("centerX", NUMBER, this::centerXProperty)
+                .add("cy", NUMBER, this::centerYProperty)
+                .add("centerY", NUMBER, this::centerYProperty)
+                .add("radius", NUMBER, this::radiusProperty);
     }
 
     @Override
