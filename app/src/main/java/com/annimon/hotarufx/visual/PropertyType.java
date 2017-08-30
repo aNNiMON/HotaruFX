@@ -7,11 +7,9 @@ import com.annimon.hotarufx.lib.Value;
 import java.util.function.Function;
 import javafx.scene.paint.Color;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter
 public enum PropertyType {
 
     NUMBER(toNumber(), o -> NumberValue.of((Number) o)),
@@ -19,6 +17,17 @@ public enum PropertyType {
 
     private final Function<Value, Object> fromHFX;
     private final Function<Object, Value> toHFX;
+
+    @SuppressWarnings("unchecked")
+    public <T> Function<Value, T> getFromHFX() {
+        return (Function<Value, T>) fromHFX;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> Function<T, Value> getToHFX() {
+        return (Function<T, Value>) toHFX;
+    }
+
 
     private static Function<Value, Object> toNumber() {
         return value -> {
