@@ -34,7 +34,9 @@ CLIP = circle({
   radius: 78
 })
 CLIP@cx
-  .add(60, 173)
+  .add(60, -400)
+  .add(100, 173)
+
 
 C = text({
   x: -240,
@@ -45,5 +47,14 @@ C = text({
   font: 100,
   clip: CLIP
 })
+C@layoutX
+  .add(100, 0)
+  .add(120, -300)
+C@scaleX
+  .add(100, 1)
+  .add(120, 1.8)
+C@scaleY
+  .add(100, 1)
+  .add(120, 1.8)
 
-render(C, CLIP)
+render(B, A, C, CLIP)
