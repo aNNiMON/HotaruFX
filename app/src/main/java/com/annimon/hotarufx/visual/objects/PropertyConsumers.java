@@ -12,6 +12,10 @@ public class PropertyConsumers {
         return genericConsumer(timeline);
     }
 
+    public static Consumer<PropertyTimeline<String>> stringConsumer(TimeLine timeline) {
+        return genericConsumer(timeline);
+    }
+
     public static Consumer<PropertyTimeline<Paint>> paintConsumer(TimeLine timeline) {
         return genericConsumer(timeline);
     }

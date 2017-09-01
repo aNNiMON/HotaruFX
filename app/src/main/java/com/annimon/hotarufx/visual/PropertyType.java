@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 public enum PropertyType {
 
     NUMBER(toNumber(), o -> NumberValue.of((Number) o)),
+    STRING(Value::asString, o -> new StringValue(String.valueOf(o))),
     PAINT(v -> Color.valueOf(v.asString()), o -> new StringValue(o.toString()));
 
     private final Function<Value, Object> fromHFX;

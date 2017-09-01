@@ -49,6 +49,9 @@ public class NodeValue implements Value {
             case NUMBER:
                 return type.<Number>getToHFX().apply(
                         ((PropertyTimeline<Number>) timeline).getProperty().getValue());
+            case STRING:
+                return type.<String>getToHFX().apply(
+                        ((PropertyTimeline<String>) timeline).getProperty().getValue());
             case PAINT:
                 return type.<Paint>getToHFX().apply(
                         ((PropertyTimeline<Paint>) timeline).getProperty().getValue());
@@ -67,6 +70,10 @@ public class NodeValue implements Value {
             case NUMBER:
                 ((PropertyTimeline<Number>) timeline).getProperty().setValue(
                         type.<Number>getFromHFX().apply(value));
+                break;
+            case STRING:
+                ((PropertyTimeline<String>) timeline).getProperty().setValue(
+                        type.<String>getFromHFX().apply(value));
                 break;
             case PAINT:
                 ((PropertyTimeline<Paint>) timeline).getProperty().setValue(

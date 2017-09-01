@@ -48,6 +48,12 @@ public class PropertyValue implements Value {
                             type.<Number>getFromHFX().apply(args[1])
                     );
                     break;
+                case STRING:
+                    ((PropertyTimeline<String>)property.getProperty().get()).add(
+                            KeyFrame.of(args[0].asInt()),
+                            type.<String>getFromHFX().apply(args[1])
+                    );
+                    break;
                 case PAINT:
                     ((PropertyTimeline<Paint>)property.getProperty().get()).add(
                             KeyFrame.of(args[0].asInt()),

@@ -4,6 +4,7 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.VirtualScene;
 import com.annimon.hotarufx.visual.objects.CircleNode;
 import com.annimon.hotarufx.visual.objects.RectangleNode;
+import com.annimon.hotarufx.visual.objects.TextNode;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -22,6 +23,13 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
     public Void visit(RectangleNode node, VirtualScene scene) {
         node.buildTimeline(timeline);
         scene.add(node.rectangle);
+        return null;
+    }
+
+    @Override
+    public Void visit(TextNode node, VirtualScene scene) {
+        node.buildTimeline(timeline);
+        scene.add(node.text);
         return null;
     }
 }
