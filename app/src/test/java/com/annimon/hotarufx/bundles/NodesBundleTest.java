@@ -28,6 +28,7 @@ class NodesBundleTest {
         assertThat(context.functions(), hasKey("circle"));
 
         val map = new HashMap<String, Value>();
+        map.put("translateZ", NumberValue.of(-40));
         map.put("cx", NumberValue.of(-10));
         map.put("radius", NumberValue.of(50));
         map.put("fill", new StringValue("#00AA00"));
@@ -43,5 +44,6 @@ class NodesBundleTest {
         assertThat(circle.circle.getCenterX(), closeTo(-10, 0.001));
         assertThat(circle.circle.getRadius(), closeTo(50, 0.001));
         assertThat(circle.circle.getFill(), is(Color.web("#00AA00")));
+        assertThat(circle.circle.getTranslateZ(), closeTo(-40, 0.001));
     }
 }
