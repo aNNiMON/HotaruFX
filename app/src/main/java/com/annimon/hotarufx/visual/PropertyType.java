@@ -19,9 +19,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
+@SuppressWarnings("ConstantConditions")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public enum PropertyType {
 
+    BOOLEAN(v -> v.asInt() != 0, o -> NumberValue.fromBoolean(Boolean.TRUE.equals(o))),
     NUMBER(toNumber(), o -> NumberValue.of((Number) o)),
     STRING(Value::asString, o -> new StringValue(String.valueOf(o))),
     NODE(toNode(), fromNode()),

@@ -48,6 +48,9 @@ public class NodeValue implements Value {
         val timeline = property.getProperty().get();
         val type = property.getType();
         switch (type) {
+            case BOOLEAN:
+                return type.<Boolean>getToHFX().apply(
+                        ((PropertyTimeline<Boolean>) timeline).getProperty().getValue());
             case NUMBER:
                 return type.<Number>getToHFX().apply(
                         ((PropertyTimeline<Number>) timeline).getProperty().getValue());
@@ -76,6 +79,10 @@ public class NodeValue implements Value {
         val timeline = property.getProperty().get();
         val type = property.getType();
         switch (type) {
+            case BOOLEAN:
+                ((PropertyTimeline<Boolean>) timeline).getProperty().setValue(
+                        type.<Boolean>getFromHFX().apply(value));
+                break;
             case NUMBER:
                 ((PropertyTimeline<Number>) timeline).getProperty().setValue(
                         type.<Number>getFromHFX().apply(value));

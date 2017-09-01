@@ -13,6 +13,7 @@ import static com.annimon.hotarufx.visual.PropertyType.*;
 public abstract class ObjectNode {
 
     private final Node node;
+    private PropertyTimelineHolder<Boolean> visible;
     private PropertyTimelineHolder<Node> clip;
     private PropertyTimelineHolder<Number> rotate;
     private PropertyTimelineHolder<Number> translateX, translateY, translateZ;
@@ -23,6 +24,7 @@ public abstract class ObjectNode {
 
     public ObjectNode(Node node) {
         this.node = node;
+        visible = PropertyTimelineHolder.empty();
         clip = PropertyTimelineHolder.empty();
         rotate = PropertyTimelineHolder.empty();
         translateX = PropertyTimelineHolder.empty();
@@ -38,6 +40,10 @@ public abstract class ObjectNode {
 
     public Node getFxNode() {
         return node;
+    }
+
+    public PropertyTimeline<Boolean> visibleProperty() {
+        return visible.setIfEmptyThenGet(node::visibleProperty);
     }
 
     public PropertyTimeline<Node> clipProperty() {
@@ -81,6 +87,7 @@ public abstract class ObjectNode {
     }
 
     public void buildTimeline(TimeLine timeline) {
+        visible.applyIfPresent(timeline);
         clip.applyIfPresent(timeline);
         rotate.applyIfPresent(timeline);
         translateX.applyIfPresent(timeline);
@@ -99,6 +106,7 @@ public abstract class ObjectNode {
 
     protected PropertyBindings propertyBindings(PropertyBindings bindings) {
         return bindings
+                .add("visible", BOOLEAN, this::visibleProperty)
                 .add("clip", CLIP_NODE, this::clipProperty)
                 .add("rotate", NUMBER, this::rotateProperty)
                 .add("translateX", NUMBER, this::translateXProperty)

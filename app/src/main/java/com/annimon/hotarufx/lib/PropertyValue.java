@@ -44,6 +44,12 @@ public class PropertyValue implements Value {
             Validator.with(args).checkAtLeast(2);
             val type = property.getType();
             switch (type) {
+                case BOOLEAN:
+                    ((PropertyTimeline<Boolean>)property.getProperty().get()).add(
+                            KeyFrame.of(args[0].asInt()),
+                            type.<Boolean>getFromHFX().apply(args[1])
+                    );
+                    break;
                 case NUMBER:
                     ((PropertyTimeline<Number>)property.getProperty().get()).add(
                             KeyFrame.of(args[0].asInt()),
