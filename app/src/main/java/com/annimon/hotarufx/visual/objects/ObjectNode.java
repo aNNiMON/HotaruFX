@@ -12,13 +12,19 @@ import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
 public abstract class ObjectNode {
 
     private final Node node;
+    private PropertyTimelineHolder<Number> rotate;
     private PropertyTimelineHolder<Number> translateX, translateY, translateZ;
 
     public ObjectNode(Node node) {
         this.node = node;
+        rotate = PropertyTimelineHolder.empty();
         translateX = PropertyTimelineHolder.empty();
         translateY = PropertyTimelineHolder.empty();
         translateZ = PropertyTimelineHolder.empty();
+    }
+
+    public PropertyTimeline<Number> rotateProperty() {
+        return rotate.setIfEmptyThenGet(node::rotateProperty);
     }
 
     public PropertyTimeline<Number> translateXProperty() {
@@ -34,6 +40,7 @@ public abstract class ObjectNode {
     }
 
     public void buildTimeline(TimeLine timeline) {
+        rotate.ifPresent(numberConsumer(timeline));
         translateX.ifPresent(numberConsumer(timeline));
         translateY.ifPresent(numberConsumer(timeline));
         translateZ.ifPresent(numberConsumer(timeline));
@@ -45,6 +52,7 @@ public abstract class ObjectNode {
 
     protected PropertyBindings propertyBindings(PropertyBindings bindings) {
         return bindings
+                .add("rotate", NUMBER, this::rotateProperty)
                 .add("translateX", NUMBER, this::translateXProperty)
                 .add("translateY", NUMBER, this::translateYProperty)
                 .add("translateZ", NUMBER, this::translateZProperty);

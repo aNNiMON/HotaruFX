@@ -35,5 +35,10 @@ C = text({
   stroke: "black",
   font: 100
 })
+C@rotate
+  .add(50, 0)
+  .add(60, 45)
+  .add(80, -45)
+  .add(90, 0)
 
 render(B, A, C)
