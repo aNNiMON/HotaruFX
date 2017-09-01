@@ -3,15 +3,28 @@ composition(1280, 720, 30)
 A = circle({
   centerX: 0,
   centerY: 0,
-  radius: 50,
+  radius: 10,
   fill: "red"
 })
-
-A.radius = 10
-
 A@radius
   .add(10, 70)
   .add(30, 20)
+A@fill
+  .add(15, "red")
+  .add(30, "#FF000000")
 
+B = rectangle({
+  x: -50,
+  y: -50,
+  width: 100,
+  height: 100,
+  fill: "green"
+})
+B@arcWidth
+  .add(28, 0)
+  .add(50, 80)
+B@arcHeight
+  .add(28, 0)
+  .add(50, 80)
 
-render(A)
+render(B, A)
