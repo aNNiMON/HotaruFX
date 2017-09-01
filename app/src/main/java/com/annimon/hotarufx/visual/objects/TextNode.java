@@ -7,6 +7,7 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public class TextNode extends ShapeNode {
@@ -16,6 +17,8 @@ public class TextNode extends ShapeNode {
     private PropertyTimelineHolder<Number> x, y;
     private PropertyTimelineHolder<String> textProperty;
     private PropertyTimelineHolder<Font> font;
+    private PropertyTimelineHolder<Number> lineSpacing, wrappingWidth;
+    private PropertyTimelineHolder<Boolean> strikethrough, underline;
 
     public TextNode() {
         this(new Text());
@@ -28,6 +31,10 @@ public class TextNode extends ShapeNode {
         y = PropertyTimelineHolder.empty();
         textProperty = PropertyTimelineHolder.empty();
         font = PropertyTimelineHolder.empty();
+        lineSpacing = PropertyTimelineHolder.empty();
+        wrappingWidth = PropertyTimelineHolder.empty();
+        strikethrough = PropertyTimelineHolder.empty();
+        underline = PropertyTimelineHolder.empty();
     }
 
     public PropertyTimeline<Number> xProperty() {
@@ -46,6 +53,22 @@ public class TextNode extends ShapeNode {
         return font.setIfEmptyThenGet(text::fontProperty);
     }
 
+    public PropertyTimeline<Number> lineSpacingProperty() {
+        return lineSpacing.setIfEmptyThenGet(text::lineSpacingProperty);
+    }
+
+    public PropertyTimeline<Number> wrappingWidthProperty() {
+        return wrappingWidth.setIfEmptyThenGet(text::wrappingWidthProperty);
+    }
+
+    public PropertyTimeline<Boolean> strikethroughProperty() {
+        return strikethrough.setIfEmptyThenGet(text::strikethroughProperty);
+    }
+
+    public PropertyTimeline<Boolean> underlineProperty() {
+        return underline.setIfEmptyThenGet(text::underlineProperty);
+    }
+
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
@@ -53,6 +76,10 @@ public class TextNode extends ShapeNode {
         y.applyIfPresent(timeline);
         textProperty.applyIfPresent(timeline);
         font.applyIfPresent(timeline);
+        lineSpacing.applyIfPresent(timeline);
+        wrappingWidth.applyIfPresent(timeline);
+        strikethrough.applyIfPresent(timeline);
+        underline.applyIfPresent(timeline);
     }
 
     @Override
@@ -61,7 +88,11 @@ public class TextNode extends ShapeNode {
                 .add("x", NUMBER, this::xProperty)
                 .add("y", NUMBER, this::yProperty)
                 .add("text", STRING, this::textProperty)
-                .add("font", FONT, this::fontProperty);
+                .add("font", FONT, this::fontProperty)
+                .add("lineSpacing", NUMBER, this::lineSpacingProperty)
+                .add("wrappingWidth", NUMBER, this::wrappingWidthProperty)
+                .add("strikethrough", BOOLEAN, this::strikethroughProperty)
+                .add("underline", BOOLEAN, this::underlineProperty);
     }
 
     @Override
