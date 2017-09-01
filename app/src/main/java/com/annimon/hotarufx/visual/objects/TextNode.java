@@ -7,7 +7,6 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public class TextNode extends ShapeNode {
@@ -91,6 +90,7 @@ public class TextNode extends ShapeNode {
                 .add("font", FONT, this::fontProperty)
                 .add("lineSpacing", NUMBER, this::lineSpacingProperty)
                 .add("wrappingWidth", NUMBER, this::wrappingWidthProperty)
+                .add("strike", BOOLEAN, this::strikethroughProperty)
                 .add("strikethrough", BOOLEAN, this::strikethroughProperty)
                 .add("underline", BOOLEAN, this::underlineProperty);
     }
