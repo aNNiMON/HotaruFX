@@ -7,7 +7,6 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.shape.Circle;
 import static com.annimon.hotarufx.visual.PropertyType.*;
-import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
 
 public class CircleNode extends ShapeNode {
 
@@ -42,9 +41,9 @@ public class CircleNode extends ShapeNode {
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
-        centerX.ifPresent(numberConsumer(timeline));
-        centerY.ifPresent(numberConsumer(timeline));
-        radius.ifPresent(numberConsumer(timeline));
+        centerX.applyIfPresent(timeline);
+        centerY.applyIfPresent(timeline);
+        radius.applyIfPresent(timeline);
     }
 
     @Override

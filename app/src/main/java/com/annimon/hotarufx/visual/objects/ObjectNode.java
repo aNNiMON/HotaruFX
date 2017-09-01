@@ -7,7 +7,6 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.Node;
 import static com.annimon.hotarufx.visual.PropertyType.*;
-import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
 
 public abstract class ObjectNode {
 
@@ -40,10 +39,10 @@ public abstract class ObjectNode {
     }
 
     public void buildTimeline(TimeLine timeline) {
-        rotate.ifPresent(numberConsumer(timeline));
-        translateX.ifPresent(numberConsumer(timeline));
-        translateY.ifPresent(numberConsumer(timeline));
-        translateZ.ifPresent(numberConsumer(timeline));
+        rotate.applyIfPresent(timeline);
+        translateX.applyIfPresent(timeline);
+        translateY.applyIfPresent(timeline);
+        translateZ.applyIfPresent(timeline);
     }
 
     public final PropertyBindings propertyBindings() {

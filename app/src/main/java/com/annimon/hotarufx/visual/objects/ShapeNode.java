@@ -7,7 +7,6 @@ import com.annimon.hotarufx.visual.TimeLine;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 import static com.annimon.hotarufx.visual.PropertyType.*;
-import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
 
 public abstract class ShapeNode extends ObjectNode {
 
@@ -33,8 +32,8 @@ public abstract class ShapeNode extends ObjectNode {
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
-        fill.ifPresent(paintConsumer(timeline));
-        stroke.ifPresent(paintConsumer(timeline));
+        fill.applyIfPresent(timeline);
+        stroke.applyIfPresent(timeline);
     }
 
     @Override

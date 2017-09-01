@@ -8,7 +8,6 @@ import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import static com.annimon.hotarufx.visual.PropertyType.*;
-import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
 
 public class TextNode extends ShapeNode {
 
@@ -50,10 +49,10 @@ public class TextNode extends ShapeNode {
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
-        x.ifPresent(numberConsumer(timeline));
-        y.ifPresent(numberConsumer(timeline));
-        font.ifPresent(genericConsumer(timeline));
-        textProperty.ifPresent(stringConsumer(timeline));
+        x.applyIfPresent(timeline);
+        y.applyIfPresent(timeline);
+        textProperty.applyIfPresent(timeline);
+        font.applyIfPresent(timeline);
     }
 
     @Override

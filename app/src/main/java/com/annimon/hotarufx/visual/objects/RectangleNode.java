@@ -7,7 +7,6 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.shape.Rectangle;
 import static com.annimon.hotarufx.visual.PropertyType.*;
-import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
 
 public class RectangleNode extends ShapeNode {
 
@@ -57,12 +56,12 @@ public class RectangleNode extends ShapeNode {
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
-        x.ifPresent(numberConsumer(timeline));
-        y.ifPresent(numberConsumer(timeline));
-        width.ifPresent(numberConsumer(timeline));
-        height.ifPresent(numberConsumer(timeline));
-        arcWidth.ifPresent(numberConsumer(timeline));
-        arcHeight.ifPresent(numberConsumer(timeline));
+        x.applyIfPresent(timeline);
+        y.applyIfPresent(timeline);
+        width.applyIfPresent(timeline);
+        height.applyIfPresent(timeline);
+        arcWidth.applyIfPresent(timeline);
+        arcHeight.applyIfPresent(timeline);
     }
 
     @Override

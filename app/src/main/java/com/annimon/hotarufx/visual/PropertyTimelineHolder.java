@@ -2,6 +2,7 @@ package com.annimon.hotarufx.visual;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import javafx.animation.KeyValue;
 import javafx.beans.value.WritableValue;
 
 public final class PropertyTimelineHolder<T> {
@@ -10,29 +11,36 @@ public final class PropertyTimelineHolder<T> {
         return new PropertyTimelineHolder<>(null);
     }
 
-    private PropertyTimeline<T> value;
+    private PropertyTimeline<T> propertyTimeline;
 
     private PropertyTimelineHolder(PropertyTimeline<T> value) {
-        this.value = value;
+        this.propertyTimeline = value;
     }
 
     public boolean isPresent() {
-        return value != null;
+        return propertyTimeline != null;
     }
 
     public boolean isEmpty() {
-        return value == null;
+        return propertyTimeline == null;
     }
 
     public void ifPresent(Consumer<PropertyTimeline<T>> consumer) {
         if (isPresent()) {
-            consumer.accept(value);
+            consumer.accept(propertyTimeline);
         }
+    }
+
+    public void applyIfPresent(TimeLine timeline) {
+        if (isEmpty()) return;
+        propertyTimeline.getKeyFrames().forEach((keyFrame, value) -> {
+            timeline.addKeyFrame(keyFrame, new KeyValue(propertyTimeline.getProperty(), value));
+        });
     }
 
     public PropertyTimelineHolder<T> setIfEmpty(Supplier<PropertyTimeline<T>> supplier) {
         if (isEmpty()) {
-            value = supplier.get();
+            propertyTimeline = supplier.get();
         }
         return this;
     }
@@ -42,7 +50,7 @@ public final class PropertyTimelineHolder<T> {
     }
 
     public PropertyTimeline<T> get() {
-        return value;
+        return propertyTimeline;
     }
 
     private Supplier<PropertyTimeline<T>> wrap(Supplier<WritableValue<T>> supplier) {
