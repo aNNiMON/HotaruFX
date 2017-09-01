@@ -5,6 +5,7 @@ import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 import static com.annimon.hotarufx.visual.objects.PropertyConsumers.*;
@@ -15,6 +16,7 @@ public class TextNode extends ShapeNode {
 
     private PropertyTimelineHolder<Number> x, y;
     private PropertyTimelineHolder<String> textProperty;
+    private PropertyTimelineHolder<Font> font;
 
     public TextNode() {
         this(new Text());
@@ -26,6 +28,7 @@ public class TextNode extends ShapeNode {
         x = PropertyTimelineHolder.empty();
         y = PropertyTimelineHolder.empty();
         textProperty = PropertyTimelineHolder.empty();
+        font = PropertyTimelineHolder.empty();
     }
 
     public PropertyTimeline<Number> xProperty() {
@@ -40,11 +43,16 @@ public class TextNode extends ShapeNode {
         return textProperty.setIfEmptyThenGet(text::textProperty);
     }
 
+    public PropertyTimeline<Font> fontProperty() {
+        return font.setIfEmptyThenGet(text::fontProperty);
+    }
+
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
         x.ifPresent(numberConsumer(timeline));
         y.ifPresent(numberConsumer(timeline));
+        font.ifPresent(genericConsumer(timeline));
         textProperty.ifPresent(stringConsumer(timeline));
     }
 
@@ -53,7 +61,8 @@ public class TextNode extends ShapeNode {
         return super.propertyBindings(bindings)
                 .add("x", NUMBER, this::xProperty)
                 .add("y", NUMBER, this::yProperty)
-                .add("text", STRING, this::textProperty);
+                .add("text", STRING, this::textProperty)
+                .add("font", FONT, this::fontProperty);
     }
 
     @Override

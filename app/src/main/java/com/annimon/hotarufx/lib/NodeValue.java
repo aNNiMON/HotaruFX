@@ -7,6 +7,7 @@ import com.annimon.hotarufx.visual.PropertyBindings;
 import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.objects.ObjectNode;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import lombok.val;
 
 public class NodeValue implements Value {
@@ -55,6 +56,9 @@ public class NodeValue implements Value {
             case PAINT:
                 return type.<Paint>getToHFX().apply(
                         ((PropertyTimeline<Paint>) timeline).getProperty().getValue());
+            case FONT:
+                return type.<Font>getToHFX().apply(
+                        ((PropertyTimeline<Font>) timeline).getProperty().getValue());
             default:
                 throw new TypeException("Unknown type of node property");
         }
@@ -78,6 +82,10 @@ public class NodeValue implements Value {
             case PAINT:
                 ((PropertyTimeline<Paint>) timeline).getProperty().setValue(
                         type.<Paint>getFromHFX().apply(value));
+                break;
+            case FONT:
+                ((PropertyTimeline<Font>) timeline).getProperty().setValue(
+                        type.<Font>getFromHFX().apply(value));
                 break;
         }
     }

@@ -8,6 +8,7 @@ import com.annimon.hotarufx.visual.PropertyTimeline;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import lombok.Getter;
 import lombok.val;
 
@@ -58,6 +59,12 @@ public class PropertyValue implements Value {
                     ((PropertyTimeline<Paint>)property.getProperty().get()).add(
                             KeyFrame.of(args[0].asInt()),
                             type.<Paint>getFromHFX().apply(args[1])
+                    );
+                    break;
+                case FONT:
+                    ((PropertyTimeline<Font>)property.getProperty().get()).add(
+                            KeyFrame.of(args[0].asInt()),
+                            type.<Font>getFromHFX().apply(args[1])
                     );
                     break;
             }

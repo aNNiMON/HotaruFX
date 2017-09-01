@@ -28,11 +28,12 @@ B@arcHeight
   .add(50, 80)
 
 C = text({
-  x: -200,
+  x: -240,
   y: -100,
   text: "HotaruFX",
   fill: "white",
   stroke: "black",
+  font: 100
 })
 
 render(B, A, C)
