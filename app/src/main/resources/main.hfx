@@ -47,6 +47,9 @@ C = text({
   font: 100,
   underline: 1
   clip: CLIP,
+  css: '
+    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.8), 5, 0, 0.5, 0.25);
+  '
 })
 C@layoutX
   .add(100, 0)

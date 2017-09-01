@@ -14,7 +14,9 @@ public abstract class ObjectNode {
 
     private final Node node;
     private PropertyTimelineHolder<Boolean> visible;
+    private PropertyTimelineHolder<Number> opacity;
     private PropertyTimelineHolder<Node> clip;
+    private PropertyTimelineHolder<String> style;
     private PropertyTimelineHolder<Number> rotate;
     private PropertyTimelineHolder<Number> translateX, translateY, translateZ;
     private PropertyTimelineHolder<Number> scaleX, scaleY, scaleZ;
@@ -25,7 +27,9 @@ public abstract class ObjectNode {
     public ObjectNode(Node node) {
         this.node = node;
         visible = PropertyTimelineHolder.empty();
+        opacity = PropertyTimelineHolder.empty();
         clip = PropertyTimelineHolder.empty();
+        style = PropertyTimelineHolder.empty();
         rotate = PropertyTimelineHolder.empty();
         translateX = PropertyTimelineHolder.empty();
         translateY = PropertyTimelineHolder.empty();
@@ -46,8 +50,16 @@ public abstract class ObjectNode {
         return visible.setIfEmptyThenGet(node::visibleProperty);
     }
 
+    public PropertyTimeline<Number> opacityProperty() {
+        return opacity.setIfEmptyThenGet(node::opacityProperty);
+    }
+
     public PropertyTimeline<Node> clipProperty() {
         return clip.setIfEmptyThenGet(node::clipProperty);
+    }
+
+    public PropertyTimeline<String> styleProperty() {
+        return style.setIfEmptyThenGet(node::styleProperty);
     }
 
     public PropertyTimeline<Number> rotateProperty() {
@@ -88,7 +100,9 @@ public abstract class ObjectNode {
 
     public void buildTimeline(TimeLine timeline) {
         visible.applyIfPresent(timeline);
+        opacity.applyIfPresent(timeline);
         clip.applyIfPresent(timeline);
+        style.applyIfPresent(timeline);
         rotate.applyIfPresent(timeline);
         translateX.applyIfPresent(timeline);
         translateY.applyIfPresent(timeline);
@@ -107,7 +121,10 @@ public abstract class ObjectNode {
     protected PropertyBindings propertyBindings(PropertyBindings bindings) {
         return bindings
                 .add("visible", BOOLEAN, this::visibleProperty)
+                .add("opacity", NUMBER, this::opacityProperty)
                 .add("clip", CLIP_NODE, this::clipProperty)
+                .add("css", STRING, this::styleProperty)
+                .add("style", STRING, this::styleProperty)
                 .add("rotate", NUMBER, this::rotateProperty)
                 .add("translateX", NUMBER, this::translateXProperty)
                 .add("translateY", NUMBER, this::translateYProperty)
