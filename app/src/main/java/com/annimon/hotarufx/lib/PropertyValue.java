@@ -7,6 +7,7 @@ import com.annimon.hotarufx.visual.Property;
 import com.annimon.hotarufx.visual.PropertyTimeline;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import lombok.Getter;
@@ -53,6 +54,13 @@ public class PropertyValue implements Value {
                     ((PropertyTimeline<String>)property.getProperty().get()).add(
                             KeyFrame.of(args[0].asInt()),
                             type.<String>getFromHFX().apply(args[1])
+                    );
+                    break;
+                case NODE:
+                case CLIP_NODE:
+                    ((PropertyTimeline<Node>)property.getProperty().get()).add(
+                            KeyFrame.of(args[0].asInt()),
+                            type.<Node>getFromHFX().apply(args[1])
                     );
                     break;
                 case PAINT:

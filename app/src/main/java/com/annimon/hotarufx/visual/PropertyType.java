@@ -1,12 +1,16 @@
 package com.annimon.hotarufx.visual;
 
 import com.annimon.hotarufx.lib.MapValue;
+import com.annimon.hotarufx.lib.NodeValue;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Value;
+import com.annimon.hotarufx.visual.objects.ObjectNode;
+import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import java.util.HashMap;
 import java.util.function.Function;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -20,6 +24,8 @@ public enum PropertyType {
 
     NUMBER(toNumber(), o -> NumberValue.of((Number) o)),
     STRING(Value::asString, o -> new StringValue(String.valueOf(o))),
+    NODE(toNode(), fromNode()),
+    CLIP_NODE(toClipNode(), fromNode()),
     PAINT(v -> Color.valueOf(v.asString()), o -> new StringValue(o.toString())),
     FONT(toFont(), fromFont());
 
@@ -44,6 +50,27 @@ public enum PropertyType {
             }
             return value.asNumber();
         };
+    }
+
+    private static Function<Value, Object> toNode() {
+        return v -> ((NodeValue)v).getNode().getFxNode();
+    }
+
+    private static Function<Value, Object> toClipNode() {
+        return v -> {
+            ObjectNode node = ((NodeValue) v).getNode();
+            node.setUsedAsClip(true);
+            return node.getFxNode();
+        };
+    }
+
+    private static Function<Object, Value> fromNode() {
+        return object -> new NodeValue(new ObjectNode((Node) object) {
+            @Override
+            public <R, T> R accept(NodeVisitor<R, T> visitor, T input) {
+                return null;
+            }
+        });
     }
 
     private static Function<Value, Object> toFont() {
