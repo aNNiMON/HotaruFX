@@ -22,7 +22,7 @@ public abstract class ObjectNode {
     private PropertyTimelineHolder<Number> scaleX, scaleY, scaleZ;
     private PropertyTimelineHolder<Number> layoutX, layoutY;
     @Getter @Setter
-    private boolean isUsedAsClip;
+    private boolean isRenderable;
 
     public ObjectNode(Node node) {
         this.node = node;
@@ -39,7 +39,7 @@ public abstract class ObjectNode {
         scaleZ = PropertyTimelineHolder.empty();
         layoutX = PropertyTimelineHolder.empty();
         layoutY = PropertyTimelineHolder.empty();
-        isUsedAsClip = false;
+        isRenderable = true;
     }
 
     public Node getFxNode() {

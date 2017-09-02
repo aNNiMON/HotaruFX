@@ -71,4 +71,8 @@ HEART = svgPath({
   stroke: "white"
 })
 
-render(B, A, C, CLIP, HEART)
+#render(B, A, C, CLIP, HEART)
+
+G1 = group(B, A)
+G1@rotate.add(10, 45).add(20, -45)
+render(G1)

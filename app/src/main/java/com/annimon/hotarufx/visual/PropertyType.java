@@ -61,7 +61,7 @@ public enum PropertyType {
     private static Function<Value, Object> toClipNode() {
         return v -> {
             ObjectNode node = ((NodeValue) v).getNode();
-            node.setUsedAsClip(true);
+            node.setRenderable(false);
             return node.getFxNode();
         };
     }
