@@ -87,7 +87,7 @@ POLYLINE = polyline(points, {
 })
 
 LINE = line({
-  visible: 0,
+  visible: false,
   startX: -600
   startY: 300
   endX: 600
@@ -95,7 +95,7 @@ LINE = line({
   stroke: "#777",
   strokeDashOffset: 45
 })
-LINE@visible.add(100, 1)
+LINE@visible.add(100, true)
 LINE@strokeWidth.add(100, 0).add(140, 10)
 
 arcRadius = 200

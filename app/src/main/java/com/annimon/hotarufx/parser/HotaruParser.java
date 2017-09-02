@@ -3,6 +3,7 @@ package com.annimon.hotarufx.parser;
 import com.annimon.hotarufx.exceptions.ParseException;
 import com.annimon.hotarufx.lexer.HotaruTokenId;
 import com.annimon.hotarufx.lexer.Token;
+import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.parser.ast.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -219,6 +220,12 @@ public class HotaruParser extends Parser {
 
     private Node value() {
         val current = get(0);
+        if (match(HotaruTokenId.TRUE)) {
+            return new ValueNode(NumberValue.ONE);
+        }
+        if (match(HotaruTokenId.FALSE)) {
+            return new ValueNode(NumberValue.ZERO);
+        }
         if (match(HotaruTokenId.NUMBER)) {
             return new ValueNode(createNumber(current.getText(), 10));
         }

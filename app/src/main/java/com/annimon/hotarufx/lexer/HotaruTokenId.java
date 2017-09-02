@@ -10,6 +10,9 @@ public enum HotaruTokenId {
     WORD(Category.IDENTIFIER),
     TEXT(Category.STRING),
 
+    TRUE(Category.KEYWORD),
+    FALSE(Category.KEYWORD),
+
     EQ(Category.OPERATOR),
     PLUS(Category.OPERATOR),
     MINUS(Category.OPERATOR),
@@ -31,7 +34,7 @@ public enum HotaruTokenId {
     EOF(Category.WHITESPACE);
 
     private enum Category {
-        NUMBER, IDENTIFIER, STRING, OPERATOR, COMMENT, WHITESPACE
+        NUMBER, IDENTIFIER, STRING, KEYWORD, OPERATOR, COMMENT, WHITESPACE
     }
 
     private final Category category;

@@ -34,6 +34,13 @@ public class HotaruLexer extends Lexer {
         OPERATORS.put("@", HotaruTokenId.AT);
     }
 
+    private static final Map<String, HotaruTokenId> KEYWORDS;
+    static {
+        KEYWORDS = new HashMap<>();
+        KEYWORDS.put("true", HotaruTokenId.TRUE);
+        KEYWORDS.put("false", HotaruTokenId.FALSE);
+    }
+
     public HotaruLexer(String input) {
         super(input);
     }
@@ -91,7 +98,7 @@ public class HotaruLexer extends Lexer {
         }
 
         val word = getBuffer().toString();
-        return addToken(HotaruTokenId.WORD, word);
+        return addToken(KEYWORDS.getOrDefault(word, HotaruTokenId.WORD));
     }
 
     private Token tokenizeText(char openChar) {

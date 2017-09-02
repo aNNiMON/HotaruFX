@@ -2,6 +2,7 @@ package com.annimon.hotarufx.parser;
 
 import com.annimon.hotarufx.exceptions.ParseException;
 import com.annimon.hotarufx.lexer.HotaruLexer;
+import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.parser.ast.AssignNode;
 import com.annimon.hotarufx.parser.ast.BlockNode;
 import com.annimon.hotarufx.parser.ast.FunctionNode;
@@ -9,6 +10,8 @@ import com.annimon.hotarufx.parser.ast.MapNode;
 import com.annimon.hotarufx.parser.ast.Node;
 import com.annimon.hotarufx.parser.ast.ValueNode;
 import com.annimon.hotarufx.parser.ast.VariableNode;
+import java.util.Arrays;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
@@ -57,6 +60,33 @@ class HotaruParserTest {
         assertThat(mapNode.elements, allOf(
                 hasKey("x"), hasKey("text")
         ));
+    }
+
+    @Test
+    void testParseTrueFalse() {
+        String input = "A = true\nB = false";
+        Node node = p(input);
+        assertThat(node, instanceOf(BlockNode.class));
+
+        val block = (BlockNode) node;
+        assertThat(block.statements.size(), is(2));
+
+        val expectedValues = Arrays.asList(
+                NumberValue.fromBoolean(true),
+                NumberValue.fromBoolean(false)
+        );
+        val it = expectedValues.iterator();
+
+        for (Node statement : block.statements) {
+            assertThat(statement, instanceOf(AssignNode.class));
+
+            val assignNode = (AssignNode) statement;
+            assertThat(assignNode.target, instanceOf(VariableNode.class));
+            assertThat(assignNode.value, instanceOf(ValueNode.class));
+
+            val value = ((ValueNode) assignNode.value).value;
+            assertThat(value, is(it.next()));
+        }
     }
 
     @Test
