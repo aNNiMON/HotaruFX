@@ -3,6 +3,7 @@ package com.annimon.hotarufx.parser.visitors;
 import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lexer.HotaruLexer;
+import com.annimon.hotarufx.lib.ArrayValue;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.MapValue;
 import com.annimon.hotarufx.lib.NumberValue;
@@ -10,10 +11,12 @@ import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.HotaruParser;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -48,6 +51,19 @@ class InterpreterVisitorTest {
     @Test
     void testUnaryOps() {
         assertThat(eval("A = -1").asInt(), is(-1));
+    }
+
+    @Test
+    void testArray() {
+        Value value = eval("A = [0, 1, 'hello']");
+        assertThat(value, instanceOf(ArrayValue.class));
+
+        ArrayValue arrayValue = (ArrayValue) value;
+        assertThat(arrayValue, contains(
+                NumberValue.of(0),
+                NumberValue.of(1),
+                new StringValue("hello")
+        ));
     }
 
     @Test

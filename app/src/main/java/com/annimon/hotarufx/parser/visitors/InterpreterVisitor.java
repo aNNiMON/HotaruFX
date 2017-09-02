@@ -20,6 +20,14 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     }
 
     @Override
+    public Value visit(ArrayNode node, Context context) {
+        val elements = node.elements.stream()
+                .map(el -> el.accept(this, context))
+                .toArray(Value[]::new);
+        return new ArrayValue(elements);
+    }
+
+    @Override
     public Value visit(AssignNode node, Context context) {
         val value = node.value.accept(this, context);
         return node.target.set(this, value, context);

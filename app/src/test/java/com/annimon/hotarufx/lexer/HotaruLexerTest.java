@@ -76,11 +76,13 @@ class HotaruLexerTest {
 
     @Test
     void testTokenizeOperators() {
-        assertThat(t("(){}=+-,.:"), contains(
+        assertThat(t("(){}[]=+-,.:"), contains(
                 tokenId(HotaruTokenId.LPAREN),
                 tokenId(HotaruTokenId.RPAREN),
                 tokenId(HotaruTokenId.LBRACE),
                 tokenId(HotaruTokenId.RBRACE),
+                tokenId(HotaruTokenId.LBRACKET),
+                tokenId(HotaruTokenId.RBRACKET),
                 tokenId(HotaruTokenId.EQ),
                 tokenId(HotaruTokenId.PLUS),
                 tokenId(HotaruTokenId.MINUS),

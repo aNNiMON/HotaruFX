@@ -6,8 +6,9 @@ public class Types {
             OBJECT = 0,
             NUMBER = 1,
             STRING = 2,
-            MAP = 3,
-            NODE = 4,
-            PROPERTY = 5,
-            FUNCTION = 6;
+            ARRAY = 3,
+            MAP = 4,
+            NODE = 5,
+            PROPERTY = 6,
+            FUNCTION = 7;
 }

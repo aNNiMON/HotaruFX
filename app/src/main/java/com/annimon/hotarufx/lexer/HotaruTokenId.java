@@ -17,6 +17,8 @@ public enum HotaruTokenId {
     RPAREN(Category.OPERATOR),
     LBRACE(Category.OPERATOR),
     RBRACE(Category.OPERATOR),
+    LBRACKET(Category.OPERATOR),
+    RBRACKET(Category.OPERATOR),
     COLON(Category.OPERATOR),
     COMMA(Category.OPERATOR),
     DOT(Category.OPERATOR),

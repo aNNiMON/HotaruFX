@@ -88,6 +88,17 @@ public class HotaruParser extends Parser {
         return function;
     }
 
+    private Node array() {
+        // [value1, value2, ...]
+        consume(HotaruTokenId.LBRACKET);
+        val elements = new ArrayList<Node>();
+        while (!match(HotaruTokenId.RBRACKET)) {
+            elements.add(expression());
+            match(HotaruTokenId.COMMA);
+        }
+        return new ArrayNode(elements);
+    }
+
     private Node map() {
         // {key1 : value1, key2 : value2, ...}
         consume(HotaruTokenId.LBRACE);
@@ -175,6 +186,9 @@ public class HotaruParser extends Parser {
 
         if (lookMatch(0, HotaruTokenId.LBRACE)) {
             return map();
+        }
+        if (lookMatch(0, HotaruTokenId.LBRACKET)) {
+            return array();
         }
         return value();
     }

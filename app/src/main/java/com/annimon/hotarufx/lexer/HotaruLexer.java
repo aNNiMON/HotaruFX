@@ -14,15 +14,17 @@ public class HotaruLexer extends Lexer {
     }
 
     private static final String TEXT_CHARS = "'\"";
-    private static final String OPERATOR_CHARS = "(){}:=+-.,@";
+    private static final String OPERATOR_CHARS = "(){}[]:=+-.,@";
 
     private static final Map<String, HotaruTokenId> OPERATORS;
     static {
-        OPERATORS = new HashMap<>();
+        OPERATORS = new HashMap<>(OPERATOR_CHARS.length());
         OPERATORS.put("(", HotaruTokenId.LPAREN);
         OPERATORS.put(")", HotaruTokenId.RPAREN);
         OPERATORS.put("{", HotaruTokenId.LBRACE);
         OPERATORS.put("}", HotaruTokenId.RBRACE);
+        OPERATORS.put("[", HotaruTokenId.LBRACKET);
+        OPERATORS.put("]", HotaruTokenId.RBRACKET);
         OPERATORS.put(":", HotaruTokenId.COLON);
         OPERATORS.put("=", HotaruTokenId.EQ);
         OPERATORS.put("+", HotaruTokenId.PLUS);
