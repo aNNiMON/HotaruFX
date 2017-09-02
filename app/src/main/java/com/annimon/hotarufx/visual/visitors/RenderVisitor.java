@@ -4,6 +4,7 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.VirtualScene;
 import com.annimon.hotarufx.visual.objects.CircleNode;
 import com.annimon.hotarufx.visual.objects.GroupNode;
+import com.annimon.hotarufx.visual.objects.LineNode;
 import com.annimon.hotarufx.visual.objects.ObjectNode;
 import com.annimon.hotarufx.visual.objects.PolygonNode;
 import com.annimon.hotarufx.visual.objects.PolylineNode;
@@ -30,6 +31,11 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
             node.accept(this, scene);
         }
         return null;
+    }
+
+    @Override
+    public Void visit(LineNode node, VirtualScene scene) {
+        return render(node, scene);
     }
 
     @Override

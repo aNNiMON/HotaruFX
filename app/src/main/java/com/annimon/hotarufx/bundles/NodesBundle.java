@@ -8,6 +8,7 @@ import com.annimon.hotarufx.lib.Validator;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.CircleNode;
 import com.annimon.hotarufx.visual.objects.GroupNode;
+import com.annimon.hotarufx.visual.objects.LineNode;
 import com.annimon.hotarufx.visual.objects.ObjectNode;
 import com.annimon.hotarufx.visual.objects.PolygonNode;
 import com.annimon.hotarufx.visual.objects.PolylineNode;
@@ -26,6 +27,7 @@ public class NodesBundle implements Bundle {
     public void load(Context context) {
         context.functions().put("circle", node(CircleNode::new));
         context.functions().put("group", group());
+        context.functions().put("line", node(LineNode::new));
         context.functions().put("polygon", poly(PolygonNode::new));
         context.functions().put("polyline", poly(PolylineNode::new));
         context.functions().put("rectangle", node(RectangleNode::new));

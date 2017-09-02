@@ -86,5 +86,17 @@ POLYLINE = polyline(points, {
   stroke: "purple"
 })
 
-render(B, A, C, CLIP, HEART, POLYGON, POLYLINE)
+LINE = line({
+  visible: 0,
+  startX: -600
+  startY: 300
+  endX: 600
+  endY: 300,
+  stroke: "#777",
+  strokeDashOffset: 45
+})
+LINE@visible.add(100, 1)
+LINE@strokeWidth.add(100, 0).add(140, 10)
+
+render(B, A, C, CLIP, HEART, POLYGON, POLYLINE, LINE)
 
