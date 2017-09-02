@@ -5,6 +5,7 @@ import com.annimon.hotarufx.visual.VirtualScene;
 import com.annimon.hotarufx.visual.objects.CircleNode;
 import com.annimon.hotarufx.visual.objects.ObjectNode;
 import com.annimon.hotarufx.visual.objects.RectangleNode;
+import com.annimon.hotarufx.visual.objects.SVGPathNode;
 import com.annimon.hotarufx.visual.objects.TextNode;
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,11 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
 
     @Override
     public Void visit(RectangleNode node, VirtualScene scene) {
+        return render(node, scene);
+    }
+
+    @Override
+    public Void visit(SVGPathNode node, VirtualScene scene) {
         return render(node, scene);
     }
 
