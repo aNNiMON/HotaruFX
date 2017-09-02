@@ -161,7 +161,18 @@ public class HotaruParser extends Parser {
             match(HotaruTokenId.RPAREN);
             return result;
         }
-        return variable();
+        return postfix(variable());
+    }
+
+    private Node postfix(Node node) {
+        // units: 1 sec || 10 ms
+        if (match(HotaruTokenId.MS)) {
+            return new UnitNode(node, UnitNode.Unit.MILLISECONDS);
+        }
+        if (match(HotaruTokenId.SEC)) {
+            return new UnitNode(node, UnitNode.Unit.SECONDS);
+        }
+        return  node;
     }
 
     private Node variable() {

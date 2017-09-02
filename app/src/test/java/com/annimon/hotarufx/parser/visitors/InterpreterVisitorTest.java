@@ -1,5 +1,7 @@
 package com.annimon.hotarufx.parser.visitors;
 
+import com.annimon.hotarufx.bundles.BundleLoader;
+import com.annimon.hotarufx.bundles.CompositionBundle;
 import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lexer.HotaruLexer;
@@ -11,15 +13,11 @@ import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.HotaruParser;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class InterpreterVisitorTest {
@@ -118,6 +116,35 @@ class InterpreterVisitorTest {
 
         value = eval("adder(ten(), ten())", context);
         assertThat(value, is(NumberValue.of(20)));
+    }
+
+    @Test
+    void testUnits() {
+        val context = new Context();
+        BundleLoader.loadSingle(context, CompositionBundle.class);
+        context.functions().put("rate", context.functions().get("composition"));
+        Value value;
+
+        value = eval("rate(30) t = 1 sec", context);
+        assertThat(value.asNumber(), closeTo(30, 0.0001));
+
+        value = eval("rate(30) t = 5 sec", context);
+        assertThat(value.asNumber(), closeTo(150, 0.0001));
+
+        value = eval("rate(30) t = 0.5 sec", context);
+        assertThat(value.asNumber(), closeTo(15, 0.0001));
+
+        value = eval("rate(30) t = 1000 ms", context);
+        assertThat(value.asNumber(), closeTo(30, 0.0001));
+
+        value = eval("rate(30) t = 333 ms", context);
+        assertThat(value.asNumber(), closeTo(10, 0.01));
+
+        value = eval("rate(25) t = 1 sec", context);
+        assertThat(value.asNumber(), closeTo(25, 0.0001));
+
+        value = eval("rate(25) t = 1000 ms", context);
+        assertThat(value.asNumber(), closeTo(25, 0.0001));
     }
 
     @Test

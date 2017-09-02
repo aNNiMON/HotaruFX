@@ -12,6 +12,8 @@ public enum HotaruTokenId {
 
     TRUE(Category.KEYWORD),
     FALSE(Category.KEYWORD),
+    MS(Category.KEYWORD),
+    SEC(Category.KEYWORD),
 
     EQ(Category.OPERATOR),
     PLUS(Category.OPERATOR),

@@ -111,6 +111,24 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     }
 
     @Override
+    public Value visit(UnitNode node, Context context) {
+        val value = node.value.accept(this, context);
+        val frameRate = context.composition().getTimeline().getFrameRate();
+        final double frame;
+        switch (node.operator) {
+            case SECONDS:
+                frame = value.asNumber() * frameRate;
+                break;
+
+            case MILLISECONDS:
+            default:
+                frame = (value.asNumber() * frameRate) / 1000d;
+                break;
+        }
+        return NumberValue.of(frame);
+    }
+
+    @Override
     public Value visit(ValueNode node, Context context) {
         return node.value;
     }

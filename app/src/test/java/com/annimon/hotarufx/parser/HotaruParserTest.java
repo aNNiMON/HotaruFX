@@ -8,6 +8,7 @@ import com.annimon.hotarufx.parser.ast.BlockNode;
 import com.annimon.hotarufx.parser.ast.FunctionNode;
 import com.annimon.hotarufx.parser.ast.MapNode;
 import com.annimon.hotarufx.parser.ast.Node;
+import com.annimon.hotarufx.parser.ast.UnitNode;
 import com.annimon.hotarufx.parser.ast.ValueNode;
 import com.annimon.hotarufx.parser.ast.VariableNode;
 import java.util.Arrays;
@@ -85,6 +86,36 @@ class HotaruParserTest {
             assertThat(assignNode.value, instanceOf(ValueNode.class));
 
             val value = ((ValueNode) assignNode.value).value;
+            assertThat(value, is(it.next()));
+        }
+    }
+
+    @Test
+    void testParseUnits() {
+        String input = "A = 500 ms\nB = 0.5 sec";
+        Node node = p(input);
+        assertThat(node, instanceOf(BlockNode.class));
+
+        val block = (BlockNode) node;
+        assertThat(block.statements.size(), is(2));
+
+        val expectedValues = Arrays.asList(
+                NumberValue.of(500),
+                NumberValue.of(0.5)
+        );
+        val it = expectedValues.iterator();
+
+        for (Node statement : block.statements) {
+            assertThat(statement, instanceOf(AssignNode.class));
+
+            val assignNode = (AssignNode) statement;
+            assertThat(assignNode.target, instanceOf(VariableNode.class));
+            assertThat(assignNode.value, instanceOf(UnitNode.class));
+
+            val unitNode = (UnitNode) assignNode.value;
+            assertThat(unitNode.value, instanceOf(ValueNode.class));
+
+            val value = ((ValueNode) unitNode.value).value;
             assertThat(value, is(it.next()));
         }
     }

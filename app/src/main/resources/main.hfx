@@ -9,9 +9,9 @@ A = circle({
 A@radius
   .add(10, 70)
   .add(30, 20)
-A@fill
-  .add(15, "red")
-  .add(30, "#FF000000")
+A@opacity
+  .add(0.5 sec, 1)
+  .add(1 sec, 0)
 
 B = rectangle({
   x: -50,

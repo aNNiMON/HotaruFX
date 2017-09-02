@@ -13,6 +13,7 @@ public interface ResultVisitor<R, T> {
     R visit(MapNode node, T t);
     R visit(PropertyNode node, T t);
     R visit(UnaryNode node, T t);
+    R visit(UnitNode node, T t);
     R visit(ValueNode node, T t);
     R visit(VariableNode node, T t);
 

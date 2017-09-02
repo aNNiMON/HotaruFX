@@ -39,6 +39,8 @@ public class HotaruLexer extends Lexer {
         KEYWORDS = new HashMap<>();
         KEYWORDS.put("true", HotaruTokenId.TRUE);
         KEYWORDS.put("false", HotaruTokenId.FALSE);
+        KEYWORDS.put("ms", HotaruTokenId.MS);
+        KEYWORDS.put("sec", HotaruTokenId.SEC);
     }
 
     public HotaruLexer(String input) {
