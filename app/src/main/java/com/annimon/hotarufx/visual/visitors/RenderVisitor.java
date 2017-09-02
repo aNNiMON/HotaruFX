@@ -2,15 +2,7 @@ package com.annimon.hotarufx.visual.visitors;
 
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.VirtualScene;
-import com.annimon.hotarufx.visual.objects.CircleNode;
-import com.annimon.hotarufx.visual.objects.GroupNode;
-import com.annimon.hotarufx.visual.objects.LineNode;
-import com.annimon.hotarufx.visual.objects.ObjectNode;
-import com.annimon.hotarufx.visual.objects.PolygonNode;
-import com.annimon.hotarufx.visual.objects.PolylineNode;
-import com.annimon.hotarufx.visual.objects.RectangleNode;
-import com.annimon.hotarufx.visual.objects.SVGPathNode;
-import com.annimon.hotarufx.visual.objects.TextNode;
+import com.annimon.hotarufx.visual.objects.*;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,6 +12,11 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
 
     @Override
     public Void visit(CircleNode node, VirtualScene scene) {
+        return render(node, scene);
+    }
+
+    @Override
+    public Void visit(EllipseNode node, VirtualScene scene) {
         return render(node, scene);
     }
 
