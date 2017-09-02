@@ -1,17 +1,10 @@
 package com.annimon.hotarufx.visual.visitors;
 
-import com.annimon.hotarufx.visual.objects.CircleNode;
-import com.annimon.hotarufx.visual.objects.EllipseNode;
-import com.annimon.hotarufx.visual.objects.GroupNode;
-import com.annimon.hotarufx.visual.objects.LineNode;
-import com.annimon.hotarufx.visual.objects.PolygonNode;
-import com.annimon.hotarufx.visual.objects.PolylineNode;
-import com.annimon.hotarufx.visual.objects.RectangleNode;
-import com.annimon.hotarufx.visual.objects.SVGPathNode;
-import com.annimon.hotarufx.visual.objects.TextNode;
+import com.annimon.hotarufx.visual.objects.*;
 
 public interface NodeVisitor<R, T> {
 
+    R visit(ArcNode node, T input);
     R visit(CircleNode node, T input);
     R visit(EllipseNode node, T input);
     R visit(GroupNode node, T input);

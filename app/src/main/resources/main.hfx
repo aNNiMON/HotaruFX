@@ -98,5 +98,14 @@ LINE = line({
 LINE@visible.add(100, 1)
 LINE@strokeWidth.add(100, 0).add(140, 10)
 
-render(B, A, C, CLIP, HEART, POLYGON, POLYLINE, LINE)
+arcRadius = 200
+ARC = arc({
+  cy: 295
+  radiusX: arcRadius,
+  radiusY: arcRadius,
+  fill: "yellow"
+})
+ARC@length.add(140, 0).add(160, 180)
+
+render(ARC, B, A, C, CLIP, HEART, POLYGON, POLYLINE, LINE)
 

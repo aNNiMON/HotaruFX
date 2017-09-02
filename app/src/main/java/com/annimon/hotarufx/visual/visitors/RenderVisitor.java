@@ -11,6 +11,11 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
     private final TimeLine timeline;
 
     @Override
+    public Void visit(ArcNode node, VirtualScene scene) {
+        return render(node, scene);
+    }
+
+    @Override
     public Void visit(CircleNode node, VirtualScene scene) {
         return render(node, scene);
     }

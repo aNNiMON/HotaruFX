@@ -17,6 +17,7 @@ public class NodesBundle implements Bundle {
 
     @Override
     public void load(Context context) {
+        context.functions().put("arc", node(ArcNode::new));
         context.functions().put("circle", node(CircleNode::new));
         context.functions().put("ellipse", node(EllipseNode::new));
         context.functions().put("group", group());
