@@ -3,6 +3,8 @@ package com.annimon.hotarufx.lib;
 import com.annimon.hotarufx.exceptions.TypeException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import lombok.Getter;
 
 public class ArrayValue implements Value, Iterable<Value> {
@@ -69,6 +71,10 @@ public class ArrayValue implements Value, Iterable<Value> {
     @Override
     public Iterator<Value> iterator() {
         return Arrays.asList(elements).iterator();
+    }
+
+    public Stream<Value> stream() {
+        return Arrays.stream(elements);
     }
 
     @Override

@@ -71,8 +71,20 @@ HEART = svgPath({
   stroke: "white"
 })
 
-#render(B, A, C, CLIP, HEART)
+points = [
+  0, -50,
+  -25, 0,
+  25, 0,
+  0, 50,
+]
+POLYGON = polygon(points, {
+  translateX: -300,
+  fill: "purple"
+})
+POLYLINE = polyline(points, {
+  translateX: 300,
+  stroke: "purple"
+})
 
-G1 = group(B, A)
-G1@rotate.add(10, 45).add(20, -45)
-render(G1)
+render(B, A, C, CLIP, HEART, POLYGON, POLYLINE)
+

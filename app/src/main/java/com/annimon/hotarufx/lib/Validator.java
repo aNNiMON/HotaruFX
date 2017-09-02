@@ -36,6 +36,15 @@ public class Validator {
         return this;
     }
 
+    public ArrayValue requireArrayAt(int index) {
+        checkAtLeast(index + 1);
+        val value = args[index];
+        if (value.type() != Types.ARRAY) {
+            throw new TypeException(String.format("Array required at %d argument", index));
+        }
+        return (ArrayValue) value;
+    }
+
     public MapValue requireMapAt(int index) {
         checkAtLeast(index + 1);
         val value = args[index];

@@ -5,6 +5,8 @@ import com.annimon.hotarufx.visual.VirtualScene;
 import com.annimon.hotarufx.visual.objects.CircleNode;
 import com.annimon.hotarufx.visual.objects.GroupNode;
 import com.annimon.hotarufx.visual.objects.ObjectNode;
+import com.annimon.hotarufx.visual.objects.PolygonNode;
+import com.annimon.hotarufx.visual.objects.PolylineNode;
 import com.annimon.hotarufx.visual.objects.RectangleNode;
 import com.annimon.hotarufx.visual.objects.SVGPathNode;
 import com.annimon.hotarufx.visual.objects.TextNode;
@@ -28,6 +30,16 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
             node.accept(this, scene);
         }
         return null;
+    }
+
+    @Override
+    public Void visit(PolygonNode node, VirtualScene scene) {
+        return render(node, scene);
+    }
+
+    @Override
+    public Void visit(PolylineNode node, VirtualScene scene) {
+        return render(node, scene);
     }
 
     @Override
