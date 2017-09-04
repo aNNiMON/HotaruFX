@@ -34,7 +34,7 @@
         </VBox>
     </top>
     <bottom>
-        <TitledPane animated="false" expanded="false" text="Log" BorderPane.alignment="CENTER">
+        <TitledPane fx:id="logPane" animated="false" expanded="false" text="Log" BorderPane.alignment="CENTER">
             <TextArea editable="false" fx:id="log" />
         </TitledPane>
     </bottom>

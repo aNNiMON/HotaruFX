@@ -32,6 +32,8 @@ public class EditorController implements Initializable {
 
     @FXML
     public TextArea log;
+    @FXML
+    public TitledPane logPane;
 
     @FXML
     public void handleMenuExit(ActionEvent event) {
@@ -62,6 +64,7 @@ public class EditorController implements Initializable {
                 sb.append(parseError);
             }
             log.setText(sb.toString());
+            logPane.setExpanded(true);
             return;
         }
         program.accept(new InterpreterVisitor(), context);
