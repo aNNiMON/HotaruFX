@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -29,25 +30,25 @@ import org.fxmisc.richtext.LineNumberFactory;
 public class EditorController implements Initializable {
 
     @FXML
-    public CodeArea editor;
+    private CodeArea editor;
 
     @FXML
-    public TextArea log;
+    private TextArea log;
     @FXML
-    public TitledPane logPane;
+    private TitledPane logPane;
 
     @FXML
-    public void handleMenuExit(ActionEvent event) {
+    private void handleMenuExit(ActionEvent event) {
         // TODO: confirmation
         Platform.exit();
     }
 
     @FXML
-    public void handleMenuAbout(ActionEvent event) {
+    private void handleMenuAbout(ActionEvent event) {
     }
 
     @FXML
-    public void handleMenuPlay(ActionEvent event) {
+    private void handleMenuPlay(ActionEvent event) {
         log.setText("");
         val input = editor.getText();
 
