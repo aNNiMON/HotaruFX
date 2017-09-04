@@ -9,13 +9,14 @@ import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.parser.HotaruParser;
 import com.annimon.hotarufx.parser.ParseError;
 import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
+import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +37,8 @@ public class EditorController implements Initializable {
     private TextArea log;
     @FXML
     private TitledPane logPane;
+
+    private SyntaxHighlighter syntaxHighlighter;
 
     @FXML
     private void handleMenuExit(ActionEvent event) {
@@ -81,7 +84,13 @@ public class EditorController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         editor.setParagraphGraphicFactory(LineNumberFactory.get(editor));
+        syntaxHighlighter = new SyntaxHighlighter(editor, Executors.newSingleThreadExecutor());
+        syntaxHighlighter.init();
         editor.replaceText(0, 0, readProgram("/main.hfx"));
+    }
+
+    public void stop() {
+        syntaxHighlighter.release();
     }
 
     private static String readProgram(String path) {
