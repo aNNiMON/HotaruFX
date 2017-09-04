@@ -19,16 +19,17 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 import lombok.val;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 
 public class EditorController implements Initializable {
 
     @FXML
-    public TextArea editor;
+    public CodeArea editor;
 
     @FXML
     public TextArea log;
@@ -78,7 +79,8 @@ public class EditorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        editor.setText(readProgram("/main.hfx"));
+        editor.setParagraphGraphicFactory(LineNumberFactory.get(editor));
+        editor.replaceText(0, 0, readProgram("/main.hfx"));
     }
 
     private static String readProgram(String path) {
