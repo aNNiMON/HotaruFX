@@ -18,6 +18,11 @@ public class Main extends Application {
         try {
             val loader = new FXMLLoader(getClass().getResource("/fxml/Editor.fxml"));
             val scene = new Scene(loader.load());
+            scene.getStylesheets().addAll(
+                    getClass().getResource("/styles/theme-dark.css").toExternalForm(),
+                    getClass().getResource("/styles/codearea.css").toExternalForm(),
+                    getClass().getResource("/styles/hotarufx-keywords.css").toExternalForm()
+                    );
             controller = loader.getController();
             primaryStage.setScene(scene);
         } catch (IOException e) {

@@ -1,0 +1,15 @@
+.keyword {
+    -fx-fill: #A648FF;
+}
+.comment {
+	-fx-fill: #969696;
+}
+.string {
+	-fx-fill: #F89722;
+}
+.number {
+	-fx-fill: #8DB8C7;
+}
+.node-function {
+	-fx-fill: #1899C7;
+}
