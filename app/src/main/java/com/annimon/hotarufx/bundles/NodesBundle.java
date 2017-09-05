@@ -1,6 +1,5 @@
 package com.annimon.hotarufx.bundles;
 
-import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.NodeValue;
 import com.annimon.hotarufx.lib.Types;
@@ -8,28 +7,38 @@ import com.annimon.hotarufx.lib.Validator;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.val;
+import static com.annimon.hotarufx.bundles.FunctionInfo.of;
+import static com.annimon.hotarufx.bundles.FunctionType.NODE;
 
 public class NodesBundle implements Bundle {
 
-    @Override
-    public void load(Context context) {
-        context.functions().put("arc", node(ArcNode::new));
-        context.functions().put("circle", node(CircleNode::new));
-        context.functions().put("ellipse", node(EllipseNode::new));
-        context.functions().put("group", group());
-        context.functions().put("line", node(LineNode::new));
-        context.functions().put("polygon", poly(PolygonNode::new));
-        context.functions().put("polyline", poly(PolylineNode::new));
-        context.functions().put("rectangle", node(RectangleNode::new));
-        context.functions().put("svgPath", node(SVGPathNode::new));
-        context.functions().put("text", node(TextNode::new));
+    private static final Map<String, FunctionInfo> FUNCTIONS;
+    static {
+        FUNCTIONS = new HashMap<>();
+        FUNCTIONS.put("arc", of(NODE, node(ArcNode::new)));
+        FUNCTIONS.put("circle", of(NODE, node(CircleNode::new)));
+        FUNCTIONS.put("ellipse", of(NODE, node(EllipseNode::new)));
+        FUNCTIONS.put("group", of(NODE, group()));
+        FUNCTIONS.put("line", of(NODE, node(LineNode::new)));
+        FUNCTIONS.put("polygon", of(NODE, poly(PolygonNode::new)));
+        FUNCTIONS.put("polyline", of(NODE, poly(PolylineNode::new)));
+        FUNCTIONS.put("rectangle", of(NODE, node(RectangleNode::new)));
+        FUNCTIONS.put("svgPath", of(NODE, node(SVGPathNode::new)));
+        FUNCTIONS.put("text", of(NODE, node(TextNode::new)));
     }
 
-    private Function node(Supplier<? extends ObjectNode> supplier) {
+    @Override
+    public Map<String, FunctionInfo> functionsInfo() {
+        return FUNCTIONS;
+    }
+
+    private static Function node(Supplier<? extends ObjectNode> supplier) {
         return args -> {
             val map = Validator.with(args).requireMapAt(0);
             val node = new NodeValue(supplier.get());
@@ -38,7 +47,7 @@ public class NodesBundle implements Bundle {
         };
     }
 
-    private Function poly(java.util.function.Function<List<Double>, ObjectNode> ctor) {
+    private static Function poly(java.util.function.Function<List<Double>, ObjectNode> ctor) {
         return args -> {
             val validator = Validator.with(args);
             val map = validator.requireMapAt(1);
@@ -51,7 +60,7 @@ public class NodesBundle implements Bundle {
         };
     }
 
-    private Function group() {
+    private static Function group() {
         return args -> {
             val nodes = Arrays.stream(args)
                     .filter(v -> v.type() == Types.NODE)

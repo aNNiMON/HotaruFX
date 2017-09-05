@@ -1,19 +1,35 @@
 package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.lib.Context;
+import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.NodeValue;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.visual.Composition;
 import com.annimon.hotarufx.visual.visitors.RenderVisitor;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.val;
+import static com.annimon.hotarufx.bundles.FunctionInfo.of;
+import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
 public class CompositionBundle implements Bundle {
 
+    private static final Map<String, FunctionInfo> FUNCTIONS;
+    static {
+        FUNCTIONS = new HashMap<>();
+        FUNCTIONS.put("composition", of(COMMON, CompositionBundle::composition));
+        FUNCTIONS.put("render", of(COMMON, CompositionBundle::render));
+    }
+
     @Override
-    public void load(Context context) {
-        context.functions().put("composition", args -> {
+    public Map<String, FunctionInfo> functionsInfo() {
+        return FUNCTIONS;
+    }
+
+    private static Function composition(Context context) {
+        return args -> {
             final int width, height;
             final double frameRate;
             switch (args.length) {
@@ -47,9 +63,11 @@ public class CompositionBundle implements Bundle {
             context.variables().put("HalfWidth", NumberValue.of(scene.getVirtualWidth() / 2));
             context.variables().put("HalfHeight", NumberValue.of(scene.getVirtualHeight() / 2));
             return NumberValue.ZERO;
-        });
+        };
+    }
 
-        context.functions().put("render", args -> {
+    private static Function render(Context context) {
+        return args -> {
             val renderVisitor = new RenderVisitor(context.composition().getTimeline());
             val scene = context.composition().getScene();
             Arrays.stream(args)
@@ -57,6 +75,6 @@ public class CompositionBundle implements Bundle {
                     .map(v -> ((NodeValue) v).getNode())
                     .forEach(node -> node.accept(renderVisitor, scene));
             return NumberValue.ZERO;
-        });
+        };
     }
 }
