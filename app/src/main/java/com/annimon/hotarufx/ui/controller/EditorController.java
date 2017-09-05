@@ -7,7 +7,6 @@ import com.annimon.hotarufx.bundles.NodesBundle;
 import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.parser.HotaruParser;
-import com.annimon.hotarufx.parser.ParseError;
 import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import java.io.ByteArrayOutputStream;
@@ -64,11 +63,7 @@ public class EditorController implements Initializable {
         val parser = new HotaruParser(HotaruLexer.tokenize(input));
         val program = parser.parse();
         if (parser.getParseErrors().hasErrors()) {
-            val sb = new StringBuilder();
-            for (ParseError parseError : parser.getParseErrors()) {
-                sb.append(parseError);
-            }
-            log.setText(sb.toString());
+            log.setText(parser.getParseErrors().toString());
             logPane.setExpanded(true);
             return;
         }

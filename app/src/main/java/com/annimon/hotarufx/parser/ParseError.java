@@ -22,6 +22,6 @@ public class ParseError {
 
     @Override
     public String toString() {
-        return "ParseError " + exception.getMessage() + " at " + pos.toString();
+        return "ParseError " + exception.getMessage();
     }
 }
