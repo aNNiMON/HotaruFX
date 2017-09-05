@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import org.fxmisc.richtext.CodeArea?>
+<?import com.annimon.hotarufx.ui.ColorPickerBox?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="800.0" prefHeight="600.0"
             minWidth="-Infinity" minHeight="-Infinity"
@@ -43,11 +44,11 @@
         <CodeArea fx:id="editor" BorderPane.alignment="CENTER"/>
     </center>
     <right>
-        <Accordion BorderPane.alignment="CENTER">
-            <panes>
-                <TitledPane animated="false" text="Color picker"/>
-                <TitledPane animated="false" minWidth="150.0" text="Library"/>
-            </panes>
-        </Accordion>
+        <VBox BorderPane.alignment="CENTER">
+            <TitledPane animated="false" text="Color picker">
+                <ColorPickerBox />
+            </TitledPane>
+            <TitledPane animated="false" minWidth="150.0" text="Library"/>
+        </VBox>
     </right>
 </BorderPane>

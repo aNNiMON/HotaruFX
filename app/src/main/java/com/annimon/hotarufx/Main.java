@@ -21,7 +21,8 @@ public class Main extends Application {
             scene.getStylesheets().addAll(
                     getClass().getResource("/styles/theme-dark.css").toExternalForm(),
                     getClass().getResource("/styles/codearea.css").toExternalForm(),
-                    getClass().getResource("/styles/hotarufx-keywords.css").toExternalForm()
+                    getClass().getResource("/styles/hotarufx-keywords.css").toExternalForm(),
+                    getClass().getResource("/styles/color-picker-box.css").toExternalForm()
                     );
             controller = loader.getController();
             primaryStage.setScene(scene);

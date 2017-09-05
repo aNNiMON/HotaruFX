@@ -1,0 +1,60 @@
+.color-picker-box {
+    -fx-padding: 1.25em;
+    -fx-spacing: 0.75em;
+    -fx-min-width: 20em;
+    -fx-pref-width: 20em;
+    -fx-pref-height: 16.666667em;
+    -fx-max-width: 20em;
+    -fx-alignment: top-left;
+    -fx-fill-height: true;
+}
+
+.color-picker-box:focused,
+.color-picker-box:selected {
+    -fx-background-color: transparent;
+}
+
+/* Hue bar, */
+.color-picker-box > .hue-bar {
+    -fx-min-height: 1.666667em;
+    -fx-min-width: 16.666667em;
+    -fx-max-height: 1.666667em;
+    -fx-border-color: #050505;
+}
+.color-picker-box > .hue-bar > #hue-bar-indicator {
+    -fx-border-radius: 0.333333em;
+    -fx-border-color: white;
+    -fx-effect: dropshadow(three-pass-box, black, 2, 0.0, 0, 1);
+    -fx-pref-height: 2em;
+    -fx-pref-width: 0.833333em;
+    -fx-translate-y: -0.1666667em;
+    -fx-translate-x: -0.4166667em;
+}
+
+/* Saturation and value rect */
+.color-picker-box .color-rect {
+    -fx-min-width: 16.666667em;
+    -fx-min-height: 16.666667em;
+}
+.color-picker-box .color-rect-border {
+    -fx-border-color: #050505;
+}
+.color-picker-box #color-rect-indicator {
+    -fx-background-color: null;
+    -fx-border-color: white;
+    -fx-border-radius: 0.4166667em;
+    -fx-translate-x: -0.4166667em;
+    -fx-translate-y: -0.4166667em;
+    -fx-pref-width: 0.833333em;
+    -fx-pref-height: 0.833333em;
+    -fx-effect: dropshadow(three-pass-box, black, 2, 0.0, 0, 1);
+}
+
+/* New color rect */
+.color-picker-box .color-new-rect {
+    -fx-min-width: 10.666667em;
+    -fx-min-height: 1.75em;
+    -fx-pref-width: 10.666667em;
+    -fx-pref-height: 1.75em;
+    -fx-border-color: #050505;
+}
