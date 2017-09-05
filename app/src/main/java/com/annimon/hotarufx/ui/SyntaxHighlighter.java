@@ -3,9 +3,11 @@ package com.annimon.hotarufx.ui;
 import com.annimon.hotarufx.bundles.BundleLoader;
 import com.annimon.hotarufx.bundles.FunctionType;
 import com.annimon.hotarufx.lexer.HotaruLexer;
+import com.annimon.hotarufx.lexer.HotaruTokenId;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -24,8 +26,11 @@ public class SyntaxHighlighter {
     private final CodeArea editor;
     private final ExecutorService executor;
     private Set<String> nodeFunctions;
+    private Map<HotaruTokenId, String> operatorClasses;
 
     public void init() {
+        operatorClasses = new HashMap<>();
+        operatorClasses.put(HotaruTokenId.AT, "keyframes-extractor");
         nodeFunctions = BundleLoader.functions().entrySet().stream()
                 .filter(e -> e.getValue() == FunctionType.NODE)
                 .map(Map.Entry::getKey)
@@ -62,6 +67,15 @@ public class SyntaxHighlighter {
                         case "identifier":
                             if (nodeFunctions.contains(t.getText())) {
                                 spans.add(Collections.singleton("node-function"), t.getLength());
+                            } else {
+                                spans.add(Collections.emptyList(), t.getLength());
+                            }
+                            break;
+
+                        case "operator":
+                            val className = operatorClasses.get(t.getType());
+                            if (className != null) {
+                                spans.add(Collections.singleton(className), t.getLength());
                             } else {
                                 spans.add(Collections.emptyList(), t.getLength());
                             }

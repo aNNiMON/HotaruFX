@@ -13,3 +13,7 @@
 .node-function {
 	-fx-fill: #1899C7;
 }
+.keyframes-extractor {
+	-fx-fill: #DF5452;
+    -fx-font-weight: bold;
+}
