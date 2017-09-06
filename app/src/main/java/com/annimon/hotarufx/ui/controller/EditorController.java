@@ -95,7 +95,9 @@ public class EditorController implements Initializable, DocumentListener {
     private void handleMenuPlay(ActionEvent event) {
         log.setText("");
         val input = editor.getText();
-        logError(input);
+        if (input.isEmpty()) {
+            return;
+        }
 
         val context = new Context();
         BundleLoader.load(context, Arrays.asList(
@@ -128,6 +130,7 @@ public class EditorController implements Initializable, DocumentListener {
         initUndoRedo();
         openSample();
         editor.getUndoManager().forgetHistory();
+        Platform.runLater(editor::requestFocus);
     }
 
     private void initUndoRedo() {

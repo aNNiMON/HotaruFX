@@ -41,6 +41,12 @@
                         <FontAwesomeIcon icon="redo"/>
                     </graphic>
                 </Button>
+                <Separator/>
+                <Button onAction="#handleMenuPlay">
+                    <graphic>
+                        <FontAwesomeIcon icon="play"/>
+                    </graphic>
+                </Button>
             </ToolBar>
         </VBox>
     </top>
