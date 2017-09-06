@@ -21,14 +21,14 @@
         <VBox BorderPane.alignment="CENTER">
             <MenuBar>
                 <Menu mnemonicParsing="false" text="File">
-                    <MenuItem onAction="#handleMenuNew" text="New"/>
-                    <MenuItem onAction="#handleMenuOpen" text="Open"/>
-                    <MenuItem onAction="#handleMenuSave" text="Save"/>
-                    <MenuItem onAction="#handleMenuSaveAs" text="Save As"/>
+                    <MenuItem onAction="#handleMenuNew" text="New" accelerator="Shortcut+N"/>
+                    <MenuItem onAction="#handleMenuOpen" text="Open" accelerator="Shortcut+O"/>
+                    <MenuItem onAction="#handleMenuSave" text="Save" accelerator="Shortcut+S"/>
+                    <MenuItem onAction="#handleMenuSaveAs" text="Save As" accelerator="Shift+Shortcut+S"/>
                     <MenuItem onAction="#handleMenuExit" text="Exit"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
-                    <MenuItem onAction="#handleMenuPlay" text="Play"/>
+                    <MenuItem onAction="#handleMenuPlay" text="Play" accelerator="F5"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <MenuItem onAction="#handleMenuAbout" text="About"/>
