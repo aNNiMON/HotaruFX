@@ -153,7 +153,8 @@ public class ColorPickerBox extends VBox {
                 return customColorProperty.get();
             }
         });
-        final Button copyButton = new Button("copy");
+        final Button copyButton = new Button("Copy");
+        copyButton.setGraphic(new FontAwesomeIcon("clipboard"));
         copyButton.setOnAction(e -> {
             final Clipboard clipboard = Clipboard.getSystemClipboard();
             final ClipboardContent content = new ClipboardContent();
@@ -190,6 +191,8 @@ public class ColorPickerBox extends VBox {
         colorRectIndicator.layoutYProperty().bind(
                 Bindings.subtract(1, bright.divide(100)).multiply(colorRect.heightProperty()));
         newColorRect.opacityProperty().bind(alpha.divide(100));
+        copyButton.prefWidthProperty().bind(
+                newColorRect.widthProperty().divide(2));
 
         /* Adding controls */
         hueBar.getChildren().setAll(hueBarIndicator);

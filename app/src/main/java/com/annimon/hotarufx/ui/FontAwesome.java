@@ -15,7 +15,8 @@ public class FontAwesome {
 
     public static final String
             UNDO = "\uf0e2",
-            REDO = "\uf01e"
+            REDO = "\uf01e",
+            CLIPBOARD = "\uf0ea"
             ;
 
     static final Map<String, String> MAPPING;
@@ -23,5 +24,6 @@ public class FontAwesome {
         MAPPING = new HashMap<>();
         MAPPING.put("undo", UNDO);
         MAPPING.put("redo", REDO);
+        MAPPING.put("clipboard", CLIPBOARD);
     }
 }
