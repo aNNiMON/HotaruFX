@@ -25,6 +25,7 @@ public class Main extends Application {
                     getClass().getResource("/styles/color-picker-box.css").toExternalForm()
                     );
             controller = loader.getController();
+            controller.setPrimaryStage(primaryStage);
             primaryStage.setScene(scene);
         } catch (IOException e) {
             // TODO: notice me!!

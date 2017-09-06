@@ -21,6 +21,7 @@
         <VBox BorderPane.alignment="CENTER">
             <MenuBar>
                 <Menu mnemonicParsing="false" text="File">
+                    <MenuItem onAction="#handleMenuOpen" text="Open"/>
                     <MenuItem onAction="#handleMenuExit" text="Exit"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
