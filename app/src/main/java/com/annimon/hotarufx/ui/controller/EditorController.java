@@ -20,9 +20,11 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
@@ -31,6 +33,9 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 public class EditorController implements Initializable, DocumentListener {
+
+    @FXML
+    private Button undoButton, redoButton;
 
     @FXML
     private CodeArea editor;
@@ -120,7 +125,18 @@ public class EditorController implements Initializable, DocumentListener {
         syntaxHighlighter = new SyntaxHighlighter(editor, Executors.newSingleThreadExecutor());
         syntaxHighlighter.init();
         documentManager = new FileManager();
+        initUndoRedo();
         openSample();
+        editor.getUndoManager().forgetHistory();
+    }
+
+    private void initUndoRedo() {
+        undoButton.disableProperty().bind(
+                Bindings.not(editor.undoAvailableProperty()));
+        redoButton.disableProperty().bind(
+                Bindings.not(editor.redoAvailableProperty()));
+        undoButton.setOnAction(a -> editor.undo());
+        redoButton.setOnAction(a -> editor.redo());
     }
 
     public void setPrimaryStage(Stage primaryStage) {

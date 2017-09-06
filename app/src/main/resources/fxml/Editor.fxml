@@ -31,12 +31,12 @@
                 </Menu>
             </MenuBar>
             <ToolBar>
-                <Button>
+                <Button fx:id="undoButton">
                     <graphic>
                         <FontAwesomeIcon icon="undo"/>
                     </graphic>
                 </Button>
-                <Button>
+                <Button fx:id="redoButton">
                     <graphic>
                         <FontAwesomeIcon icon="redo"/>
                     </graphic>
