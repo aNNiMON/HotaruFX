@@ -53,11 +53,13 @@
         <CodeArea fx:id="editor" BorderPane.alignment="CENTER"/>
     </center>
     <right>
-        <VBox BorderPane.alignment="CENTER">
-            <TitledPane animated="false" text="Color picker">
-                <ColorPickerBox />
-            </TitledPane>
-            <TitledPane animated="false" minWidth="150.0" text="Library"/>
-        </VBox>
+        <ScrollPane BorderPane.alignment="CENTER">
+            <VBox>
+                <TitledPane animated="false" text="Color picker">
+                    <ColorPickerBox />
+                </TitledPane>
+                <TitledPane animated="false" minWidth="150.0" text="Library"/>
+            </VBox>
+        </ScrollPane>
     </right>
 </BorderPane>
