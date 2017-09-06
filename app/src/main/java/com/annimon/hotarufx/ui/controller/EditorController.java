@@ -59,6 +59,18 @@ public class EditorController implements Initializable, DocumentListener {
         }
     }
 
+    @FXML
+    private void handleMenuSave(ActionEvent event) {
+        documentManager.save(primaryStage, editor::getText);
+        updateTitle();
+    }
+
+    @FXML
+    private void handleMenuSaveAs(ActionEvent event) {
+        documentManager.saveAs(primaryStage, editor::getText);
+        updateTitle();
+    }
+
     private void updateTitle() {
         primaryStage.setTitle(
                 documentManager.name().orElse("HotaruFX"));

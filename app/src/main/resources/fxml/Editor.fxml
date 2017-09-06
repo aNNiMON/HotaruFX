@@ -23,6 +23,8 @@
                 <Menu mnemonicParsing="false" text="File">
                     <MenuItem onAction="#handleMenuNew" text="New"/>
                     <MenuItem onAction="#handleMenuOpen" text="Open"/>
+                    <MenuItem onAction="#handleMenuSave" text="Save"/>
+                    <MenuItem onAction="#handleMenuSaveAs" text="Save As"/>
                     <MenuItem onAction="#handleMenuExit" text="Exit"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
