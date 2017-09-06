@@ -14,18 +14,29 @@ public class FontAwesome {
     }
 
     public static final String
-            UNDO = "\uf0e2",
-            REDO = "\uf01e",
             CLIPBOARD = "\uf0ea",
-            PLAY = "\uf04b"
+            COPYRIGHT = "\uf1f9",
+            FONT_AWESOME = "\uf2b4",
+            GITHUB = "\uf09b",
+            GLOBE = "\uf0ac",
+            PENCIL = "\uf040",
+            PLAY = "\uf04b",
+            REDO = "\uf01e",
+            UNDO = "\uf0e2"
             ;
 
     static final Map<String, String> MAPPING;
     static {
         MAPPING = new HashMap<>();
-        MAPPING.put("undo", UNDO);
-        MAPPING.put("redo", REDO);
         MAPPING.put("clipboard", CLIPBOARD);
+        MAPPING.put("copyright", COPYRIGHT);
+        MAPPING.put("earth", GLOBE);
+        MAPPING.put("font-awesome", FONT_AWESOME);
+        MAPPING.put("github", GITHUB);
+        MAPPING.put("globe", GLOBE);
+        MAPPING.put("pencil", PENCIL);
         MAPPING.put("play", PLAY);
+        MAPPING.put("redo", REDO);
+        MAPPING.put("undo", UNDO);
     }
 }

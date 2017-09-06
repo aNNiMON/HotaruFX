@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.text.TextFlow?>
+<?import com.annimon.hotarufx.ui.LineText?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Hyperlink?>
+<?import com.annimon.hotarufx.ui.FontAwesomeIcon?>
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="400.0" prefHeight="300.0"
+            minWidth="NaN" minHeight="NaN"
+            maxWidth="-Infinity" maxHeight="-Infinity"
+            fitToWidth="true">
+    <TextFlow textAlignment="CENTER">
+        <LineText />
+        <Text styleClass="title" text="HotaruFX" />
+        <LineText />
+
+        <LineText />
+        <LineText styleClass="bold" content="0.9.1" />
+
+        <LineText />
+        <LineText content="Programming language for creating animations" />
+        <LineText styleClass="italic" content="(hotaru — jap. ホタル — firefly)" />
+
+        <LineText />
+        <FontAwesomeIcon icon="github"/>
+        <Hyperlink>https://github.com/aNNiMON/HotaruFX</Hyperlink>
+        <LineText />
+        <FontAwesomeIcon icon="globe"/>
+        <Hyperlink>https://annimon.com/</Hyperlink>
+        <LineText />
+
+        <LineText />
+        <FontAwesomeIcon icon="copyright" />
+        <LineText styleClass="h4" content=" 2017 aNNiMON" />
+        <LineText />
+
+
+        <LineText />
+        <LineText styleClass="h2" content="Third-party licenses" />
+        <LineText />
+
+        <FontAwesomeIcon styleClass="h3" icon="font-awesome" />
+        <LineText styleClass="h3" content=" Font Awesome" />
+        <LineText content="by Dave Gandy" />
+        <Hyperlink>http://fontawesome.io</Hyperlink>
+        <LineText />
+
+        <LineText styleClass="h3" />
+        <FontAwesomeIcon styleClass="h3" icon="pencil"/>
+        <LineText styleClass="h3" content=" RichTextFX" />
+        <LineText />
+        <LineText styleClass="copyright">
+            <content>
+                Copyright (c) 2013-2017, Tomas Mikula and contributors\n
+                All rights reserved.\n
+                \n
+                Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\n
+                \n
+                1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.\n
+                \n
+                2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.\n
+                \n
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+            </content>
+        </LineText>
+    </TextFlow>
+</ScrollPane>

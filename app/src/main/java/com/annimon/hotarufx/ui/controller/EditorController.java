@@ -23,10 +23,13 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.val;
 import org.fxmisc.richtext.CodeArea;
@@ -89,6 +92,24 @@ public class EditorController implements Initializable, DocumentListener {
 
     @FXML
     private void handleMenuAbout(ActionEvent event) {
+        val stage = new Stage();
+        stage.setTitle("About");
+        stage.setResizable(false);
+        stage.initOwner(primaryStage);
+        stage.initModality(Modality.WINDOW_MODAL);
+        try {
+            val loader = new FXMLLoader(getClass().getResource("/fxml/About.fxml"));
+            val scene = new Scene(loader.load());
+            scene.getStylesheets().addAll(
+                    getClass().getResource("/styles/theme-dark.css").toExternalForm(),
+                    getClass().getResource("/styles/about.css").toExternalForm()
+            );
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            logError("Unable to open about window");
+            logPane.setExpanded(true);
+        }
     }
 
     @FXML

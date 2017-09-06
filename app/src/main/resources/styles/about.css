@@ -1,0 +1,35 @@
+.linetext {
+    -fx-fill: #CCCCCC;
+}
+.title {
+    -fx-font-weight: bold;
+    -fx-font-size: 4em;
+    -fx-effect: dropshadow(three-pass-box, rgba(100,183,3,0.8), 18, 0, 0.5, 0.25);
+    -fx-fill: #FDFD42;
+}
+.h2 {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.6em;
+}
+.h3 {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
+}
+.h4 {
+    -fx-font-size: 1.19em;
+}
+.copyright {
+    -fx-font-size: 1em;
+    -fx-font-family: monospace;
+    -fx-background: #454545;
+    -fx-fill: #AAAAAA;
+}
+.bold {
+    -fx-font-weight: bold;
+}
+.italic {
+    -fx-font-style: italic;
+}
+.fa-icon {
+    -fx-fill: #fff;
+}
