@@ -45,9 +45,15 @@ public class EditorController implements Initializable, DocumentListener {
     private DocumentManager documentManager;
 
     @FXML
+    private void handleMenuNew(ActionEvent event) {
+        documentManager.newDocument();
+        openSample();
+        updateTitle();
+    }
+
+    @FXML
     private void handleMenuOpen(ActionEvent event) {
-        val isOpened = documentManager.open(primaryStage,
-                s -> editor.replaceText(0, 0, s));
+        val isOpened = documentManager.open(primaryStage, editor::replaceText);
         if (isOpened) {
             updateTitle();
         }
@@ -72,6 +78,7 @@ public class EditorController implements Initializable, DocumentListener {
     private void handleMenuPlay(ActionEvent event) {
         log.setText("");
         val input = editor.getText();
+        logError(input);
 
         val context = new Context();
         BundleLoader.load(context, Arrays.asList(
@@ -101,7 +108,7 @@ public class EditorController implements Initializable, DocumentListener {
         syntaxHighlighter = new SyntaxHighlighter(editor, Executors.newSingleThreadExecutor());
         syntaxHighlighter.init();
         documentManager = new FileManager();
-        editor.replaceText(0, 0, readProgram("/main.hfx"));
+        openSample();
     }
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -115,6 +122,24 @@ public class EditorController implements Initializable, DocumentListener {
     @Override
     public void logError(String message) {
         log.insertText(0, message + System.lineSeparator());
+    }
+
+    private void openSample() {
+        editor.replaceText(
+                "composition(1280, 720, 30)\n" +
+                "\n" +
+                "A = circle({\n" +
+                "  cx: 0,\n" +
+                "  cy: 0,\n" +
+                "  radius: 100,\n" +
+                "  fill: '#9bc747'\n" +
+                "})\n" +
+                "\n" +
+                "A@radius\n" +
+                "  .add(300 ms, 200)\n" +
+                "  .add(1 sec, 50)\n" +
+                "\n" +
+                "render(A)");
     }
 
     private String readProgram(String path) {
