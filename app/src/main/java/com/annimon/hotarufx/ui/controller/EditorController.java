@@ -116,6 +116,11 @@ public class EditorController implements Initializable, DocumentListener {
 
         val stage = new Stage();
         val composition = context.composition();
+        if (composition == null) {
+            logError("There is no composition.\nMake sure you call composition method.");
+            logPane.setExpanded(true);
+            return;
+        }
         stage.setScene(composition.produceAnimationScene());
         composition.getTimeline().getFxTimeline().play();
         stage.show();
