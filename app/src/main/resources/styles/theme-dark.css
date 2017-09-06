@@ -14,8 +14,33 @@
     -fx-focus-color: -fx-accent;
 }
 
-/* Menu */
-.menu-bar {
+/* Button */
+.button {
+    -fx-background-color: -fx-base;
+}
+.button:hover,
+.button:focused {
+    -fx-background-color: derive(-fx-base, 20%);
+}
+.button:pressed {
+    -fx-background-color: derive(-fx-base, 30%);
+}
+
+/* Icons */
+.fa-icon {
+    -fx-fill: #BBB;
+}
+.fa-icon:hover,
+.fa-icon:focused,
+.button:hover .fa-icon,
+.button:focused .fa-icon,
+.button:pressed .fa-icon {
+    -fx-fill: #DEF262;
+}
+
+/* Menu, Toolbar */
+.menu-bar,
+.tool-bar {
     -fx-background-color: -fx-base;
 }
 .menu-bar > .container > .menu-button:hover > .label,

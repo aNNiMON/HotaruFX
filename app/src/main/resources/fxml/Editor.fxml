@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
+<?import com.annimon.hotarufx.ui.ColorPickerBox?>
+<?import com.annimon.hotarufx.ui.FontAwesomeIcon?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-
 <?import org.fxmisc.richtext.CodeArea?>
-<?import com.annimon.hotarufx.ui.ColorPickerBox?>
+
 <BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="800.0" prefHeight="600.0"
             minWidth="-Infinity" minHeight="-Infinity"
@@ -34,9 +30,18 @@
                     <MenuItem onAction="#handleMenuAbout" text="About"/>
                 </Menu>
             </MenuBar>
-            <!--<ToolBar prefHeight="40.0" prefWidth="200.0">-->
-                <!--<Button mnemonicParsing="false" text="Button"/>-->
-            <!--</ToolBar>-->
+            <ToolBar>
+                <Button>
+                    <graphic>
+                        <FontAwesomeIcon icon="undo"/>
+                    </graphic>
+                </Button>
+                <Button>
+                    <graphic>
+                        <FontAwesomeIcon icon="redo"/>
+                    </graphic>
+                </Button>
+            </ToolBar>
         </VBox>
     </top>
     <bottom>
