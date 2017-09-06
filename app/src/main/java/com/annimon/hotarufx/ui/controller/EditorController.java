@@ -46,8 +46,16 @@ public class EditorController implements Initializable, DocumentListener {
 
     @FXML
     private void handleMenuOpen(ActionEvent event) {
-        documentManager.open(primaryStage,
+        val isOpened = documentManager.open(primaryStage,
                 s -> editor.replaceText(0, 0, s));
+        if (isOpened) {
+            updateTitle();
+        }
+    }
+
+    private void updateTitle() {
+        primaryStage.setTitle(
+                documentManager.name().orElse("HotaruFX"));
     }
 
     @FXML

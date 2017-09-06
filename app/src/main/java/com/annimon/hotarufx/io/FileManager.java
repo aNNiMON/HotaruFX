@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.function.Consumer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -21,6 +22,12 @@ public class FileManager implements DocumentManager {
         fileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("Supported Files", "*.hfx")
         );
+    }
+
+    @Override
+    public Optional<String> name() {
+        return Optional.ofNullable(currentFile)
+                .map(File::getName);
     }
 
     @Override
