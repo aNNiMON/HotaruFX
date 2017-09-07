@@ -12,8 +12,8 @@ import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.parser.HotaruParser;
 import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
-import com.annimon.hotarufx.ui.control.LibraryItem;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
+import com.annimon.hotarufx.ui.control.LibraryItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -22,7 +22,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -44,7 +46,7 @@ public class EditorController implements Initializable, DocumentListener {
     private CheckMenuItem syntaxHighlightingItem;
 
     @FXML
-    private Button undoButton, redoButton;
+    private Button undoButton, redoButton, cutButton, copyButton, pasteButton;
 
     @FXML
     private CodeArea editor;
@@ -164,6 +166,7 @@ public class EditorController implements Initializable, DocumentListener {
         documentManager = new FileManager();
         initSyntaxHighlighter();
         initUndoRedo();
+        initCopyCutPaste();
         openSample();
         editor.getUndoManager().forgetHistory();
         initializeLibrary();
@@ -191,8 +194,31 @@ public class EditorController implements Initializable, DocumentListener {
                 Bindings.not(editor.undoAvailableProperty()));
         redoButton.disableProperty().bind(
                 Bindings.not(editor.redoAvailableProperty()));
-        undoButton.setOnAction(a -> editor.undo());
-        redoButton.setOnAction(a -> editor.redo());
+        undoButton.setOnAction(editorAction(editor::undo));
+        redoButton.setOnAction(editorAction(editor::redo));
+    }
+
+    private void initCopyCutPaste() {
+        val selectionEmpty = new BooleanBinding() {
+            { bind(editor.selectionProperty()); }
+            @Override
+            protected boolean computeValue() {
+                return editor.getSelection().getLength() == 0;
+            }
+        };
+        cutButton.disableProperty().bind(selectionEmpty);
+        copyButton.disableProperty().bind(selectionEmpty);
+
+        cutButton.setOnAction(editorAction(editor::cut));
+        copyButton.setOnAction(editorAction(editor::copy));
+        pasteButton.setOnAction(editorAction(editor::paste));
+    }
+
+    private EventHandler<ActionEvent> editorAction(Runnable r) {
+        return event -> {
+            r.run();
+            editor.requestFocus();
+        };
     }
 
     private void initializeLibrary() {

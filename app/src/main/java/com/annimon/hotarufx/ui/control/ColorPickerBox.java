@@ -155,7 +155,7 @@ public class ColorPickerBox extends VBox {
             }
         });
         final Button copyButton = new Button("Copy");
-        copyButton.setGraphic(new FontAwesomeIcon("clipboard"));
+        copyButton.setGraphic(new FontAwesomeIcon("copy"));
         copyButton.setOnAction(e -> {
             final Clipboard clipboard = Clipboard.getSystemClipboard();
             final ClipboardContent content = new ClipboardContent();

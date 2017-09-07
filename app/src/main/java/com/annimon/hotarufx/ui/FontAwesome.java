@@ -11,7 +11,9 @@ import javafx.util.Pair;
 
 public enum FontAwesome {
 
-    CLIPBOARD("\uf0ea", "clipboard"),
+    CLIPBOARD("\uf0ea", "clipboard", "paste"),
+    CLONE("\uf24d", "clone"),
+    COPY("\uf0c5", "copy"),
     COPYRIGHT("\uf1f9", "copyright"),
     FONT_AWESOME("\uf2b4", "font-awesome"),
     GITHUB("\uf09b", "github"),
@@ -19,6 +21,7 @@ public enum FontAwesome {
     PENCIL("\uf040", "pencil"),
     PLAY("\uf04b", "play"),
     REDO("\uf01e", "redo"),
+    SCISSORS("\uf0c4", "scissors", "cut"),
     UNDO("\uf0e2", "undo");
 
     private final String symbol;

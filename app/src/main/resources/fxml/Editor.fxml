@@ -49,7 +49,7 @@
                         <FontAwesomeIcon icon="undo"/>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Undo"/>
+                        <Tooltip text="Undo action"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="redoButton">
@@ -57,7 +57,32 @@
                         <FontAwesomeIcon icon="redo"/>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Redo"/>
+                        <Tooltip text="Redo action"/>
+                    </tooltip>
+                </Button>
+                <Separator/>
+                <Button fx:id="cutButton">
+                    <graphic>
+                        <FontAwesomeIcon icon="cut"/>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Cut selection"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="copyButton">
+                    <graphic>
+                        <FontAwesomeIcon icon="copy"/>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Copy selection"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="pasteButton">
+                    <graphic>
+                        <FontAwesomeIcon icon="paste"/>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Paste from clipboard"/>
                     </tooltip>
                 </Button>
                 <Separator/>
