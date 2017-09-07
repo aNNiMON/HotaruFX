@@ -3,9 +3,12 @@ package com.annimon.hotarufx;
 import com.annimon.hotarufx.ui.control.ClickableHyperLink;
 import com.annimon.hotarufx.ui.controller.EditorController;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import lombok.val;
 
@@ -29,8 +32,12 @@ public class Main extends Application {
             controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
             primaryStage.setScene(scene);
-        } catch (IOException e) {
-            // TODO: notice me!!
+        } catch (IOException ex) {
+            val sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            val text = new TextArea(sw.toString());
+            text.setEditable(false);
+            primaryStage.setScene(new Scene(text));
         }
         primaryStage.show();
     }
