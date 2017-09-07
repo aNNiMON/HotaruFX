@@ -41,6 +41,6 @@ public class Composition {
     }
 
     public Scene produceAnimationScene() {
-        return new Scene(scene.getGroup(), sceneWidth, sceneHeight, Color.WHITE);
+        return new Scene(scene.getGroup(), sceneWidth, sceneHeight);
     }
 }

@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.annimon.hotarufx.ui.ColorPickerBox?>
-<?import com.annimon.hotarufx.ui.FontAwesomeIcon?>
+<?import com.annimon.hotarufx.ui.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Text?>
 <?import org.fxmisc.richtext.CodeArea?>
-
 <BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="800.0" prefHeight="600.0"
             minWidth="NaN" minHeight="NaN"
@@ -64,7 +72,201 @@
                 <TitledPane animated="false" text="Color picker">
                     <ColorPickerBox />
                 </TitledPane>
-                <TitledPane animated="false" minWidth="150.0" text="Library"/>
+                <TitledPane animated="false" expanded="false" text="Library">
+                    <FlowPane fx:id="library" prefWidth="200">
+                        <LibraryItem text="Circle">
+                            <graphic>
+                                <Circle radius="15.0"
+                                        fill="#c0c033"
+                                        strokeWidth="2" stroke="#ddd" />
+                            </graphic>
+                            <code>
+                                circle({\n
+                                __cx: 0,\n
+                                __cy: 0,\n
+                                __radius: 100,\n
+                                __fill: '#c0c033',\n
+                                __strokeWidth: 4,\n
+                                __stroke: "#ddd"\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Rectangle">
+                            <graphic>
+                                <Rectangle width="15.0" height="22.0"
+                                           fill="#4233c0"
+                                           strokeWidth="2" stroke="#819bed"
+                                           rotate="30" />
+                            </graphic>
+                            <code>
+                                rectangle({\n
+                                __x: -50,\n
+                                __y: -75,\n
+                                __width: 100,\n
+                                __height: 150,\n
+                                __fill: '#4233c0'\n
+                                __strokeWidth: 4,\n
+                                __stroke: '#819bed',\n
+                                __rotate: 30\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Rounded rectangle">
+                            <graphic>
+                                <Rectangle width="25.0" height="20.0"
+                                           arcWidth="10.0" arcHeight="10.0"
+                                           fill="#4233c0"
+                                           strokeWidth="2" stroke="#819bed" />
+                            </graphic>
+                            <code>
+                                rectangle({\n
+                                __x: -175,\n
+                                __y: -100,\n
+                                __width: 350,\n
+                                __height: 200,\n
+                                __arcWidth: 25,\n
+                                __arcHeight: 25,\n
+                                __fill: '#4233c0'\n
+                                __strokeWidth: 4,\n
+                                __stroke: '#819bed'\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Ellipse">
+                            <graphic>
+                                <Ellipse radiusX="10.0" radiusY="12.0"
+                                         fill="#9f40b8"
+                                         strokeWidth="2" stroke="#f29797" />
+                            </graphic>
+                            <code>
+                                ellipse({\n
+                                __cx: 0,\n
+                                __cy: 0,\n
+                                __radiusX: 150,\n
+                                __radiusY: 200,\n
+                                __fill: '#9f40b8',\n
+                                __strokeWidth: 4,\n
+                                __stroke: '#f29797'\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Text">
+                            <graphic>
+                                <Text text="txt" underline="true"
+                                      fill="WHITE"
+                                      strokeWidth="0.2" stroke="red" />
+                            </graphic>
+                            <code>
+                                text({\n
+                                __x: -50,\n
+                                __y: 0,\n
+                                __text: 'txt',\n
+                                __fill: 'white',\n
+                                __stroke: 'red',\n
+                                __font: 100,\n
+                                __underline: true\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Polygon">
+                            <graphic>
+                                <Polygon points="-10,-10,0,-5,10,-10,10,10,0,5,-10,10"
+                                         fill="58c033"
+                                         strokeWidth="2" stroke="#259b3e" />
+                            </graphic>
+                            <code>
+                                points = [\n
+                                __-50, -50,\n
+                                __0, -25,\n
+                                __50, -50,\n
+                                __50, 50,\n
+                                __0, 25,\n
+                                __-50, 50\n
+                                ]\n
+                                polygon(points, {\n
+                                __fill: '#58c033',\n
+                                __strokeWidth: 4,\n
+                                __stroke: '#259b3e'\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Polyline">
+                            <graphic>
+                                <Polyline points="-10,-10,0,-5,10,-10,10,10,0,5,-10,10,-10,-10"
+                                          strokeWidth="2" stroke="#cf3636" />
+                            </graphic>
+                            <code>
+                                points = [\n
+                                __-50, -50,\n
+                                __0, -25,\n
+                                __50, -50,\n
+                                __50, 50,\n
+                                __0, 25,\n
+                                __-50, 50\n
+                                __-50,-50\n
+                                ]\n
+                                polyline(points, {\n
+                                __strokeWidth: 4,\n
+                                __stroke: '#cf3636'\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="SVG Hearth">
+                            <graphic>
+                                <SVGPath content="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
+                                         fill="#c91720"
+                                         scaleX="0.6" scaleY="0.6"
+                                         strokeWidth="2" stroke="#edabab" />
+                            </graphic>
+                            <code>
+                                svgPath({\n
+                                __content: "M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z",\n
+                                __fill: "#c91720",\n
+                                __strokeWidth: 2,\n
+                                __stroke: "#edabab"\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Line">
+                            <graphic>
+                                <Line startX="-20" startY="-20"
+                                      strokeWidth="3" stroke="#aaa" />
+                            </graphic>
+                            <code>
+                                line({\n
+                                __startX: -600\n
+                                __startY: -300\n
+                                __endX: 600\n
+                                __endY: 300,\n
+                                __stroke: "#AAA",\n
+                                __strokeWidth: 5\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Arc">
+                            <graphic>
+                                <Arc type="ROUND"
+                                     radiusX="12" radiusY="12"
+                                     startAngle="60" length="240"
+                                     fill="#1b8118"
+                                     strokeWidth="2" stroke="#4cbc72" />
+                            </graphic>
+                            <code>
+                                arc({\n
+                                __cx: 0\n
+                                __cy: 0\n
+                                __radiusX: 50,\n
+                                __radiusY: 50,\n
+                                __startAngle: 60,\n
+                                __length: 240\n
+                                __fill: "#1b8118",\n
+                                __strokeWidth: 4,\n
+                                __stroke: "#4cbc72"\n
+                                })
+                            </code>
+                        </LibraryItem>
+                    </FlowPane>
+                </TitledPane>
             </VBox>
         </ScrollPane>
     </right>

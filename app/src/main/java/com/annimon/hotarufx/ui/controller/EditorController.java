@@ -5,13 +5,14 @@ import com.annimon.hotarufx.bundles.BundleLoader;
 import com.annimon.hotarufx.bundles.CompositionBundle;
 import com.annimon.hotarufx.bundles.NodesBundle;
 import com.annimon.hotarufx.io.DocumentListener;
+import com.annimon.hotarufx.io.DocumentManager;
+import com.annimon.hotarufx.io.FileManager;
 import com.annimon.hotarufx.io.IOStream;
 import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.parser.HotaruParser;
 import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
-import com.annimon.hotarufx.io.DocumentManager;
-import com.annimon.hotarufx.io.FileManager;
+import com.annimon.hotarufx.ui.LibraryItem;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.val;
@@ -42,6 +44,9 @@ public class EditorController implements Initializable, DocumentListener {
 
     @FXML
     private CodeArea editor;
+
+    @FXML
+    private Pane library;
 
     @FXML
     private TextArea log;
@@ -156,6 +161,7 @@ public class EditorController implements Initializable, DocumentListener {
         initUndoRedo();
         openSample();
         editor.getUndoManager().forgetHistory();
+        initializeLibrary();
         Platform.runLater(editor::requestFocus);
     }
 
@@ -166,6 +172,15 @@ public class EditorController implements Initializable, DocumentListener {
                 Bindings.not(editor.redoAvailableProperty()));
         undoButton.setOnAction(a -> editor.undo());
         redoButton.setOnAction(a -> editor.redo());
+    }
+
+    private void initializeLibrary() {
+        library.getChildren().stream()
+                .map(LibraryItem.class::cast)
+                .forEach(item -> item.setOnAction(a -> {
+                    editor.insertText(editor.getCaretPosition(), item.getCode());
+                    editor.requestFocus();
+                }));
     }
 
     public void setPrimaryStage(Stage primaryStage) {
