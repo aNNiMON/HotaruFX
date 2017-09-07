@@ -6,10 +6,12 @@ import com.annimon.hotarufx.lib.NodeValue;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.visual.Composition;
+import com.annimon.hotarufx.visual.PropertyType;
 import com.annimon.hotarufx.visual.visitors.RenderVisitor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.paint.Paint;
 import lombok.val;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
@@ -30,32 +32,35 @@ public class CompositionBundle implements Bundle {
 
     private static Function composition(Context context) {
         return args -> {
-            final int width, height;
-            final double frameRate;
+            final Composition composition;
             switch (args.length) {
                 case 0:
-                    width = 1280;
-                    height = 720;
-                    frameRate = 30d;
+                    composition = new Composition();
                     break;
                 case 1:
-                    width = 1280;
-                    height = 720;
-                    frameRate = args[0].asNumber();
+                    double frameRate = args[0].asNumber();
+                    composition = new Composition(frameRate);
                     break;
                 case 2:
-                    width = args[0].asInt();
-                    height = args[1].asInt();
-                    frameRate = 30d;
+                    int width = args[0].asInt();
+                    int height = args[1].asInt();
+                    composition = new Composition(width, height);
                     break;
                 case 3:
+                    width = args[0].asInt();
+                    height = args[1].asInt();
+                    frameRate = args[2].asNumber();
+                    composition = new Composition(width, height, frameRate);
+                    break;
+                case 4:
                 default:
                     width = args[0].asInt();
                     height = args[1].asInt();
                     frameRate = args[2].asNumber();
+                    val background = PropertyType.PAINT.<Paint>getFromHFX().apply(args[3]);
+                    composition = new Composition(width, height, frameRate, background);
                     break;
             }
-            val composition = new Composition(width, height, frameRate);
             val scene = composition.getScene();
             context.composition(composition);
             context.variables().put("Width", NumberValue.of(scene.getVirtualWidth()));
