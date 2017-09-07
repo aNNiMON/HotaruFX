@@ -4,6 +4,8 @@ import com.annimon.hotarufx.Main;
 import com.annimon.hotarufx.bundles.BundleLoader;
 import com.annimon.hotarufx.bundles.CompositionBundle;
 import com.annimon.hotarufx.bundles.NodesBundle;
+import com.annimon.hotarufx.exceptions.Exceptions;
+import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
 import com.annimon.hotarufx.io.DocumentListener;
 import com.annimon.hotarufx.io.DocumentManager;
 import com.annimon.hotarufx.io.FileManager;
@@ -144,7 +146,13 @@ public class EditorController implements Initializable, DocumentListener {
             logPane.setExpanded(true);
             return;
         }
-        program.accept(new InterpreterVisitor(), context);
+        try {
+            program.accept(new InterpreterVisitor(), context);
+        } catch (RuntimeException e) {
+            logError(Exceptions.stackTraceToString(e));
+            logPane.setExpanded(true);
+            return;
+        }
 
         val stage = new Stage();
         val composition = context.composition();
@@ -258,7 +266,7 @@ public class EditorController implements Initializable, DocumentListener {
                 "  .add(300 ms, 200)\n" +
                 "  .add(1 sec, 50)\n" +
                 "\n" +
-                "render(A)");
+                "render(A)\n");
     }
 
     private String readProgram(String path) {

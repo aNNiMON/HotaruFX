@@ -1,10 +1,9 @@
 package com.annimon.hotarufx;
 
+import com.annimon.hotarufx.exceptions.Exceptions;
 import com.annimon.hotarufx.ui.control.ClickableHyperLink;
 import com.annimon.hotarufx.ui.controller.EditorController;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,9 +32,7 @@ public class Main extends Application {
             controller.setPrimaryStage(primaryStage);
             primaryStage.setScene(scene);
         } catch (IOException ex) {
-            val sw = new StringWriter();
-            ex.printStackTrace(new PrintWriter(sw));
-            val text = new TextArea(sw.toString());
+            val text = new TextArea(Exceptions.stackTraceToString(ex));
             text.setEditable(false);
             primaryStage.setScene(new Scene(text));
         }
