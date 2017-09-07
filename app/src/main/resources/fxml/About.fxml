@@ -4,8 +4,8 @@
 <?import javafx.scene.text.TextFlow?>
 <?import com.annimon.hotarufx.ui.LineText?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Hyperlink?>
 <?import com.annimon.hotarufx.ui.FontAwesomeIcon?>
+<?import com.annimon.hotarufx.ui.ClickableHyperLink?>
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="400.0" prefHeight="300.0"
             minWidth="NaN" minHeight="NaN"
@@ -25,10 +25,10 @@
 
         <LineText />
         <FontAwesomeIcon icon="github"/>
-        <Hyperlink>https://github.com/aNNiMON/HotaruFX</Hyperlink>
+        <ClickableHyperLink>https://github.com/aNNiMON/HotaruFX</ClickableHyperLink>
         <LineText />
         <FontAwesomeIcon icon="globe"/>
-        <Hyperlink>https://annimon.com/</Hyperlink>
+        <ClickableHyperLink>https://annimon.com/</ClickableHyperLink>
         <LineText />
 
         <LineText />
@@ -44,7 +44,7 @@
         <FontAwesomeIcon styleClass="h3" icon="font-awesome" />
         <LineText styleClass="h3" content=" Font Awesome" />
         <LineText content="by Dave Gandy" />
-        <Hyperlink>http://fontawesome.io</Hyperlink>
+        <ClickableHyperLink>http://fontawesome.io</ClickableHyperLink>
         <LineText />
 
         <LineText styleClass="h3" />

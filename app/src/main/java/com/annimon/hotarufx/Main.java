@@ -1,5 +1,6 @@
 package com.annimon.hotarufx;
 
+import com.annimon.hotarufx.ui.ClickableHyperLink;
 import com.annimon.hotarufx.ui.controller.EditorController;
 import java.io.IOException;
 import javafx.application.Application;
@@ -14,6 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        ClickableHyperLink.setHostServices(getHostServices());
         primaryStage.setTitle("HotaruFX");
         try {
             val loader = new FXMLLoader(getClass().getResource("/fxml/Editor.fxml"));
