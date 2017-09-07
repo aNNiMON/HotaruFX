@@ -26,7 +26,7 @@ public class FontAwesomeIcon extends Text {
         setFont(FontAwesome.FONT);
         getStyleClass().add("fa-icon");
         icon.addListener((observable, oldValue, newValue) -> {
-            String faIcon = FontAwesome.MAPPING.get(newValue);
+            String faIcon = FontAwesome.getIcon(newValue);
             if (faIcon != null) {
                 setText(faIcon);
             }
