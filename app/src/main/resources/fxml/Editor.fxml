@@ -34,7 +34,7 @@
                     <MenuItem onAction="#handleMenuExit" text="Exit"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
-                    <MenuItem onAction="#handleMenuPlay" text="Play" accelerator="F5"/>
+                    <MenuItem onAction="#handleMenuPlay" text="Preview" accelerator="F5"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <MenuItem onAction="#handleMenuAbout" text="About"/>
@@ -45,17 +45,26 @@
                     <graphic>
                         <FontAwesomeIcon icon="undo"/>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="Undo"/>
+                    </tooltip>
                 </Button>
                 <Button fx:id="redoButton">
                     <graphic>
                         <FontAwesomeIcon icon="redo"/>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="Redo"/>
+                    </tooltip>
                 </Button>
                 <Separator/>
                 <Button onAction="#handleMenuPlay">
                     <graphic>
                         <FontAwesomeIcon icon="play"/>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="Preview composition"/>
+                    </tooltip>
                 </Button>
             </ToolBar>
         </VBox>
