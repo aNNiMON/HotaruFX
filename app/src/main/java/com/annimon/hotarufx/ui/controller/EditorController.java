@@ -12,7 +12,7 @@ import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.parser.HotaruParser;
 import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
-import com.annimon.hotarufx.ui.LibraryItem;
+import com.annimon.hotarufx.ui.control.LibraryItem;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,5 +1,6 @@
-package com.annimon.hotarufx.ui;
+package com.annimon.hotarufx.ui.control;
 
+import com.annimon.hotarufx.ui.FontAwesomeIcon;
 import java.util.regex.Pattern;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;

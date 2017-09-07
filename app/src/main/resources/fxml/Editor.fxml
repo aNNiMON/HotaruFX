@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.annimon.hotarufx.ui.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -15,6 +14,9 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Text?>
 <?import org.fxmisc.richtext.CodeArea?>
+<?import com.annimon.hotarufx.ui.control.ColorPickerBox?>
+<?import com.annimon.hotarufx.ui.control.LibraryItem?>
+<?import com.annimon.hotarufx.ui.FontAwesomeIcon?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="800.0" prefHeight="600.0"
             minWidth="NaN" minHeight="NaN"

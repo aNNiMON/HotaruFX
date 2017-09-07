@@ -1,4 +1,4 @@
-package com.annimon.hotarufx.ui;
+package com.annimon.hotarufx.ui.control;
 
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleStringProperty;

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.annimon.hotarufx.ui.control.ClickableHyperLink?>
+<?import com.annimon.hotarufx.ui.*?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.text.TextFlow?>
-<?import com.annimon.hotarufx.ui.LineText?>
 <?import javafx.scene.text.Text?>
-<?import com.annimon.hotarufx.ui.FontAwesomeIcon?>
-<?import com.annimon.hotarufx.ui.ClickableHyperLink?>
+<?import javafx.scene.text.TextFlow?>
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="400.0" prefHeight="300.0"
             minWidth="NaN" minHeight="NaN"

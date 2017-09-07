@@ -1,4 +1,4 @@
-package com.annimon.hotarufx.ui;
+package com.annimon.hotarufx.ui.control;
 
 import java.util.Optional;
 import javafx.application.HostServices;

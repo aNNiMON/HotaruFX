@@ -1,6 +1,6 @@
 package com.annimon.hotarufx;
 
-import com.annimon.hotarufx.ui.ClickableHyperLink;
+import com.annimon.hotarufx.ui.control.ClickableHyperLink;
 import com.annimon.hotarufx.ui.controller.EditorController;
 import java.io.IOException;
 import javafx.application.Application;
