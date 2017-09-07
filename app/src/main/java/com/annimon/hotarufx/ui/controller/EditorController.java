@@ -147,6 +147,8 @@ public class EditorController implements Initializable, DocumentListener {
             logPane.setExpanded(true);
             return;
         }
+        stage.initOwner(primaryStage);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(composition.produceAnimationScene());
         composition.getTimeline().getFxTimeline().play();
         stage.show();
