@@ -28,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
@@ -38,6 +39,9 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 public class EditorController implements Initializable, DocumentListener {
+
+    @FXML
+    private CheckMenuItem syntaxHighlightingItem;
 
     @FXML
     private Button undoButton, redoButton;
@@ -157,14 +161,29 @@ public class EditorController implements Initializable, DocumentListener {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         editor.setParagraphGraphicFactory(LineNumberFactory.get(editor));
-        syntaxHighlighter = new SyntaxHighlighter(editor, Executors.newSingleThreadExecutor());
-        syntaxHighlighter.init();
         documentManager = new FileManager();
+        initSyntaxHighlighter();
         initUndoRedo();
         openSample();
         editor.getUndoManager().forgetHistory();
         initializeLibrary();
         Platform.runLater(editor::requestFocus);
+    }
+
+    private void initSyntaxHighlighter() {
+        val highlightProperty = syntaxHighlightingItem.selectedProperty();
+        highlightProperty.addListener((observable, oldValue, highlightEnabled) -> {
+            if (highlightEnabled) {
+                // create event to reinit highlighter
+                val pos = editor.getCaretPosition();
+                editor.insertText(pos, " ");
+                editor.replaceText(pos, pos + 1, "");
+            } else {
+                editor.clearStyle(0, editor.getLength());
+            }
+        });
+        syntaxHighlighter = new SyntaxHighlighter(editor, Executors.newSingleThreadExecutor());
+        syntaxHighlighter.init(highlightProperty);
     }
 
     private void initUndoRedo() {

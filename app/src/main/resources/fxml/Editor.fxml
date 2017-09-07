@@ -33,6 +33,9 @@
                     <MenuItem onAction="#handleMenuSaveAs" text="Save As" accelerator="Shift+Shortcut+S"/>
                     <MenuItem onAction="#handleMenuExit" text="Exit"/>
                 </Menu>
+                <Menu mnemonicParsing="false" text="View">
+                    <CheckMenuItem fx:id="syntaxHighlightingItem" text="Syntax Highlighting" selected="true" />
+                </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
                     <MenuItem onAction="#handleMenuPlay" text="Preview" accelerator="F5"/>
                 </Menu>

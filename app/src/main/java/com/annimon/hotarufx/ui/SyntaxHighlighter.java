@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
+import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.Task;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -28,7 +29,7 @@ public class SyntaxHighlighter {
     private Set<String> nodeFunctions;
     private Map<HotaruTokenId, String> operatorClasses;
 
-    public void init() {
+    public void init(BooleanProperty enabledProperty) {
         operatorClasses = new HashMap<>();
         operatorClasses.put(HotaruTokenId.AT, "keyframes-extractor");
         nodeFunctions = BundleLoader.functions().entrySet().stream()
@@ -36,6 +37,7 @@ public class SyntaxHighlighter {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
         editor.richChanges()
+                .filter(ch -> enabledProperty.get())
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
                 .successionEnds(Duration.ofMillis(500))
                 .supplyTask(this::computeHighlightingAsync)
