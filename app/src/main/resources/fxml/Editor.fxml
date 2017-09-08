@@ -292,12 +292,13 @@
                             </graphic>
                             <code>
                                 arc({\n
-                                __cx: 0\n
-                                __cy: 0\n
+                                __cx: 0,\n
+                                __cy: 0,\n
                                 __radiusX: 50,\n
                                 __radiusY: 50,\n
                                 __startAngle: 60,\n
                                 __length: 240\n
+                                __type: "ROUND" # OPEN, CHORD, ROUND\n
                                 __fill: "#1b8118",\n
                                 __strokeWidth: 4,\n
                                 __stroke: "#4cbc72"\n

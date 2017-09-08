@@ -8,6 +8,7 @@ import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import static com.annimon.hotarufx.visual.PropertyType.NUMBER;
+import static com.annimon.hotarufx.visual.PropertyType.STRING;
 
 public class ArcNode extends ShapeNode {
 
@@ -15,6 +16,7 @@ public class ArcNode extends ShapeNode {
 
     private PropertyTimelineHolder<Number> centerX, centerY, radiusX, radiusY;
     private PropertyTimelineHolder<Number> startAngle, length;
+    private PropertyTimelineHolder<String> type;
 
     public ArcNode() {
         this(new Arc());
@@ -30,6 +32,7 @@ public class ArcNode extends ShapeNode {
         radiusY = PropertyTimelineHolder.empty();
         startAngle = PropertyTimelineHolder.empty();
         length = PropertyTimelineHolder.empty();
+        type = PropertyTimelineHolder.empty();
     }
 
     public PropertyTimeline<Number> centerXProperty() {
@@ -56,6 +59,10 @@ public class ArcNode extends ShapeNode {
         return length.setIfEmptyThenGet(arc::lengthProperty);
     }
 
+    public PropertyTimeline<String> typeProperty() {
+        return type.setIfEmptyThenGet(enumToString(ArcType.class, arc.typeProperty()));
+    }
+
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
@@ -65,6 +72,7 @@ public class ArcNode extends ShapeNode {
         radiusY.applyIfPresent(timeline);
         startAngle.applyIfPresent(timeline);
         length.applyIfPresent(timeline);
+        type.applyIfPresent(timeline);
     }
 
     @Override
@@ -78,7 +86,8 @@ public class ArcNode extends ShapeNode {
                 .add("radiusY", NUMBER, this::radiusYProperty)
                 .add("angle", NUMBER, this::startAngleProperty)
                 .add("startAngle", NUMBER, this::startAngleProperty)
-                .add("length", NUMBER, this::lengthProperty);
+                .add("length", NUMBER, this::lengthProperty)
+                .add("type", STRING, this::typeProperty);
     }
 
     @Override
