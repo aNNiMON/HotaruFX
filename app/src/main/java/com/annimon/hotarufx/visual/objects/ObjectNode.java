@@ -1,13 +1,21 @@
 package com.annimon.hotarufx.visual.objects;
 
+import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
 import com.annimon.hotarufx.visual.PropertyBindings;
 import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
+import java.util.EnumSet;
+import java.util.function.Supplier;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.WritableValue;
 import javafx.scene.Node;
+import javafx.util.StringConverter;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public abstract class ObjectNode {
@@ -134,6 +142,34 @@ public abstract class ObjectNode {
                 .add("scaleZ", NUMBER, this::scaleZProperty)
                 .add("layoutX", NUMBER, this::layoutXProperty)
                 .add("layoutY", NUMBER, this::layoutYProperty);
+    }
+
+    protected <T extends Enum<T>> Supplier<WritableValue<String>> enumToString(Class<T> enumClass, ObjectProperty<T> property) {
+        return () -> {
+            val stringProperty = new SimpleStringProperty();
+            stringProperty.bindBidirectional(property, new StringConverter<T>() {
+                @Override
+                public String toString(T object) {
+                    return object.name();
+                }
+
+                @Override
+                public T fromString(String string) {
+                    try {
+                        return Enum.valueOf(enumClass, string);
+                    } catch (IllegalArgumentException e) {
+                        try {
+                            val number = (int) Double.parseDouble(string);
+                            return enumClass.cast(EnumSet.allOf(enumClass).toArray()[number]);
+                        } catch (Exception ex) {
+                            throw new HotaruRuntimeException("No constant " + string
+                                    + " for type " + enumClass.getSimpleName());
+                        }
+                    }
+                }
+            });
+            return stringProperty;
+        };
     }
 
     public abstract <R, T> R accept(NodeVisitor<R, T> visitor, T input);
