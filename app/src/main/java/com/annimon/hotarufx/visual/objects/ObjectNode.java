@@ -12,6 +12,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.WritableValue;
 import javafx.scene.Node;
+import javafx.scene.effect.BlendMode;
 import javafx.util.StringConverter;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public abstract class ObjectNode {
     private PropertyTimelineHolder<Number> translateX, translateY, translateZ;
     private PropertyTimelineHolder<Number> scaleX, scaleY, scaleZ;
     private PropertyTimelineHolder<Number> layoutX, layoutY;
+    private PropertyTimelineHolder<String> blendMode;
     @Getter @Setter
     private boolean isRenderable;
 
@@ -47,6 +49,7 @@ public abstract class ObjectNode {
         scaleZ = PropertyTimelineHolder.empty();
         layoutX = PropertyTimelineHolder.empty();
         layoutY = PropertyTimelineHolder.empty();
+        blendMode = PropertyTimelineHolder.empty();
         isRenderable = true;
     }
 
@@ -106,6 +109,10 @@ public abstract class ObjectNode {
         return layoutY.setIfEmptyThenGet(node::layoutYProperty);
     }
 
+    public PropertyTimeline<String> blendModeProperty() {
+        return blendMode.setIfEmptyThenGet(enumToString(BlendMode.class, node.blendModeProperty()));
+    }
+
     public void buildTimeline(TimeLine timeline) {
         visible.applyIfPresent(timeline);
         opacity.applyIfPresent(timeline);
@@ -120,6 +127,7 @@ public abstract class ObjectNode {
         scaleZ.applyIfPresent(timeline);
         layoutX.applyIfPresent(timeline);
         layoutY.applyIfPresent(timeline);
+        blendMode.applyIfPresent(timeline);
     }
 
     public final PropertyBindings propertyBindings() {
@@ -141,7 +149,8 @@ public abstract class ObjectNode {
                 .add("scaleY", NUMBER, this::scaleYProperty)
                 .add("scaleZ", NUMBER, this::scaleZProperty)
                 .add("layoutX", NUMBER, this::layoutXProperty)
-                .add("layoutY", NUMBER, this::layoutYProperty);
+                .add("layoutY", NUMBER, this::layoutYProperty)
+                .add("blendMode", STRING, this::blendModeProperty);
     }
 
     protected <T extends Enum<T>> Supplier<WritableValue<String>> enumToString(Class<T> enumClass, ObjectProperty<T> property) {
