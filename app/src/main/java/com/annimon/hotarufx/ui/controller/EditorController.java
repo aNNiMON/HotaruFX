@@ -34,6 +34,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.val;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -157,7 +158,17 @@ public class EditorController implements Initializable, DocumentListener {
         stage.initOwner(primaryStage);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(composition.produceAnimationScene());
-        composition.getTimeline().getFxTimeline().play();
+        val timeline = composition.getTimeline();
+        timeline.getFxTimeline().currentTimeProperty().addListener((o, oldValue, d) -> {
+            val min = (int) d.toMinutes();
+            val durationSec = d.subtract(Duration.minutes(min));
+            val sec = (int) durationSec.toSeconds();
+            val durationMs = durationSec.subtract(Duration.seconds(sec));
+            val frame = (int) (durationMs.toMillis() * timeline.getFrameRate() / 1000d);
+            val allFrame = (int) (d.toMillis() * timeline.getFrameRate() / 1000d);
+            stage.setTitle(String.format("%02d:%02d.%02d   %d", min, sec, frame, allFrame));
+        });
+        stage.setOnShown(e -> timeline.getFxTimeline().play());
         stage.show();
     }
 

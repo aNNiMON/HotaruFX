@@ -2,6 +2,7 @@ package com.annimon.hotarufx.visual;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import lombok.Getter;
@@ -62,6 +63,30 @@ public class Composition {
     }
 
     public Scene produceAnimationScene() {
-        return new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
+        val fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
+        fxScene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case SPACE:
+                    timeline.togglePause();
+                    break;
+                case BACK_SPACE:
+                    timeline.getFxTimeline().playFromStart();
+                    break;
+                case LEFT:
+                case RIGHT:
+                    int sign = e.getCode() == KeyCode.LEFT ? -1 : 1;
+                    if (e.isShiftDown()) {
+                        timeline.seek(sign);
+                    } else if (e.isControlDown()) {
+                        timeline.seek(10 * sign);
+                    } else if (e.isAltDown()) {
+                        timeline.seek(30 * sign);
+                    } else {
+                        timeline.seekFrame(sign);
+                    }
+                    break;
+            }
+        });
+        return fxScene;
     }
 }
