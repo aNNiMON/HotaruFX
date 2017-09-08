@@ -2,10 +2,7 @@ package com.annimon.hotarufx.ui.controller;
 
 import com.annimon.hotarufx.Main;
 import com.annimon.hotarufx.bundles.BundleLoader;
-import com.annimon.hotarufx.bundles.CompositionBundle;
-import com.annimon.hotarufx.bundles.NodesBundle;
 import com.annimon.hotarufx.exceptions.Exceptions;
-import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
 import com.annimon.hotarufx.io.DocumentListener;
 import com.annimon.hotarufx.io.DocumentManager;
 import com.annimon.hotarufx.io.FileManager;
@@ -19,7 +16,6 @@ import com.annimon.hotarufx.ui.control.LibraryItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
@@ -134,10 +130,7 @@ public class EditorController implements Initializable, DocumentListener {
         }
 
         val context = new Context();
-        BundleLoader.load(context, Arrays.asList(
-                CompositionBundle.class,
-                NodesBundle.class
-        ));
+        BundleLoader.load(context, BundleLoader.runtimeBundles());
 
         val parser = new HotaruParser(HotaruLexer.tokenize(input));
         val program = parser.parse();

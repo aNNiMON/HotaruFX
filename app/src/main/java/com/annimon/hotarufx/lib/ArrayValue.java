@@ -2,12 +2,20 @@ package com.annimon.hotarufx.lib;
 
 import com.annimon.hotarufx.exceptions.TypeException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Function;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 import lombok.Getter;
 
 public class ArrayValue implements Value, Iterable<Value> {
+
+    public static <T> ArrayValue from(Collection<? extends T> collection,
+                                      Function<? super T, Value> converter) {
+        return new ArrayValue(collection.stream()
+                .map(converter)
+                .toArray(Value[]::new));
+    }
 
     @Getter
     private final Value[] elements;

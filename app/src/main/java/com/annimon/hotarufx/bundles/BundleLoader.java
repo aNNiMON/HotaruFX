@@ -11,10 +11,11 @@ import lombok.val;
 
 public final class BundleLoader {
 
-    public static List<Class<? extends Bundle>> allBundles() {
+    public static List<Class<? extends Bundle>> runtimeBundles() {
         return Arrays.asList(
                 CompositionBundle.class,
-                NodesBundle.class
+                NodesBundle.class,
+                NodeUtilsBundle.class
         );
     }
 
@@ -24,7 +25,7 @@ public final class BundleLoader {
 
     public static Map<String, FunctionType> functions() {
         val functions = new HashMap<String, FunctionType>();
-        apply(allBundles(), functions, ((bundle, map) -> map.putAll(bundle.functions())));
+        apply(runtimeBundles(), functions, ((bundle, map) -> map.putAll(bundle.functions())));
         return functions;
     }
 

@@ -270,17 +270,20 @@
                         <LibraryItem text="Line">
                             <graphic>
                                 <Line startX="-20" startY="-20"
-                                      strokeWidth="3" stroke="#aaa" />
+                                      strokeWidth="3" stroke="#aaa"
+                                      strokeDashArray="6, 8, 2, 8" />
                             </graphic>
                             <code>
-                                line({\n
-                                __startX: -600\n
-                                __startY: -300\n
+                                LINE = line({\n
+                                __startX: -600,\n
+                                __startY: -300,\n
                                 __endX: 600\n
                                 __endY: 300,\n
                                 __stroke: "#AAA",\n
                                 __strokeWidth: 5\n
-                                })
+                                })\n
+                                strokeDashArray(LINE, [25, 20, 5, 20])\n
+                                LINE@strokeDashOffset.add(2 sec, -200)\n
                             </code>
                         </LibraryItem>
                         <LibraryItem text="Arc">
