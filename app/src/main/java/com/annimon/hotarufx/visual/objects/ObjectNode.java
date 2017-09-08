@@ -159,11 +159,17 @@ public abstract class ObjectNode {
             stringProperty.bindBidirectional(property, new StringConverter<T>() {
                 @Override
                 public String toString(T object) {
+                    if (object == null) {
+                        return "null";
+                    }
                     return object.name();
                 }
 
                 @Override
                 public T fromString(String string) {
+                    if ("null".equals(string)) {
+                        return null;
+                    }
                     try {
                         return Enum.valueOf(enumClass, string);
                     } catch (IllegalArgumentException e) {
