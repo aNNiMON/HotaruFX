@@ -15,7 +15,8 @@ public final class BundleLoader {
         return Arrays.asList(
                 CompositionBundle.class,
                 NodesBundle.class,
-                NodeUtilsBundle.class
+                NodeUtilsBundle.class,
+                InterpolatorsBundle.class
         );
     }
 

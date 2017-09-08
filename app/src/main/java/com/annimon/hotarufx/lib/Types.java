@@ -10,5 +10,6 @@ public class Types {
             MAP = 4,
             NODE = 5,
             PROPERTY = 6,
-            FUNCTION = 7;
+            INTERPOLATOR = 7,
+            FUNCTION = 8;
 }

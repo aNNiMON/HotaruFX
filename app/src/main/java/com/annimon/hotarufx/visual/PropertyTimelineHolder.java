@@ -33,8 +33,9 @@ public final class PropertyTimelineHolder<T> {
 
     public void applyIfPresent(TimeLine timeline) {
         if (isEmpty()) return;
-        propertyTimeline.getKeyFrames().forEach((keyFrame, value) -> {
-            timeline.addKeyFrame(keyFrame, new KeyValue(propertyTimeline.getProperty(), value));
+        propertyTimeline.getKeyFrames().forEach((keyFrame, p) -> {
+            timeline.addKeyFrame(keyFrame, new KeyValue(
+                    propertyTimeline.getProperty(), p.getValue(), p.getInterpolator()));
         });
     }
 
