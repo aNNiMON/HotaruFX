@@ -5,8 +5,12 @@ import com.annimon.hotarufx.visual.PropertyTimeline;
 import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
+import javafx.geometry.VPos;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBoundsType;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public class TextNode extends ShapeNode {
@@ -18,6 +22,8 @@ public class TextNode extends ShapeNode {
     private PropertyTimelineHolder<Font> font;
     private PropertyTimelineHolder<Number> lineSpacing, wrappingWidth;
     private PropertyTimelineHolder<Boolean> strikethrough, underline;
+    private PropertyTimelineHolder<String> boundsType, fontSmoothingType;
+    private PropertyTimelineHolder<String> textAlignment, textOrigin;
 
     public TextNode() {
         this(new Text());
@@ -34,6 +40,10 @@ public class TextNode extends ShapeNode {
         wrappingWidth = PropertyTimelineHolder.empty();
         strikethrough = PropertyTimelineHolder.empty();
         underline = PropertyTimelineHolder.empty();
+        boundsType = PropertyTimelineHolder.empty();
+        fontSmoothingType = PropertyTimelineHolder.empty();
+        textAlignment = PropertyTimelineHolder.empty();
+        textOrigin = PropertyTimelineHolder.empty();
     }
 
     public PropertyTimeline<Number> xProperty() {
@@ -68,6 +78,22 @@ public class TextNode extends ShapeNode {
         return underline.setIfEmptyThenGet(text::underlineProperty);
     }
 
+    public PropertyTimeline<String> boundsTypeProperty() {
+        return boundsType.setIfEmptyThenGet(enumToString(TextBoundsType.class, text.boundsTypeProperty()));
+    }
+
+    public PropertyTimeline<String> fontSmoothingTypeProperty() {
+        return fontSmoothingType.setIfEmptyThenGet(enumToString(FontSmoothingType.class, text.fontSmoothingTypeProperty()));
+    }
+
+    public PropertyTimeline<String> textAlignmentProperty() {
+        return textAlignment.setIfEmptyThenGet(enumToString(TextAlignment.class, text.textAlignmentProperty()));
+    }
+
+    public PropertyTimeline<String> textOriginProperty() {
+        return textOrigin.setIfEmptyThenGet(enumToString(VPos.class, text.textOriginProperty()));
+    }
+
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
@@ -79,6 +105,10 @@ public class TextNode extends ShapeNode {
         wrappingWidth.applyIfPresent(timeline);
         strikethrough.applyIfPresent(timeline);
         underline.applyIfPresent(timeline);
+        boundsType.applyIfPresent(timeline);
+        fontSmoothingType .applyIfPresent(timeline);
+        textAlignment.applyIfPresent(timeline);
+        textOrigin.applyIfPresent(timeline);
     }
 
     @Override
@@ -92,7 +122,13 @@ public class TextNode extends ShapeNode {
                 .add("wrappingWidth", NUMBER, this::wrappingWidthProperty)
                 .add("strike", BOOLEAN, this::strikethroughProperty)
                 .add("strikethrough", BOOLEAN, this::strikethroughProperty)
-                .add("underline", BOOLEAN, this::underlineProperty);
+                .add("underline", BOOLEAN, this::underlineProperty)
+                .add("boundsType", STRING, this::boundsTypeProperty)
+                .add("fontSmoothingType", STRING, this::fontSmoothingTypeProperty)
+                .add("halign", STRING, this::textAlignmentProperty)
+                .add("textAlignment", STRING, this::textAlignmentProperty)
+                .add("valign", STRING, this::textOriginProperty)
+                .add("textOrigin", STRING, this::textOriginProperty);
     }
 
     @Override

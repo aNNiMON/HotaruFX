@@ -199,6 +199,7 @@
                                 text({\n
                                 __x: -50,\n
                                 __y: 0,\n
+                                __valign: "CENTER",\n
                                 __text: 'txt',\n
                                 __fill: 'white',\n
                                 __stroke: 'red',\n
