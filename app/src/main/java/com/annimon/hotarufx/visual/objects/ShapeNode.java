@@ -6,6 +6,9 @@ import com.annimon.hotarufx.visual.PropertyTimelineHolder;
 import com.annimon.hotarufx.visual.TimeLine;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeType;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public abstract class ShapeNode extends ObjectNode {
@@ -15,6 +18,7 @@ public abstract class ShapeNode extends ObjectNode {
     private PropertyTimelineHolder<Boolean> smooth;
     private PropertyTimelineHolder<Paint> fill, stroke;
     private PropertyTimelineHolder<Number> strokeWidth, strokeDashOffset, strokeMiterLimit;
+    private PropertyTimelineHolder<String> strokeType, strokeLineCap, strokeLineJoin;
 
     public ShapeNode(Shape shape) {
         super(shape);
@@ -23,8 +27,11 @@ public abstract class ShapeNode extends ObjectNode {
         fill = PropertyTimelineHolder.empty();
         stroke = PropertyTimelineHolder.empty();
         strokeWidth = PropertyTimelineHolder.empty();
+        strokeType = PropertyTimelineHolder.empty();
         strokeDashOffset = PropertyTimelineHolder.empty();
         strokeMiterLimit = PropertyTimelineHolder.empty();
+        strokeLineCap = PropertyTimelineHolder.empty();
+        strokeLineJoin = PropertyTimelineHolder.empty();
     }
 
     public PropertyTimeline<Boolean> smoothProperty() {
@@ -43,6 +50,10 @@ public abstract class ShapeNode extends ObjectNode {
         return strokeWidth.setIfEmptyThenGet(shape::strokeWidthProperty);
     }
 
+    public PropertyTimeline<String> strokeTypeProperty() {
+        return strokeType.setIfEmptyThenGet(enumToString(StrokeType.class, shape.strokeTypeProperty()));
+    }
+
     public PropertyTimeline<Number> strokeDashOffsetProperty() {
         return strokeDashOffset.setIfEmptyThenGet(shape::strokeDashOffsetProperty);
     }
@@ -51,15 +62,26 @@ public abstract class ShapeNode extends ObjectNode {
         return strokeMiterLimit.setIfEmptyThenGet(shape::strokeMiterLimitProperty);
     }
 
+    public PropertyTimeline<String> strokeLineCapProperty() {
+        return strokeLineCap.setIfEmptyThenGet(enumToString(StrokeLineCap.class, shape.strokeLineCapProperty()));
+    }
+
+    public PropertyTimeline<String> strokeLineJoinProperty() {
+        return strokeLineJoin.setIfEmptyThenGet(enumToString(StrokeLineJoin.class, shape.strokeLineJoinProperty()));
+    }
+
     @Override
     public void buildTimeline(TimeLine timeline) {
         super.buildTimeline(timeline);
         smooth.applyIfPresent(timeline);
         fill.applyIfPresent(timeline);
         stroke.applyIfPresent(timeline);
+        strokeType.applyIfPresent(timeline);
         strokeWidth.applyIfPresent(timeline);
         strokeDashOffset.applyIfPresent(timeline);
         strokeMiterLimit.applyIfPresent(timeline);
+        strokeLineCap.applyIfPresent(timeline);
+        strokeLineJoin.applyIfPresent(timeline);
     }
 
     @Override
@@ -68,8 +90,11 @@ public abstract class ShapeNode extends ObjectNode {
                 .add("smooth", BOOLEAN, this::smoothProperty)
                 .add("fill", PAINT, this::fillProperty)
                 .add("stroke", PAINT, this::strokeProperty)
+                .add("strokeType", STRING, this::strokeTypeProperty)
                 .add("strokeWidth", NUMBER, this::strokeWidthProperty)
                 .add("strokeDashOffset", NUMBER, this::strokeDashOffsetProperty)
-                .add("strokeMiterLimit", NUMBER, this::strokeMiterLimitProperty);
+                .add("strokeMiterLimit", NUMBER, this::strokeMiterLimitProperty)
+                .add("strokeLineCap", STRING, this::strokeLineCapProperty)
+                .add("strokeLineJoin", STRING, this::strokeLineJoinProperty);
     }
 }
