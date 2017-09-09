@@ -8,6 +8,7 @@ import com.annimon.hotarufx.io.DocumentManager;
 import com.annimon.hotarufx.io.FileManager;
 import com.annimon.hotarufx.io.IOStream;
 import com.annimon.hotarufx.lib.Context;
+import com.annimon.hotarufx.ui.FontAwesomeIcon;
 import com.annimon.hotarufx.ui.RenderPreparer;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import com.annimon.hotarufx.ui.control.LibraryItem;
@@ -24,8 +25,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
@@ -33,6 +37,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import lombok.val;
 import org.fxmisc.richtext.CodeArea;
@@ -96,8 +101,29 @@ public class EditorController implements Initializable, DocumentListener {
 
     @FXML
     private void handleMenuExit(ActionEvent event) {
-        // TODO: confirmation
-        Platform.exit();
+        if (confirmExit()) {
+            primaryStage.close();
+        }
+    }
+
+    public void onCloseRequest(WindowEvent windowEvent) {
+        if (!confirmExit()) {
+            windowEvent.consume();
+        }
+    }
+
+    private boolean confirmExit() {
+        val alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setHeaderText("Are you sure you want to exit?");
+        alert.initOwner(primaryStage);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.getDialogPane().setContent(new Group());
+        val icon = new FontAwesomeIcon("question-circle");
+        alert.getDialogPane().setGraphic(icon);
+        return alert.showAndWait()
+                .filter(b -> b == ButtonType.OK)
+                .isPresent();
     }
 
     @FXML

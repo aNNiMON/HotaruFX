@@ -20,6 +20,7 @@ public enum FontAwesome {
     GLOBE("\uf0ac", "earth", "globe"),
     PENCIL("\uf040", "pencil"),
     PLAY("\uf04b", "play"),
+    QUESTION_CIRCLE("\uf059", "question-circle"),
     REDO("\uf01e", "redo"),
     SCISSORS("\uf0c4", "scissors", "cut"),
     UNDO("\uf0e2", "undo");

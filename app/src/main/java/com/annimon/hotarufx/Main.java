@@ -30,6 +30,7 @@ public class Main extends Application {
                     );
             controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
+            primaryStage.setOnCloseRequest(controller::onCloseRequest);
             primaryStage.setScene(scene);
         } catch (IOException ex) {
             val text = new TextArea(Exceptions.stackTraceToString(ex));

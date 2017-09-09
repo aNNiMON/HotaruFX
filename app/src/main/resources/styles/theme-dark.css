@@ -68,3 +68,30 @@
 .scroll-bar > .decrement-button > .decrement-arrow {
     -fx-background-color: derive(-fx-accent, -20%);
 }
+
+/* Dialogs */
+.dialog-pane:header .header-panel {
+    -fx-background-color: -fx-background;
+}
+.alert.confirmation.dialog-pane {
+    -fx-graphic: null;
+}
+.alert.confirmation.dialog-pane .fa-icon,
+.alert.confirmation.dialog-pane .fa-icon:hover {
+    -fx-font-size: 32px;
+    -fx-fill: #4CA5C6;
+}
+.alert.confirmation.dialog-pane .fa-icon:hover {
+    -fx-fill: #FDFD42;
+    -fx-effect: dropshadow(three-pass-box, rgba(100,183,3,0.8), 18, 0, 0.5, 0.25);
+}
+.dialog-pane .button {
+    -fx-background-color: #2F2F2F;
+}
+.dialog-pane .button:hover,
+.dialog-pane .button:focused:hover {
+    -fx-background-color: #666;
+}
+.dialog-pane .button:focused {
+    -fx-background-color: #444;
+}
