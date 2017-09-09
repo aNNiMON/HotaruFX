@@ -12,6 +12,10 @@ public class FontAwesomeIcon extends Text {
         init();
     }
 
+    public FontAwesomeIcon(FontAwesome icon) {
+        this(icon.getSymbol());
+    }
+
     public FontAwesomeIcon(String text) {
         super(text);
         init();

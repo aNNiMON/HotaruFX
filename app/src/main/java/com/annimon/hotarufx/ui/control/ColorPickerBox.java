@@ -1,5 +1,6 @@
 package com.annimon.hotarufx.ui.control;
 
+import com.annimon.hotarufx.ui.FontAwesome;
 import com.annimon.hotarufx.ui.FontAwesomeIcon;
 import java.util.regex.Pattern;
 import javafx.beans.binding.Bindings;
@@ -155,7 +156,7 @@ public class ColorPickerBox extends VBox {
             }
         });
         final Button copyButton = new Button("Copy");
-        copyButton.setGraphic(new FontAwesomeIcon("copy"));
+        copyButton.setGraphic(new FontAwesomeIcon(FontAwesome.COPY));
         copyButton.setOnAction(e -> {
             final Clipboard clipboard = Clipboard.getSystemClipboard();
             final ClipboardContent content = new ClipboardContent();

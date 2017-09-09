@@ -8,6 +8,7 @@ import com.annimon.hotarufx.io.DocumentManager;
 import com.annimon.hotarufx.io.FileManager;
 import com.annimon.hotarufx.io.IOStream;
 import com.annimon.hotarufx.lib.Context;
+import com.annimon.hotarufx.ui.FontAwesome;
 import com.annimon.hotarufx.ui.FontAwesomeIcon;
 import com.annimon.hotarufx.ui.RenderPreparer;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
@@ -119,7 +120,7 @@ public class EditorController implements Initializable, DocumentListener {
         alert.initOwner(primaryStage);
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.getDialogPane().setContent(new Group());
-        val icon = new FontAwesomeIcon("question-circle");
+        val icon = new FontAwesomeIcon(FontAwesome.QUESTION_CIRCLE);
         alert.getDialogPane().setGraphic(icon);
         return alert.showAndWait()
                 .filter(b -> b == ButtonType.OK)

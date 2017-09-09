@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
+import lombok.Getter;
 
 public enum FontAwesome {
 
@@ -25,6 +26,7 @@ public enum FontAwesome {
     SCISSORS("\uf0c4", "scissors", "cut"),
     UNDO("\uf0e2", "undo");
 
+    @Getter
     private final String symbol;
     private final List<String> names;
 
