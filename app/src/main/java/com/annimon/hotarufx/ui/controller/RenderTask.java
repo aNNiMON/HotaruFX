@@ -29,7 +29,6 @@ public class RenderTask extends Task<Boolean> {
         frameRate = timeLine.getFrameRate();
     }
 
-
     @Override
     protected Boolean call() throws Exception {
         val fxTimeline = timeLine.getFxTimeline();

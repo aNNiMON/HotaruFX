@@ -117,8 +117,7 @@ public class EditorController implements Initializable, DocumentListener {
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
-            logError("Unable to open about window");
-            logPane.setExpanded(true);
+            showError("Unable to open about window");
         }
     }
 
@@ -151,11 +150,9 @@ public class EditorController implements Initializable, DocumentListener {
                         stage.show();
                     });
         } catch (RendererException re) {
-            logError(re.getMessage());
-            logPane.setExpanded(true);
+            showError(re.getMessage());
         } catch (RuntimeException e) {
-            logError(Exceptions.stackTraceToString(e));
-            logPane.setExpanded(true);
+            showError(Exceptions.stackTraceToString(e));
         }
     }
 
@@ -189,8 +186,7 @@ public class EditorController implements Initializable, DocumentListener {
                                 stage.setTitle(task.getMessage());
                             });
                             task.setOnFailed(ev -> {
-                                logError(Exceptions.stackTraceToString(ev.getSource().getException()));
-                                logPane.setExpanded(true);
+                                showError(Exceptions.stackTraceToString(ev.getSource().getException()));
                                 stage.close();
                             });
                             task.setOnSucceeded(ev -> stage.close());
@@ -199,11 +195,9 @@ public class EditorController implements Initializable, DocumentListener {
                         stage.show();
                     });
         } catch (RendererException re) {
-            logError(re.getMessage());
-            logPane.setExpanded(true);
+            showError(re.getMessage());
         } catch (RuntimeException e) {
-            logError(Exceptions.stackTraceToString(e));
-            logPane.setExpanded(true);
+            showError(Exceptions.stackTraceToString(e));
         }
     }
 
@@ -283,6 +277,11 @@ public class EditorController implements Initializable, DocumentListener {
 
     public void stop() {
         syntaxHighlighter.release();
+    }
+
+    public void showError(String message) {
+        logError(message);
+        logPane.setExpanded(true);
     }
 
     @Override
