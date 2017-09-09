@@ -106,6 +106,7 @@ public class HotaruLexer extends Lexer {
     private Token tokenizeText(char openChar) {
         next();// "
         clearBuffer();
+        int startPos = getPos() - 1;
         char current = peek(0);
         while (true) {
             if (current == '\\') {
@@ -125,7 +126,9 @@ public class HotaruLexer extends Lexer {
                     case 't': current = next(); buffer.append('\t'); continue;
                     case 'u': // http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.3
                         int rollbackPosition = getPos();
-                        while (current == 'u') current = next();
+                        while (current == 'u') {
+                            current = next();
+                        }
                         int escapedValue = 0;
                         for (int i = 12; i >= 0 && escapedValue != -1; i -= 4) {
                             if (isHexNumber(current)) {
@@ -155,7 +158,8 @@ public class HotaruLexer extends Lexer {
             current = next();
         }
         next(); // "
-        return addToken(HotaruTokenId.TEXT, getBuffer().toString(), getBuffer().length() + 2);
+        int actualLength = getPos() - startPos;
+        return addToken(HotaruTokenId.TEXT, getBuffer().toString(), actualLength);
     }
 
     private Token tokenizeOperator() {
