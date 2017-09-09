@@ -70,6 +70,7 @@ public class Composition {
                     timeline.togglePause();
                     break;
                 case BACK_SPACE:
+                    timeline.getFxTimeline().stop();
                     timeline.getFxTimeline().playFromStart();
                     break;
                 case LEFT:
