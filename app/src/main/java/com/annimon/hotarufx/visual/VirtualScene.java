@@ -1,6 +1,6 @@
 package com.annimon.hotarufx.visual;
 
-import javafx.scene.Group;
+import com.annimon.hotarufx.ui.control.NodesGroup;
 import javafx.scene.Node;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public class VirtualScene {
 
     @Getter
-    private final Group group;
+    private final NodesGroup group;
 
     @Getter
     private final int virtualWidth, virtualHeight;

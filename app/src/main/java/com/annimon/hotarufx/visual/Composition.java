@@ -1,6 +1,6 @@
 package com.annimon.hotarufx.visual;
 
-import javafx.scene.Group;
+import com.annimon.hotarufx.ui.control.NodesGroup;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -54,7 +54,7 @@ public class Composition {
     }
 
     private VirtualScene newScene() {
-        val group = new Group();
+        val group = new NodesGroup(sceneWidth, sceneHeight);
         group.setScaleX(1d / factor);
         group.setScaleY(1d / factor);
         group.setTranslateX(sceneWidth / 2);
