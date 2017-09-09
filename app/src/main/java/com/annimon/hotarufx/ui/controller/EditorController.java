@@ -1,16 +1,14 @@
 package com.annimon.hotarufx.ui.controller;
 
 import com.annimon.hotarufx.Main;
-import com.annimon.hotarufx.bundles.BundleLoader;
 import com.annimon.hotarufx.exceptions.Exceptions;
+import com.annimon.hotarufx.exceptions.RendererException;
 import com.annimon.hotarufx.io.DocumentListener;
 import com.annimon.hotarufx.io.DocumentManager;
 import com.annimon.hotarufx.io.FileManager;
 import com.annimon.hotarufx.io.IOStream;
-import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.Context;
-import com.annimon.hotarufx.parser.HotaruParser;
-import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
+import com.annimon.hotarufx.ui.Renderer;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import com.annimon.hotarufx.ui.control.LibraryItem;
 import java.io.IOException;
@@ -129,47 +127,34 @@ public class EditorController implements Initializable, DocumentListener {
         if (input.isEmpty()) {
             return;
         }
-
-        val context = new Context();
-        BundleLoader.load(context, BundleLoader.runtimeBundles());
-
-        val parser = new HotaruParser(HotaruLexer.tokenize(input));
-        val program = parser.parse();
-        if (parser.getParseErrors().hasErrors()) {
-            log.setText(parser.getParseErrors().toString());
-            logPane.setExpanded(true);
-            return;
-        }
         try {
-            program.accept(new InterpreterVisitor(), context);
+            Renderer.init()
+                    .input(input)
+                    .context(new Context())
+                    .evaluateWithRuntimeBundle()
+                    .prepareStage(primaryStage)
+                    .peek((stage, composition) -> {
+                        val timeline = composition.getTimeline();
+                        timeline.getFxTimeline().currentTimeProperty().addListener((o, oldValue, d) -> {
+                            val min = (int) d.toMinutes();
+                            val durationSec = d.subtract(Duration.minutes(min));
+                            val sec = (int) durationSec.toSeconds();
+                            val durationMs = durationSec.subtract(Duration.seconds(sec));
+                            val frame = (int) (durationMs.toMillis() * timeline.getFrameRate() / 1000d);
+                            val allFrame = (int) (d.toMillis() * timeline.getFrameRate() / 1000d);
+                            stage.setTitle(String.format("%02d:%02d.%02d   %d", min, sec, frame, allFrame));
+                        });
+
+                        stage.setOnShown(e -> timeline.getFxTimeline().play());
+                        stage.show();
+                    });
+        } catch (RendererException re) {
+            logError(re.getMessage());
+            logPane.setExpanded(true);
         } catch (RuntimeException e) {
             logError(Exceptions.stackTraceToString(e));
             logPane.setExpanded(true);
-            return;
         }
-
-        val stage = new Stage();
-        val composition = context.composition();
-        if (composition == null) {
-            logError("There is no composition.\nMake sure you call composition method.");
-            logPane.setExpanded(true);
-            return;
-        }
-        stage.initOwner(primaryStage);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.setScene(composition.produceAnimationScene());
-        val timeline = composition.getTimeline();
-        timeline.getFxTimeline().currentTimeProperty().addListener((o, oldValue, d) -> {
-            val min = (int) d.toMinutes();
-            val durationSec = d.subtract(Duration.minutes(min));
-            val sec = (int) durationSec.toSeconds();
-            val durationMs = durationSec.subtract(Duration.seconds(sec));
-            val frame = (int) (durationMs.toMillis() * timeline.getFrameRate() / 1000d);
-            val allFrame = (int) (d.toMillis() * timeline.getFrameRate() / 1000d);
-            stage.setTitle(String.format("%02d:%02d.%02d   %d", min, sec, frame, allFrame));
-        });
-        stage.setOnShown(e -> timeline.getFxTimeline().play());
-        stage.show();
     }
 
     @Override
