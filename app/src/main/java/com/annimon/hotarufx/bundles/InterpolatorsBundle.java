@@ -22,6 +22,7 @@ public class InterpolatorsBundle implements Bundle {
     public void load(Context context) {
         Bundle.super.load(context);
         context.variables().put("linear", new InterpolatorValue(Interpolator.LINEAR));
+        context.variables().put("hold", new InterpolatorValue(Interpolator.DISCRETE));
         context.variables().put("discrete", new InterpolatorValue(Interpolator.DISCRETE));
         context.variables().put("easeIn", new InterpolatorValue(Interpolator.EASE_IN));
         context.variables().put("easeOut", new InterpolatorValue(Interpolator.EASE_OUT));
