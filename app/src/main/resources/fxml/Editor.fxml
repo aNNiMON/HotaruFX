@@ -38,6 +38,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
                     <MenuItem onAction="#handleMenuPlay" text="Preview" accelerator="F5"/>
+                    <MenuItem onAction="#handleMenuRender" text="Render"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <MenuItem onAction="#handleMenuAbout" text="About"/>

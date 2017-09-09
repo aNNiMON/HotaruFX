@@ -62,7 +62,7 @@ public class Composition {
         return new VirtualScene(group, virtualWidth, virtualHeight);
     }
 
-    public Scene produceAnimationScene() {
+    public Scene producePreviewScene() {
         val fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
         fxScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
@@ -87,6 +87,12 @@ public class Composition {
                     break;
             }
         });
+        return fxScene;
+    }
+
+    public Scene produceRendererScene() {
+        val fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
+
         return fxScene;
     }
 }

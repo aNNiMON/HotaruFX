@@ -10,17 +10,19 @@ import com.annimon.hotarufx.parser.visitors.InterpreterVisitor;
 import com.annimon.hotarufx.visual.Composition;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
+import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.val;
 
-public class Renderer {
+public class RenderPreparer {
 
-    public static Renderer init() {
-        return new Renderer();
+    public static RenderPreparer init() {
+        return new RenderPreparer();
     }
 
-    private Renderer() {
+    private RenderPreparer() {
     }
 
     public WithInput input(String input) {
@@ -58,24 +60,30 @@ public class Renderer {
 
         public Evaluated evaluateWithBundles(List<Class<? extends Bundle>> bundles) {
             BundleLoader.load(context, bundles);
-            return evaluate();
+            evaluate();
+            return new Evaluated(this);
         }
 
-        private Evaluated evaluate() {
+        public EvaluatedForRender evaluateForRender() {
+            BundleLoader.load(context, BundleLoader.runtimeBundles());
+            evaluate();
+            return new EvaluatedForRender(this);
+        }
+
+        private void evaluate() {
             val parser = new HotaruParser(HotaruLexer.tokenize(source.input));
             val program = parser.parse();
             if (parser.getParseErrors().hasErrors()) {
                 throw new RendererException(parser.getParseErrors().toString());
             }
             program.accept(new InterpreterVisitor(), context);
-            return new Evaluated(this);
         }
     }
 
 
     public class Evaluated {
 
-        private final WithContext source;
+        protected final WithContext source;
 
         private Evaluated(WithContext source) {
             this.source = source;
@@ -87,8 +95,12 @@ public class Renderer {
             stage.initOwner(primaryStage);
             stage.initModality(Modality.WINDOW_MODAL);
             val composition = source.context.composition();
-            stage.setScene(composition.produceAnimationScene());
+            stage.setScene(sceneProvider().apply(composition));
             return new WithStage(composition, stage);
+        }
+
+        protected Function<Composition, Scene> sceneProvider() {
+            return Composition::producePreviewScene;
         }
 
         private void checkCompositionExists() {
@@ -96,6 +108,18 @@ public class Renderer {
                 throw new RendererException("There is no composition.\n" +
                         "Make sure you call composition method.");
             }
+        }
+    }
+
+    public class EvaluatedForRender extends Evaluated {
+
+        private EvaluatedForRender(WithContext source) {
+            super(source);
+        }
+
+        @Override
+        protected Function<Composition, Scene> sceneProvider() {
+            return Composition::produceRendererScene;
         }
     }
 

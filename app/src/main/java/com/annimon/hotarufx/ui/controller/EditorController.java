@@ -8,7 +8,7 @@ import com.annimon.hotarufx.io.DocumentManager;
 import com.annimon.hotarufx.io.FileManager;
 import com.annimon.hotarufx.io.IOStream;
 import com.annimon.hotarufx.lib.Context;
-import com.annimon.hotarufx.ui.Renderer;
+import com.annimon.hotarufx.ui.RenderPreparer;
 import com.annimon.hotarufx.ui.SyntaxHighlighter;
 import com.annimon.hotarufx.ui.control.LibraryItem;
 import java.io.IOException;
@@ -30,6 +30,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -37,6 +38,7 @@ import lombok.val;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+@SuppressWarnings("unused")
 public class EditorController implements Initializable, DocumentListener {
 
     @FXML
@@ -128,7 +130,7 @@ public class EditorController implements Initializable, DocumentListener {
             return;
         }
         try {
-            Renderer.init()
+            RenderPreparer.init()
                     .input(input)
                     .context(new Context())
                     .evaluateWithRuntimeBundle()
@@ -146,6 +148,54 @@ public class EditorController implements Initializable, DocumentListener {
                         });
 
                         stage.setOnShown(e -> timeline.getFxTimeline().play());
+                        stage.show();
+                    });
+        } catch (RendererException re) {
+            logError(re.getMessage());
+            logPane.setExpanded(true);
+        } catch (RuntimeException e) {
+            logError(Exceptions.stackTraceToString(e));
+            logPane.setExpanded(true);
+        }
+    }
+
+    @FXML
+    private void handleMenuRender(ActionEvent event) {
+        log.setText("");
+        val input = editor.getText();
+        if (input.isEmpty()) {
+            return;
+        }
+        try {
+            RenderPreparer.init()
+                    .input(input)
+                    .context(new Context())
+                    .evaluateForRender()
+                    .prepareStage(primaryStage)
+                    .peek((stage, composition) -> {
+                        val chooser = new DirectoryChooser();
+                        chooser.setTitle("Choose directory for rendering frames");
+                        val directory = chooser.showDialog(primaryStage);
+                        if (directory == null || !directory.exists() || !directory.isDirectory()) {
+                            return;
+                        }
+
+                        val fxTimeline = composition.getTimeline().getFxTimeline();
+                        stage.setOnShown(e -> {
+                            fxTimeline.playFromStart();
+                            fxTimeline.pause();
+                            val task = new RenderTask(directory, composition, stage.getScene());
+                            task.messageProperty().addListener(ev -> {
+                                stage.setTitle(task.getMessage());
+                            });
+                            task.setOnFailed(ev -> {
+                                logError(Exceptions.stackTraceToString(ev.getSource().getException()));
+                                logPane.setExpanded(true);
+                                stage.close();
+                            });
+                            task.setOnSucceeded(ev -> stage.close());
+                            new Thread(task).start();
+                        });
                         stage.show();
                     });
         } catch (RendererException re) {
