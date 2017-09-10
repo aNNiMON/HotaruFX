@@ -3,6 +3,8 @@ HotaruFX
 
 Programming language for creating animations
 
+![App running on Linux Mint](art/screenshot.png)
+
 
 ## Demo
 
