@@ -1,0 +1,43 @@
+composition(1280, 720, 30)
+
+WE = text({
+  x: -375
+  y: 0
+  valign: "CENTER"
+  text: "\uf0c0"
+  fill: '#292929'
+  font: 200
+})
+
+LOVE = text({
+  x: -80
+  y: 0
+  valign: "CENTER"
+  text: "\uf004"
+  fill: '#cf1010'
+  font: 200
+})
+LOVE@scaleX
+  .add(200 ms, 1.4, easeOut)
+  .add(600 ms, 1.1, easeOut)
+LOVE@scaleY
+  .add(200 ms, 1.4, easeOut)
+  .add(600 ms, 1.1, easeOut)
+
+GITHUB = text({
+  x: 200
+  y: 0
+  valign: "CENTER"
+  text: "\uf09b"
+  fill: '#292929'
+  font: 200
+})
+
+G = group(WE LOVE GITHUB)
+G@rotate
+  .add(1 sec, 0, hold)
+  .add(1800 ms, 360, ease)
+
+/* note: no commas at all */
+
+render(G)

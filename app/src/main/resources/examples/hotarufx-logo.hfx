@@ -1,0 +1,20 @@
+composition(1280, 720, 30, "#2F2F2F")
+
+LOGO = text({
+  x: -250,
+  y: 0,
+  valign: "CENTER",
+  text: 'HotaruFX',
+  fill: '#FDFD42',
+  font: 100,
+  css: '
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(100,183,3,0.8), 18, 0, 0.5, 0.25);
+  '
+})
+
+LOGO@fill
+  .add(2 sec, "#82fd42", easeOut)
+  .add(4 sec, "#FDFD42", ease)
+
+render(LOGO)

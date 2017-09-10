@@ -1,0 +1,21 @@
+composition(1280, 720, 30, "#FAFAFA")
+
+TEXT = text({
+  x: -250,
+  y: 0,
+  halign: "CENTER",
+  valign: "CENTER",
+  text: 'MULTILINE
+TEXT
+EXAMPLE',
+  fill: '#273687',
+  lineSpacing: 50,
+  font: {
+    family: "monospace",
+    weight: "bold",
+    italic: true,
+    size: 100
+  },
+})
+
+render(TEXT)

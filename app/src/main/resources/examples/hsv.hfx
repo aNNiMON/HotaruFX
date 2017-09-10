@@ -1,0 +1,18 @@
+composition(1280, 720, 30)
+
+A = circle({
+  cx: 0,
+  cy: 0,
+  radius: 200,
+  fill: '#ff0000'
+})
+
+A@fill
+  .add(2 sec, "#ffff00")
+  .add(4 sec, "#00ff00")
+  .add(6 sec, "#00ffff")
+  .add(8 sec, "#0000ff")
+  .add(10 sec, "#ff00ff")
+  .add(12 sec, "#ff0000")
+
+render(A)

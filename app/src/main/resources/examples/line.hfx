@@ -1,0 +1,44 @@
+composition(1280, 720, 30)
+
+LINE = line({
+  startX: -HalfWidth,
+  startY: -HalfHeight,
+  endX: HalfWidth,
+  endY: HalfHeight,
+  stroke: "#333",
+  strokeWidth: 5
+})
+
+LINE@startY
+  .add(2 sec, HalfHeight, ease)
+  .add(4 sec, -HalfHeight, ease)
+LINE@endY
+  .add(2 sec, -HalfHeight, ease)
+  .add(4 sec, HalfHeight, ease)
+
+LINE@startX
+  .add(4 sec, -HalfWidth, discrete)
+  .add(6 sec, HalfWidth, ease)
+  .add(8 sec, -HalfWidth, ease)
+  .add(10 sec, HalfWidth, ease)
+  .add(12 sec, -HalfWidth, ease)
+LINE@endX
+  .add(4 sec, HalfWidth, discrete)
+  .add(6 sec, -HalfWidth, ease)
+  .add(8 sec, HalfWidth, ease)
+  .add(10 sec, -HalfWidth, ease)
+  .add(12 sec, HalfWidth, ease)
+  
+
+LINE@startY
+  .add(8 sec, -HalfHeight, discrete)
+  .add(10 sec, HalfHeight, ease)
+  .add(12 sec, -HalfHeight, ease)
+LINE@endY
+  .add(8 sec, HalfHeight, discrete)
+  .add(10 sec, -HalfHeight, ease)
+  .add(12 sec, HalfHeight, ease)
+
+
+
+render(LINE)

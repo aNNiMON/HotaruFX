@@ -1,0 +1,17 @@
+composition(1280, 720, 30)
+
+A = rectangle({
+  x: -700,
+  y: -75,
+  width: 100,
+  height: 150,
+  fill: '#4233c0'
+  rotate: 0
+})
+
+A@rotate
+  .add(2 sec, 720, ease)
+A@x
+  .add(2 sec, 600, ease)
+
+render(A)

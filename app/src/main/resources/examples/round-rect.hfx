@@ -1,0 +1,16 @@
+composition(1280, 720, 30)
+
+A = rectangle({
+  x: -100,
+  y: -100,
+  width: 200,
+  height: 200,
+  fill: "green"
+})
+A@arcWidth
+  .add(1.5 sec, 100)
+A@arcHeight
+  .add(1.5 sec, 100)
+
+render(A)
+

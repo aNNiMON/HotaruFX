@@ -16,6 +16,7 @@ import com.annimon.hotarufx.ui.control.LibraryItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
@@ -32,6 +33,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
@@ -46,6 +49,9 @@ import org.fxmisc.richtext.LineNumberFactory;
 
 @SuppressWarnings("unused")
 public class EditorController implements Initializable, DocumentListener {
+
+    @FXML
+    private Menu examplesMenu;
 
     @FXML
     private CheckMenuItem syntaxHighlightingItem;
@@ -71,7 +77,7 @@ public class EditorController implements Initializable, DocumentListener {
     @FXML
     private void handleMenuNew(ActionEvent event) {
         documentManager.newDocument();
-        openSample();
+        openExample();
         updateTitle();
     }
 
@@ -249,13 +255,34 @@ public class EditorController implements Initializable, DocumentListener {
     public void initialize(URL location, ResourceBundle resources) {
         editor.setParagraphGraphicFactory(LineNumberFactory.get(editor));
         documentManager = new FileManager();
+        populateExamples();
         initSyntaxHighlighter();
         initUndoRedo();
         initCopyCutPaste();
-        openSample();
+        openExample();
         editor.getUndoManager().forgetHistory();
         initializeLibrary();
         Platform.runLater(editor::requestFocus);
+    }
+
+    private void populateExamples() {
+        val map = new LinkedHashMap<String, String>();
+        map.put("HotaruFX Logo", "hotarufx-logo.hfx");
+        map.put("Font Awesome Icons", "font-awesome.hfx");
+        map.put("HSV Color", "hsv.hfx");
+        map.put("Line", "line.hfx");
+        map.put("Rectangle", "rectangle.hfx");
+        map.put("Round Rectangle", "round-rect.hfx");
+        map.put("Font", "font.hfx");
+        map.put("Text Clipping", "clip-text.hfx");
+        map.put("Blend Modes", "blend-modes.hfx");
+        map.put("Stroke Ants", "stroke-ants.hfx");
+        examplesMenu.getItems().clear();
+        for (val entry : map.entrySet()) {
+            val item = new MenuItem(entry.getKey());
+            item.setOnAction(e -> openExample("/examples/" + entry.getValue()));
+            examplesMenu.getItems().add(item);
+        }
     }
 
     private void initSyntaxHighlighter() {
@@ -333,9 +360,28 @@ public class EditorController implements Initializable, DocumentListener {
         log.insertText(0, message + System.lineSeparator());
     }
 
-    private void openSample() {
-        editor.replaceText(
-                "composition(1280, 720, 30)\n" +
+    private void openExample() {
+        openExample(null);
+    }
+
+    private void openExample(String path) {
+        val content = (path != null) ? readProgram(path) : fallbackProgram();
+        editor.replaceText(content);
+    }
+
+    private String readProgram(String path) {
+        try (InputStream is = Main.class.getResourceAsStream(path)) {
+            if (is == null) {
+                return fallbackProgram();
+            }
+            return IOStream.readContent(is);
+        } catch (IOException ioe) {
+            return fallbackProgram();
+        }
+    }
+
+    private String fallbackProgram() {
+        return "composition(1280, 720, 30)\n" +
                 "\n" +
                 "A = circle({\n" +
                 "  cx: 0,\n" +
@@ -348,18 +394,6 @@ public class EditorController implements Initializable, DocumentListener {
                 "  .add(300 ms, 200)\n" +
                 "  .add(1 sec, 50)\n" +
                 "\n" +
-                "render(A)\n");
-    }
-
-    private String readProgram(String path) {
-        val fallbackProgram = "composition(640, 480, 25)";
-        try (InputStream is = Main.class.getResourceAsStream(path)) {
-            if (is == null) {
-                return fallbackProgram;
-            }
-            return IOStream.readContent(is);
-        } catch (IOException ioe) {
-            return fallbackProgram;
-        }
+                "render(A)\n";
     }
 }

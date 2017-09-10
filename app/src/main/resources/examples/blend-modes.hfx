@@ -1,0 +1,80 @@
+composition(1280, 720, 30)
+
+TOP = circle({
+  cx: 0,
+  cy: 100,
+  radius: 100,
+  fill: '#c74747'
+})
+RIGHT = circle({
+  cx: 100,
+  cy: 0,
+  radius: 100,
+  fill: '#c7c747'
+})
+BOTTOM = circle({
+  cx: 0,
+  cy: -100,
+  radius: 100,
+  fill: '#9bc747'
+})
+LEFT = circle({
+  cx: -100,
+  cy: 0,
+  radius: 100,
+  fill: '#47c0c7'
+})
+FRONT = circle({
+  cx: 0,
+  cy: 0,
+  radius: 100,
+  fill: '#4754c7',
+  blendMode: "SRC_OVER"
+})
+LABEL = text({
+  x: -100,
+  y: -300,
+  halign: "CENTER",
+  valign: "CENTER",
+  text: 'SRC_OVER',
+  fill: 'black',
+  font: 40
+})
+
+FRONT@blendMode
+  .add(1 sec, "SRC_ATOP", discrete)
+  .add(2 sec, "ADD", discrete)
+  .add(3 sec, "MULTIPLY", discrete)
+  .add(4 sec, "SCREEN", discrete)
+  .add(5 sec, "OVERLAY", discrete)
+  .add(6 sec, "DARKEN", discrete)
+  .add(7 sec, "LIGHTEN", discrete)
+  .add(8 sec, "COLOR_DODGE", discrete)
+  .add(9 sec, "COLOR_BURN", discrete)
+  .add(10 sec, "HARD_LIGHT", discrete)
+  .add(11 sec, "SOFT_LIGHT", discrete)
+  .add(12 sec, "DIFFERENCE", discrete)
+  .add(13 sec, "EXCLUSION", discrete)
+  .add(14 sec, "RED", discrete)
+  .add(15 sec, "GREEN", discrete)
+  .add(16 sec, "BLUE", discrete)
+
+LABEL@text
+  .add(1 sec, "SRC_ATOP", discrete)
+  .add(2 sec, "ADD", discrete)
+  .add(3 sec, "MULTIPLY", discrete)
+  .add(4 sec, "SCREEN", discrete)
+  .add(5 sec, "OVERLAY", discrete)
+  .add(6 sec, "DARKEN", discrete)
+  .add(7 sec, "LIGHTEN", discrete)
+  .add(8 sec, "COLOR_DODGE", discrete)
+  .add(9 sec, "COLOR_BURN", discrete)
+  .add(10 sec, "HARD_LIGHT", discrete)
+  .add(11 sec, "SOFT_LIGHT", discrete)
+  .add(12 sec, "DIFFERENCE", discrete)
+  .add(13 sec, "EXCLUSION", discrete)
+  .add(14 sec, "RED", discrete)
+  .add(15 sec, "GREEN", discrete)
+  .add(16 sec, "BLUE", discrete)
+
+render(TOP, RIGHT, BOTTOM, LEFT, FRONT, LABEL)

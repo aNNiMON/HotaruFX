@@ -1,0 +1,19 @@
+composition(1280, 720, 30)
+
+A = text({
+  x: -450,
+  y: 0,
+  valign: "CENTER",
+  text: 'HotaruFX',
+  fill: "white",
+  stroke: '#37bd2b',
+  strokeWidth: 4,
+  font: 200
+})
+
+strokeDashArray(A, [25, 50])
+
+A@strokeDashOffset
+  .add(5 sec, 500)
+
+render(A)

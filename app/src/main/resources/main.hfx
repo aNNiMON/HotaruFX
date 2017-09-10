@@ -1,111 +1,14 @@
 composition(1280, 720, 30)
 
 A = circle({
-  centerX: 0,
-  centerY: 0,
-  radius: 10,
-  fill: "red"
+  cx: 0,
+  cy: 0,
+  radius: 100,
+  fill: '#9bc747'
 })
+
 A@radius
-  .add(10, 70)
-  .add(30, 20)
-A@opacity
-  .add(0.5 sec, 1)
-  .add(1 sec, 0)
+  .add(300 ms, 200)
+  .add(1 sec, 50)
 
-B = rectangle({
-  x: -50,
-  y: -50,
-  width: 100,
-  height: 100,
-  fill: "green"
-})
-B@arcWidth
-  .add(28, 0)
-  .add(50, 80)
-B@arcHeight
-  .add(28, 0)
-  .add(50, 80)
-
-
-CLIP = circle({
-  cx: -500,
-  cy: -125,
-  radius: 78
-})
-CLIP@cx
-  .add(60, -400)
-  .add(100, 173)
-
-
-C = text({
-  x: -240,
-  y: -100,
-  text: "HotaruFX",
-  fill: "white",
-  stroke: "black",
-  font: 100,
-  underline: 1
-  clip: CLIP,
-  css: '
-    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.8), 5, 0, 0.5, 0.25);
-  '
-})
-C@layoutX
-  .add(100, 0)
-  .add(120, -300)
-C@scaleX
-  .add(100, 1)
-  .add(120, 1.8)
-C@scaleY
-  .add(100, 1)
-  .add(120, 1.8)
-
-HEART = svgPath({
-  layoutX: -15,
-  layoutY: -12,
-  content: "M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-            6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z",
-  fill: "red",
-  strokeWidth: 2,
-  stroke: "white"
-})
-
-points = [
-  0, -50,
-  -25, 0,
-  25, 0,
-  0, 50,
-]
-POLYGON = polygon(points, {
-  translateX: -300,
-  fill: "purple"
-})
-POLYLINE = polyline(points, {
-  translateX: 300,
-  stroke: "purple"
-})
-
-LINE = line({
-  visible: false,
-  startX: -600
-  startY: 300
-  endX: 600
-  endY: 300,
-  stroke: "#777",
-  strokeDashOffset: 45
-})
-LINE@visible.add(100, true)
-LINE@strokeWidth.add(100, 0).add(140, 10)
-
-arcRadius = 200
-ARC = arc({
-  cy: 295
-  radiusX: arcRadius,
-  radiusY: arcRadius,
-  fill: "yellow"
-})
-ARC@length.add(140, 0).add(160, 180)
-
-render(ARC, B, A, C, CLIP, HEART, POLYGON, POLYLINE, LINE)
-
+render(A)

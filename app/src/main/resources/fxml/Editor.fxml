@@ -29,6 +29,7 @@
                 <Menu mnemonicParsing="false" text="File">
                     <MenuItem onAction="#handleMenuNew" text="New" accelerator="Shortcut+N"/>
                     <MenuItem onAction="#handleMenuOpen" text="Open" accelerator="Shortcut+O"/>
+                    <Menu fx:id="examplesMenu" text="Open example" mnemonicParsing="false" />
                     <MenuItem onAction="#handleMenuSave" text="Save" accelerator="Shortcut+S"/>
                     <MenuItem onAction="#handleMenuSaveAs" text="Save As" accelerator="Shift+Shortcut+S"/>
                     <MenuItem onAction="#handleMenuExit" text="Exit"/>
