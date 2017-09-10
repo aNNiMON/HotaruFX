@@ -35,6 +35,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="View">
                     <CheckMenuItem fx:id="syntaxHighlightingItem" text="Syntax Highlighting" selected="true" />
+                    <MenuItem onAction="#handleMenuIncreaseFontSize" text="Increase fomt size" accelerator="Shortcut+Equals"/>
+                    <MenuItem onAction="#handleMenuDecreaseFontSize" text="Decrease fomt size" accelerator="Shortcut+Minus"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Composition">
                     <MenuItem onAction="#handleMenuPlay" text="Preview" accelerator="F5"/>
@@ -93,6 +95,23 @@
                     </graphic>
                     <tooltip>
                         <Tooltip text="Preview composition"/>
+                    </tooltip>
+                </Button>
+                <Separator/>
+                <Button onAction="#handleMenuIncreaseFontSize">
+                    <graphic>
+                        <FontAwesomeIcon icon="search-plus"/>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Increase font size"/>
+                    </tooltip>
+                </Button>
+                <Button onAction="#handleMenuDecreaseFontSize">
+                    <graphic>
+                        <FontAwesomeIcon icon="search-minus"/>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Decrease font size"/>
                     </tooltip>
                 </Button>
             </ToolBar>

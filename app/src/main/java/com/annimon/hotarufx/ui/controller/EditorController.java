@@ -128,6 +128,23 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     @FXML
+    private void handleMenuIncreaseFontSize(ActionEvent event) {
+        changeFontSize(+1);
+    }
+
+    @FXML
+    private void handleMenuDecreaseFontSize(ActionEvent event) {
+        changeFontSize(-1);
+    }
+
+    private void changeFontSize(int delta) {
+        if (editor.getFont() == null) return;
+        val newSize = (int) editor.getFont().getSize() + delta;
+        if (8 > newSize || newSize > 40) return;
+        editor.setStyle("-fx-font-size: " + newSize + "px");
+    }
+
+    @FXML
     private void handleMenuAbout(ActionEvent event) {
         val stage = new Stage();
         stage.setTitle("About");

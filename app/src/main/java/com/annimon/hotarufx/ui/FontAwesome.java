@@ -24,6 +24,8 @@ public enum FontAwesome {
     QUESTION_CIRCLE("\uf059", "question-circle"),
     REDO("\uf01e", "redo"),
     SCISSORS("\uf0c4", "scissors", "cut"),
+    SEARCH_PLUS("\uf00e", "search-plus"),
+    SEARCH_MINUS("\uf010", "search-minus"),
     UNDO("\uf0e2", "undo");
 
     @Getter
