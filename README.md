@@ -97,7 +97,6 @@ TEXT = text({
   fill: "white",
   stroke: "black",
   font: 100,
-  halign: "CENTER",
   valign: "CENTER",
   underline: true,
   clip: CLIP,
@@ -141,6 +140,6 @@ Application requires JRE-8u60 or higher and Java FX support. Works properly on O
 
 ## License
 
-Apache 2.0. See ![license information](LICENSE).
+Apache 2.0. See [license information](LICENSE).
 
 
