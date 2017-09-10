@@ -99,20 +99,20 @@
                     </tooltip>
                 </Button>
                 <Separator/>
-                <Button onAction="#handleMenuIncreaseFontSize">
-                    <graphic>
-                        <FontAwesomeIcon icon="search-plus"/>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="Increase font size"/>
-                    </tooltip>
-                </Button>
                 <Button onAction="#handleMenuDecreaseFontSize">
                     <graphic>
                         <FontAwesomeIcon icon="search-minus"/>
                     </graphic>
                     <tooltip>
                         <Tooltip text="Decrease font size"/>
+                    </tooltip>
+                </Button>
+                <Button onAction="#handleMenuIncreaseFontSize">
+                    <graphic>
+                        <FontAwesomeIcon icon="search-plus"/>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Increase font size"/>
                     </tooltip>
                 </Button>
             </ToolBar>
