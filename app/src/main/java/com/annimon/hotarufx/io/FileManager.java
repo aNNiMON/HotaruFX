@@ -76,6 +76,9 @@ public class FileManager implements DocumentManager {
         fileChooser.setTitle(FILE_SAVE_TITLE);
         if (currentFile != null) {
             fileChooser.setInitialDirectory(currentFile.getParentFile());
+            fileChooser.setInitialFileName(currentFile.getName());
+        } else {
+            fileChooser.setInitialFileName("animation.hfx");
         }
         val newFile = fileChooser.showSaveDialog(stage);
         if (newFile == null) {
