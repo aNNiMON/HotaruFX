@@ -8,7 +8,7 @@ Programming language for creating animations
 
 ![Logo](art/logo.gif)
 
-```scala
+```java
 composition(320, 57, 25, "#2F2F2F")
 
 LOGO = text({
@@ -33,7 +33,7 @@ render(LOGO)
 
 ![Font icons](art/love-github.gif)
 
-```scala
+```java
 composition(1280, 720, 50)
 
 LOVE = text({
@@ -79,7 +79,7 @@ render(LOVE GITHUB)
 
 ![Text clip](art/hotarufx-clip.gif)
 
-```scala
+```java
 composition(1280, 720, 30)
 
 CLIP = circle({
