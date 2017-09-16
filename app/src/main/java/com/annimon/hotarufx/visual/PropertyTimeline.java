@@ -26,4 +26,9 @@ public class PropertyTimeline<T> {
         keyFrames.put(keyFrame, new KeyFrameValue<>(value, interpolator));
         return this;
     }
+
+    public PropertyTimeline<T> clear() {
+        keyFrames.clear();
+        return this;
+    }
 }

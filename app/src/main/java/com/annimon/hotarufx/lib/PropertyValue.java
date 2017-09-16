@@ -24,6 +24,7 @@ public class PropertyValue implements Value {
         this.property = property;
         fields = new HashMap<>();
         fields.put("add", new FunctionValue(add()));
+        fields.put("clear", new FunctionValue(clear()));
     }
 
     @Override
@@ -98,6 +99,13 @@ public class PropertyValue implements Value {
                     );
                     break;
             }
+            return this;
+        };
+    }
+
+    private Function clear() {
+        return args -> {
+            property.getProperty().get().clear();
             return this;
         };
     }
