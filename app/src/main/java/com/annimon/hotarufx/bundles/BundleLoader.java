@@ -16,7 +16,8 @@ public final class BundleLoader {
                 CompositionBundle.class,
                 NodesBundle.class,
                 NodeUtilsBundle.class,
-                InterpolatorsBundle.class
+                InterpolatorsBundle.class,
+                FontBundle.class
         );
     }
 

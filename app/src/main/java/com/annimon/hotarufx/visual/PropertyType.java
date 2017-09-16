@@ -1,5 +1,6 @@
 package com.annimon.hotarufx.visual;
 
+import com.annimon.hotarufx.lib.FontValue;
 import com.annimon.hotarufx.lib.MapValue;
 import com.annimon.hotarufx.lib.NodeValue;
 import com.annimon.hotarufx.lib.NumberValue;
@@ -8,16 +9,12 @@ import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.ObjectNode;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
-import java.util.HashMap;
 import java.util.function.Function;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 @SuppressWarnings("ConstantConditions")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
@@ -29,7 +26,7 @@ public enum PropertyType {
     NODE(toNode(), fromNode()),
     CLIP_NODE(toClipNode(), fromNode()),
     PAINT(v -> Color.valueOf(v.asString()), o -> new StringValue(o.toString())),
-    FONT(toFont(), fromFont());
+    FONT(toFont(), object -> new FontValue((Font) object));
 
     private final Function<Value, Object> fromHFX;
     private final Function<Object, Value> toHFX;
@@ -77,32 +74,10 @@ public enum PropertyType {
 
     private static Function<Value, Object> toFont() {
         return value -> {
-            // TODO: FontValue + FontBundle
             if (value.type() == Types.MAP) {
-                val map = ((MapValue) value).getMap();
-                val family = map.getOrDefault("family", new StringValue(Font.getDefault().getFamily())).asString();
-                val weight = map.getOrDefault("weight", NumberValue.of(FontWeight.NORMAL.getWeight())).asInt();
-                val isItalic = map.getOrDefault("italic", NumberValue.ZERO).asBoolean();
-                val posture = isItalic ? FontPosture.ITALIC : FontPosture.REGULAR;
-                val size = map.getOrDefault("size", NumberValue.MINUS_ONE).asDouble();
-                return Font.font(family, FontWeight.findByWeight(weight), posture, size);
+                return FontValue.toFont((MapValue) value);
             }
             return Font.font(value.asDouble());
-        };
-    }
-
-    private static Function<Object, Value> fromFont() {
-        return object -> {
-            val font = (Font) object;
-            val map = new HashMap<String, Value>(4);
-            map.put("family", new StringValue(font.getFamily()));
-            map.put("isItalic", NumberValue.fromBoolean(font.getStyle().toLowerCase().contains("italic")));
-            val weight = FontWeight.findByName(font.getStyle());
-            map.put("weight", NumberValue.of(weight != null
-                    ? (weight.getWeight())
-                    : FontWeight.NORMAL.getWeight()));
-            map.put("size", NumberValue.of(font.getSize()));
-            return new MapValue(map);
         };
     }
 }
