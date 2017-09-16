@@ -38,7 +38,7 @@ public class CompositionBundle implements Bundle {
                     composition = new Composition();
                     break;
                 case 1:
-                    double frameRate = args[0].asNumber();
+                    double frameRate = args[0].asDouble();
                     composition = new Composition(frameRate);
                     break;
                 case 2:
@@ -49,14 +49,14 @@ public class CompositionBundle implements Bundle {
                 case 3:
                     width = args[0].asInt();
                     height = args[1].asInt();
-                    frameRate = args[2].asNumber();
+                    frameRate = args[2].asDouble();
                     composition = new Composition(width, height, frameRate);
                     break;
                 case 4:
                 default:
                     width = args[0].asInt();
                     height = args[1].asInt();
-                    frameRate = args[2].asNumber();
+                    frameRate = args[2].asDouble();
                     val background = PropertyType.PAINT.<Paint>getFromHFX().apply(args[3]);
                     composition = new Composition(width, height, frameRate, background);
                     break;

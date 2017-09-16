@@ -24,12 +24,7 @@ public class InterpolatorValue implements Value {
     }
 
     @Override
-    public int asInt() {
-        throw new TypeException("Cannot cast interpolator to integer");
-    }
-
-    @Override
-    public double asNumber() {
+    public Number asNumber() {
         throw new TypeException("Cannot cast interpolator to number");
     }
 

@@ -117,12 +117,12 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
         final double frame;
         switch (node.operator) {
             case SECONDS:
-                frame = value.asNumber() * frameRate;
+                frame = value.asDouble() * frameRate;
                 break;
 
             case MILLISECONDS:
             default:
-                frame = (value.asNumber() * frameRate) / 1000d;
+                frame = (value.asDouble() * frameRate) / 1000d;
                 break;
         }
         return NumberValue.of(frame);

@@ -116,12 +116,7 @@ public class NodeValue implements Value {
     }
 
     @Override
-    public int asInt() {
-        throw new TypeException("Cannot cast node to integer");
-    }
-
-    @Override
-    public double asNumber() {
+    public Number asNumber() {
         throw new TypeException("Cannot cast node to number");
     }
 

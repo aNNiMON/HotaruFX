@@ -4,9 +4,19 @@ public interface Value extends Comparable<Value> {
 
     Object raw();
 
-    int asInt();
+    default boolean asBoolean() {
+        return asInt() != 0;
+    }
 
-    double asNumber();
+    default int asInt() {
+        return asNumber().intValue();
+    }
+
+    default double asDouble() {
+        return asNumber().doubleValue();
+    }
+
+    Number asNumber();
 
     String asString();
 

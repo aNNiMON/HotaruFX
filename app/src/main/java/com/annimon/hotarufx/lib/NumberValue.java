@@ -55,34 +55,9 @@ public class NumberValue implements Value {
         return value.intValue() != 0;
     }
 
-    public byte asByte() {
-        return value.byteValue();
-    }
-
-    public short asShort() {
-        return value.shortValue();
-    }
-
     @Override
-    public int asInt() {
-        return value.intValue();
-    }
-
-    public long asLong() {
-        return value.longValue();
-    }
-
-    public float asFloat() {
-        return value.floatValue();
-    }
-
-    public double asDouble() {
-        return value.doubleValue();
-    }
-
-    @Override
-    public double asNumber() {
-        return value.doubleValue();
+    public Number asNumber() {
+        return value;
     }
 
     @Override

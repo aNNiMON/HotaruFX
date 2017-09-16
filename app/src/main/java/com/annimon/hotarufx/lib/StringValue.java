@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public class StringValue implements Value {
 
-    public static final StringValue EMPTY = new StringValue("");
-
     private final String value;
 
     public StringValue(String value) {
@@ -36,12 +34,17 @@ public class StringValue implements Value {
     }
 
     @Override
-    public double asNumber() {
+    public double asDouble() {
         try {
             return Double.parseDouble(value);
         } catch (NumberFormatException e) {
             return 0;
         }
+    }
+
+    @Override
+    public Number asNumber() {
+        return asDouble();
     }
 
     @Override

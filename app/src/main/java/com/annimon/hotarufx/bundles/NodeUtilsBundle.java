@@ -41,7 +41,7 @@ public class NodeUtilsBundle implements Bundle {
             if (args.length == 2) {
                 val array = validator.requireArrayAt(1);
                 val dashList = array.stream()
-                        .map(Value::asNumber)
+                        .map(Value::asDouble)
                         .collect(Collectors.toList());
                 shape.getStrokeDashArray().setAll(dashList);
                 return NumberValue.ZERO;

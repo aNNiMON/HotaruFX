@@ -23,7 +23,7 @@ import lombok.val;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public enum PropertyType {
 
-    BOOLEAN(v -> v.asInt() != 0, o -> NumberValue.fromBoolean(Boolean.TRUE.equals(o))),
+    BOOLEAN(Value::asBoolean, o -> NumberValue.fromBoolean(Boolean.TRUE.equals(o))),
     NUMBER(toNumber(), o -> NumberValue.of((Number) o)),
     STRING(Value::asString, o -> new StringValue(String.valueOf(o))),
     NODE(toNode(), fromNode()),
@@ -50,7 +50,7 @@ public enum PropertyType {
             if (value.type() == Types.NUMBER) {
                 return ((NumberValue) value).raw();
             }
-            return value.asNumber();
+            return value.asDouble();
         };
     }
 
@@ -82,12 +82,12 @@ public enum PropertyType {
                 val map = ((MapValue) value).getMap();
                 val family = map.getOrDefault("family", new StringValue(Font.getDefault().getFamily())).asString();
                 val weight = map.getOrDefault("weight", NumberValue.of(FontWeight.NORMAL.getWeight())).asInt();
-                val isItalic = map.getOrDefault("italic", NumberValue.ZERO).asInt() != 0;
+                val isItalic = map.getOrDefault("italic", NumberValue.ZERO).asBoolean();
                 val posture = isItalic ? FontPosture.ITALIC : FontPosture.REGULAR;
-                val size = map.getOrDefault("size", NumberValue.MINUS_ONE).asNumber();
+                val size = map.getOrDefault("size", NumberValue.MINUS_ONE).asDouble();
                 return Font.font(family, FontWeight.findByWeight(weight), posture, size);
             }
-            return Font.font(value.asNumber());
+            return Font.font(value.asDouble());
         };
     }
 

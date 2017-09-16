@@ -46,12 +46,7 @@ public class MapValue implements Value, Iterable<Map.Entry<String, Value>> {
     }
 
     @Override
-    public int asInt() {
-        throw new TypeException("Cannot cast map to integer");
-    }
-
-    @Override
-    public double asNumber() {
+    public Number asNumber() {
         throw new TypeException("Cannot cast map to number");
     }
 

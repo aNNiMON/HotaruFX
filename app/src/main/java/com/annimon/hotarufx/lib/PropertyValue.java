@@ -108,12 +108,7 @@ public class PropertyValue implements Value {
     }
 
     @Override
-    public int asInt() {
-        throw new TypeException("Cannot cast property to integer");
-    }
-
-    @Override
-    public double asNumber() {
+    public Number asNumber() {
         throw new TypeException("Cannot cast property to number");
     }
 

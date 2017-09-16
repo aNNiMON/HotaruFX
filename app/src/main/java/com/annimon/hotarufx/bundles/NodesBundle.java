@@ -52,7 +52,7 @@ public class NodesBundle implements Bundle {
             val validator = Validator.with(args);
             val map = validator.requireMapAt(1);
             val points = validator.requireArrayAt(0).stream()
-                    .map(Value::asNumber)
+                    .map(Value::asDouble)
                     .collect(Collectors.toList());
             val node = new NodeValue(ctor.apply(points));
             node.fill(map);

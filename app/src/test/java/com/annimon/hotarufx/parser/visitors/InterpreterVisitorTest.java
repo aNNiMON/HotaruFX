@@ -126,25 +126,25 @@ class InterpreterVisitorTest {
         Value value;
 
         value = eval("rate(30) t = 1 sec", context);
-        assertThat(value.asNumber(), closeTo(30, 0.0001));
+        assertThat(value.asDouble(), closeTo(30, 0.0001));
 
         value = eval("rate(30) t = 5 sec", context);
-        assertThat(value.asNumber(), closeTo(150, 0.0001));
+        assertThat(value.asDouble(), closeTo(150, 0.0001));
 
         value = eval("rate(30) t = 0.5 sec", context);
-        assertThat(value.asNumber(), closeTo(15, 0.0001));
+        assertThat(value.asDouble(), closeTo(15, 0.0001));
 
         value = eval("rate(30) t = 1000 ms", context);
-        assertThat(value.asNumber(), closeTo(30, 0.0001));
+        assertThat(value.asDouble(), closeTo(30, 0.0001));
 
         value = eval("rate(30) t = 333 ms", context);
-        assertThat(value.asNumber(), closeTo(10, 0.01));
+        assertThat(value.asDouble(), closeTo(10, 0.01));
 
         value = eval("rate(25) t = 1 sec", context);
-        assertThat(value.asNumber(), closeTo(25, 0.0001));
+        assertThat(value.asDouble(), closeTo(25, 0.0001));
 
         value = eval("rate(25) t = 1000 ms", context);
-        assertThat(value.asNumber(), closeTo(25, 0.0001));
+        assertThat(value.asDouble(), closeTo(25, 0.0001));
     }
 
     @Test
