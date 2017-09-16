@@ -274,6 +274,8 @@ public class EditorController implements Initializable, DocumentListener {
         map.put("Rectangle", "rectangle.hfx");
         map.put("Round Rectangle", "round-rect.hfx");
         map.put("Font", "font.hfx");
+        map.put("Image", "image.hfx");
+        map.put("Image Rotate & Zoom", "image_rotate_zoom.hfx");
         map.put("Text Clipping", "clip-text.hfx");
         map.put("Blend Modes", "blend-modes.hfx");
         map.put("Stroke Ants", "stroke-ants.hfx");

@@ -1,0 +1,21 @@
+composition(1280, 720, 30)
+
+IMG = image("http://lorempixel.com/1280/720/city", {
+  x: -160,
+  y: -120,
+  smooth: true,
+  fitWidth: 320,
+  fitHeight: 240
+})
+
+easing = easeOut
+
+IMG@x.add(1 sec, -960, easing)
+IMG@y.add(1 sec, -540, easing)
+
+IMG@fitWidth
+  .add(1 sec, 1920, easing)
+IMG@fitHeight
+  .add(1 sec, 1080, easing)
+
+render(IMG)
