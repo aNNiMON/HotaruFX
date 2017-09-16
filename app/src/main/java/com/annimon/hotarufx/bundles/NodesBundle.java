@@ -25,6 +25,7 @@ public class NodesBundle implements Bundle {
         FUNCTIONS.put("circle", of(NODE, node(CircleNode::new)));
         FUNCTIONS.put("ellipse", of(NODE, node(EllipseNode::new)));
         FUNCTIONS.put("group", of(NODE, group()));
+        FUNCTIONS.put("image", of(NODE, image()));
         FUNCTIONS.put("line", of(NODE, node(LineNode::new)));
         FUNCTIONS.put("polygon", of(NODE, poly(PolygonNode::new)));
         FUNCTIONS.put("polyline", of(NODE, poly(PolylineNode::new)));
@@ -55,6 +56,17 @@ public class NodesBundle implements Bundle {
                     .map(Value::asDouble)
                     .collect(Collectors.toList());
             val node = new NodeValue(ctor.apply(points));
+            node.fill(map);
+            return node;
+        };
+    }
+
+    private static Function image() {
+        return args -> {
+            val validator = Validator.with(args);
+            val map = validator.requireMapAt(1);
+            val url = args[0].asString();
+            val node = new NodeValue(new ImageNode(url));
             node.fill(map);
             return node;
         };

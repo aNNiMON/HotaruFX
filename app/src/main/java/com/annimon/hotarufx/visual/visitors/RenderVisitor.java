@@ -36,6 +36,11 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
     }
 
     @Override
+    public Void visit(ImageNode node, VirtualScene scene) {
+        return render(node, scene);
+    }
+
+    @Override
     public Void visit(LineNode node, VirtualScene scene) {
         return render(node, scene);
     }
