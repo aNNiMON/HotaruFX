@@ -1,0 +1,24 @@
+composition(1280, 720, 30)
+
+A = circle({
+  radius: 100,
+  fill: '#9bc747'
+})
+
+assertEquals(A.cx, A.cy)
+assertEquals(0, A.cy)
+assertEquals(100, A.radius)
+A@radius
+  .add(300 ms, 200)
+  .add(1 sec, 50)
+
+assertHasVariable("A")
+assertHasVariable("Width")
+assertHasVariable("HalfWidth")
+
+println(Width)
+println(HalfWidth)
+
+dump()
+
+render(A)
