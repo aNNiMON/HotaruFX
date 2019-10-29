@@ -3,6 +3,9 @@ HotaruFX
 
 Programming language for creating animations
 
+[![Build Status](https://travis-ci.org/aNNiMON/HotaruFX.svg?branch=master)](https://travis-ci.org/aNNiMON/HotaruFX)
+
+
 ![App running on Linux Mint](art/screenshot.png)
 
 
