@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.paint.Paint;
-import lombok.val;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
@@ -57,11 +56,11 @@ public class CompositionBundle implements Bundle {
                     width = args[0].asInt();
                     height = args[1].asInt();
                     frameRate = args[2].asDouble();
-                    val background = PropertyType.PAINT.<Paint>getFromHFX().apply(args[3]);
+                    final var background = PropertyType.PAINT.<Paint>getFromHFX().apply(args[3]);
                     composition = new Composition(width, height, frameRate, background);
                     break;
             }
-            val scene = composition.getScene();
+            final var scene = composition.getScene();
             context.composition(composition);
             context.variables().put("Width", NumberValue.of(scene.getVirtualWidth()));
             context.variables().put("Height", NumberValue.of(scene.getVirtualHeight()));
@@ -73,8 +72,8 @@ public class CompositionBundle implements Bundle {
 
     private static Function render(Context context) {
         return args -> {
-            val renderVisitor = new RenderVisitor(context.composition().getTimeline());
-            val scene = context.composition().getScene();
+            final var renderVisitor = new RenderVisitor(context.composition().getTimeline());
+            final var scene = context.composition().getScene();
             Arrays.stream(args)
                     .filter(v -> v.type() == Types.NODE)
                     .map(v -> ((NodeValue) v).getNode())

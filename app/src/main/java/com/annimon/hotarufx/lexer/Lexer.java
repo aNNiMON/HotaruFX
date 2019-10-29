@@ -3,8 +3,8 @@ package com.annimon.hotarufx.lexer;
 import com.annimon.hotarufx.exceptions.LexerException;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.val;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class Lexer {
 
     private final String input;
@@ -88,7 +88,7 @@ public abstract class Lexer {
     }
 
     protected Token addToken(HotaruTokenId tokenId, String text, int length) {
-        val token = createToken(tokenId, text, length);
+        final var token = createToken(tokenId, text, length);
         tokens.add(token);
         return token;
     }

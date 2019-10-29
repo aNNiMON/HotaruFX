@@ -4,12 +4,14 @@ import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.visitors.ResultVisitor;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class ValueNode extends ASTNode {
 
     public final Value value;
+
+    public ValueNode(Value value) {
+        this.value = value;
+    }
 
     public ValueNode(Number value) {
         this(NumberValue.of(value));

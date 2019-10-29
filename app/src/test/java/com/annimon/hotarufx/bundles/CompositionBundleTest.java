@@ -2,7 +2,6 @@ package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.NumberValue;
-import lombok.val;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -11,7 +10,7 @@ class CompositionBundleTest {
 
     @Test
     void testBundle() {
-        val context = new Context();
+        final var context = new Context();
         BundleLoader.loadSingle(context, CompositionBundle.class);
 
         assertThat(context.functions(), hasKey("composition"));

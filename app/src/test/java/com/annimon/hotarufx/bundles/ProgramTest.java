@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.stream.Stream;
-import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -45,8 +44,8 @@ class ProgramTest {
     @MethodSource("programPathProvider")
     @ParameterizedTest
     void testProgram(Path path) {
-        val context = new Context();
-        val bundles = new ArrayList<Class<? extends Bundle>>();
+        final var context = new Context();
+        final var bundles = new ArrayList<Class<? extends Bundle>>();
         bundles.addAll(BundleLoader.runtimeBundles());
         bundles.add(AssertionsBundle.class);
         bundles.add(PrintBundle.class);

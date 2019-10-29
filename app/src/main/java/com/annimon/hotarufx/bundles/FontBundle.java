@@ -9,7 +9,6 @@ import com.annimon.hotarufx.lib.Validator;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.text.Font;
-import lombok.val;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
@@ -28,7 +27,7 @@ public class FontBundle implements Bundle {
 
     private static Function newFont(Context context) {
         return args -> {
-            val validator = Validator.with(args);
+            final var validator = Validator.with(args);
             validator.check(1);
             if (args[0].type() == Types.MAP) {
                 return new FontValue(FontValue.toFont((MapValue) args[0]));

@@ -9,7 +9,6 @@ import com.annimon.hotarufx.visual.objects.ObjectNode;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import lombok.val;
 
 public class NodeValue implements Value {
 
@@ -45,8 +44,8 @@ public class NodeValue implements Value {
             throw new HotaruRuntimeException("Unable to get property " + key + " from node value");
         }
         final Property property = bindings.get(key);
-        val timeline = property.getProperty().get();
-        val type = property.getType();
+        final var timeline = property.getProperty().get();
+        final var type = property.getType();
         switch (type) {
             case BOOLEAN:
                 return type.<Boolean>getToHFX().apply(
@@ -76,8 +75,8 @@ public class NodeValue implements Value {
     public void set(String key, Value value) {
         if (!bindings.containsKey(key)) return;
         final Property property = bindings.get(key);
-        val timeline = property.getProperty().get();
-        val type = property.getType();
+        final var timeline = property.getProperty().get();
+        final var type = property.getType();
         switch (type) {
             case BOOLEAN:
                 ((PropertyTimeline<Boolean>) timeline).getProperty().setValue(
@@ -108,7 +107,7 @@ public class NodeValue implements Value {
     }
 
     public Value getProperty(String key) {
-        val property = bindings.get(key);
+        final var property = bindings.get(key);
         if (property == null) {
             throw new HotaruRuntimeException("Unable to get property " + key + " from node value");
         }

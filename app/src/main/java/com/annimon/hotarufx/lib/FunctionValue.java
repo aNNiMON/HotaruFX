@@ -2,17 +2,19 @@ package com.annimon.hotarufx.lib;
 
 import com.annimon.hotarufx.exceptions.TypeException;
 import java.util.Objects;
-import lombok.Getter;
 
 public class FunctionValue implements Value {
 
     public static final FunctionValue EMPTY = new FunctionValue(args -> NumberValue.ZERO);
 
-    @Getter
     private final Function value;
 
     public FunctionValue(Function value) {
         this.value = value;
+    }
+
+    public Function getValue() {
+        return value;
     }
 
     @Override

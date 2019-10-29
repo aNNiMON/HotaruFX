@@ -12,7 +12,6 @@ import com.annimon.hotarufx.parser.ast.UnitNode;
 import com.annimon.hotarufx.parser.ast.ValueNode;
 import com.annimon.hotarufx.parser.ast.VariableNode;
 import java.util.Arrays;
-import lombok.val;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
@@ -69,23 +68,23 @@ class HotaruParserTest {
         Node node = p(input);
         assertThat(node, instanceOf(BlockNode.class));
 
-        val block = (BlockNode) node;
+        final var block = (BlockNode) node;
         assertThat(block.statements.size(), is(2));
 
-        val expectedValues = Arrays.asList(
+        final var expectedValues = Arrays.asList(
                 NumberValue.fromBoolean(true),
                 NumberValue.fromBoolean(false)
         );
-        val it = expectedValues.iterator();
+        final var it = expectedValues.iterator();
 
         for (Node statement : block.statements) {
             assertThat(statement, instanceOf(AssignNode.class));
 
-            val assignNode = (AssignNode) statement;
+            final var assignNode = (AssignNode) statement;
             assertThat(assignNode.target, instanceOf(VariableNode.class));
             assertThat(assignNode.value, instanceOf(ValueNode.class));
 
-            val value = ((ValueNode) assignNode.value).value;
+            final var value = ((ValueNode) assignNode.value).value;
             assertThat(value, is(it.next()));
         }
     }
@@ -96,26 +95,26 @@ class HotaruParserTest {
         Node node = p(input);
         assertThat(node, instanceOf(BlockNode.class));
 
-        val block = (BlockNode) node;
+        final var block = (BlockNode) node;
         assertThat(block.statements.size(), is(2));
 
-        val expectedValues = Arrays.asList(
+        final var expectedValues = Arrays.asList(
                 NumberValue.of(500),
                 NumberValue.of(0.5)
         );
-        val it = expectedValues.iterator();
+        final var it = expectedValues.iterator();
 
         for (Node statement : block.statements) {
             assertThat(statement, instanceOf(AssignNode.class));
 
-            val assignNode = (AssignNode) statement;
+            final var assignNode = (AssignNode) statement;
             assertThat(assignNode.target, instanceOf(VariableNode.class));
             assertThat(assignNode.value, instanceOf(UnitNode.class));
 
-            val unitNode = (UnitNode) assignNode.value;
+            final var unitNode = (UnitNode) assignNode.value;
             assertThat(unitNode.value, instanceOf(ValueNode.class));
 
-            val value = ((ValueNode) unitNode.value).value;
+            final var value = ((ValueNode) unitNode.value).value;
             assertThat(value, is(it.next()));
         }
     }

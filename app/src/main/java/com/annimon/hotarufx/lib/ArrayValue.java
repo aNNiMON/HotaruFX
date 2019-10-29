@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Function;
 import java.util.stream.Stream;
-import lombok.Getter;
 
 public class ArrayValue implements Value, Iterable<Value> {
 
@@ -17,7 +16,6 @@ public class ArrayValue implements Value, Iterable<Value> {
                 .toArray(Value[]::new));
     }
 
-    @Getter
     private final Value[] elements;
 
     public ArrayValue(int size) {
@@ -31,6 +29,10 @@ public class ArrayValue implements Value, Iterable<Value> {
 
     public ArrayValue(ArrayValue array) {
         this(array.elements);
+    }
+
+    public Value[] getElements() {
+        return elements;
     }
 
     public Value[] getCopyElements() {

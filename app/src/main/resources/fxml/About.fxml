@@ -16,7 +16,7 @@
         <LineText />
 
         <LineText />
-        <LineText styleClass="bold" content="0.9.1" />
+        <LineText styleClass="bold" content="1.0.0" />
 
         <LineText />
         <LineText content="Programming language for creating animations" />

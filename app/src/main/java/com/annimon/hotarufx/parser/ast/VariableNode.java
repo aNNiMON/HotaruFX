@@ -2,12 +2,14 @@ package com.annimon.hotarufx.parser.ast;
 
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.visitors.ResultVisitor;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class VariableNode extends ASTNode implements Accessible {
 
     public final String name;
+
+    public VariableNode(String name) {
+        this.name = name;
+    }
 
     @Override
     public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {

@@ -15,19 +15,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.Task;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.StyleSpans;
-import org.fxmisc.richtext.StyleSpansBuilder;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-@RequiredArgsConstructor
 public class SyntaxHighlighter {
 
     private final CodeArea editor;
     private final ExecutorService executor;
     private Set<String> nodeFunctions;
     private Map<HotaruTokenId, String> operatorClasses;
+
+    public SyntaxHighlighter(CodeArea editor, ExecutorService executor) {
+        this.editor = editor;
+        this.executor = executor;
+    }
 
     public void init(BooleanProperty enabledProperty) {
         operatorClasses = new HashMap<>();
@@ -51,13 +53,13 @@ public class SyntaxHighlighter {
     }
 
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
-        val text = editor.getText();
-        val task = new Task<StyleSpans<Collection<String>>>() {
+        final var text = editor.getText();
+        final var task = new Task<StyleSpans<Collection<String>>>() {
             @Override
             protected StyleSpans<Collection<String>> call() throws Exception {
-                val spans = new StyleSpansBuilder<Collection<String>>();
-                for (val t : new HotaruLexer(text).tokenize()) {
-                    val category = t.getType().getPrimaryCategory();
+                final var spans = new StyleSpansBuilder<Collection<String>>();
+                for (final var t : new HotaruLexer(text).tokenize()) {
+                    final var category = t.getType().getPrimaryCategory();
                     switch (category) {
                         case "string":
                         case "keyword":
@@ -75,7 +77,7 @@ public class SyntaxHighlighter {
                             break;
 
                         case "operator":
-                            val className = operatorClasses.get(t.getType());
+                            final var className = operatorClasses.get(t.getType());
                             if (className != null) {
                                 spans.add(Collections.singleton(className), t.getLength());
                             } else {

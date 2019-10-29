@@ -1,6 +1,5 @@
 package com.annimon.hotarufx.visual;
 
-import lombok.val;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -9,7 +8,7 @@ class TimeLineTest {
 
     @Test
     void add() {
-        val timeline = new PropertyTimeline<String>(null);
+        final var timeline = new PropertyTimeline<String>(null);
         timeline.add(KeyFrame.of(20), null);
         timeline.add(KeyFrame.of(10), null);
         timeline.add(KeyFrame.of(0), null);

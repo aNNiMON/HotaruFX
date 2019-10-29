@@ -3,12 +3,11 @@ package com.annimon.hotarufx.lexer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.val;
 
 public class HotaruLexer extends Lexer {
 
     public static List<Token> tokenize(String input) {
-        val lexer = new HotaruLexer(input);
+        final var lexer = new HotaruLexer(input);
         lexer.tokenize();
         return lexer.getTokens();
     }
@@ -48,7 +47,7 @@ public class HotaruLexer extends Lexer {
     }
 
     public Token nextToken() {
-        val current = peek(0);
+        final var current = peek(0);
         if (Character.isDigit(current)) return tokenizeNumber();
         else if (Character.isJavaIdentifierStart(current)) return tokenizeWord();
         else if (current == '#') return tokenizeComment();
@@ -99,7 +98,7 @@ public class HotaruLexer extends Lexer {
             current = next();
         }
 
-        val word = getBuffer().toString();
+        final var word = getBuffer().toString();
         return addToken(KEYWORDS.getOrDefault(word, HotaruTokenId.WORD));
     }
 
@@ -110,7 +109,7 @@ public class HotaruLexer extends Lexer {
         char current = peek(0);
         while (true) {
             if (current == '\\') {
-                val buffer = getBuffer();
+                final var buffer = getBuffer();
                 current = next();
                 if (current == openChar) {
                     current = next();
@@ -166,7 +165,7 @@ public class HotaruLexer extends Lexer {
         char current = peek(0);
         clearBuffer();
         while (true) {
-            val text = getBuffer().toString();
+            final var text = getBuffer().toString();
             if (!text.isEmpty() && !OPERATORS.containsKey(text + current)) {
                 return addToken(OPERATORS.get(text), "", text.length());
             }

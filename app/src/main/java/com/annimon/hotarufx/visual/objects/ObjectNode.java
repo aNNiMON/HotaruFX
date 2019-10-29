@@ -14,9 +14,6 @@ import javafx.beans.value.WritableValue;
 import javafx.scene.Node;
 import javafx.scene.effect.BlendMode;
 import javafx.util.StringConverter;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.val;
 import static com.annimon.hotarufx.visual.PropertyType.*;
 
 public abstract class ObjectNode {
@@ -31,7 +28,6 @@ public abstract class ObjectNode {
     private PropertyTimelineHolder<Number> scaleX, scaleY, scaleZ;
     private PropertyTimelineHolder<Number> layoutX, layoutY;
     private PropertyTimelineHolder<String> blendMode;
-    @Getter @Setter
     private boolean isRenderable;
 
     public ObjectNode(Node node) {
@@ -55,6 +51,14 @@ public abstract class ObjectNode {
 
     public Node getFxNode() {
         return node;
+    }
+
+    public boolean isRenderable() {
+        return isRenderable;
+    }
+
+    public void setRenderable(boolean renderable) {
+        isRenderable = renderable;
     }
 
     public PropertyTimeline<Boolean> visibleProperty() {
@@ -155,7 +159,7 @@ public abstract class ObjectNode {
 
     protected <T extends Enum<T>> Supplier<WritableValue<String>> enumToString(Class<T> enumClass, ObjectProperty<T> property) {
         return () -> {
-            val stringProperty = new SimpleStringProperty();
+            final var stringProperty = new SimpleStringProperty();
             stringProperty.bindBidirectional(property, new StringConverter<T>() {
                 @Override
                 public String toString(T object) {
@@ -174,7 +178,7 @@ public abstract class ObjectNode {
                         return Enum.valueOf(enumClass, string);
                     } catch (IllegalArgumentException e) {
                         try {
-                            val number = (int) Double.parseDouble(string);
+                            final var number = (int) Double.parseDouble(string);
                             return enumClass.cast(EnumSet.allOf(enumClass).toArray()[number]);
                         } catch (Exception ex) {
                             throw new HotaruRuntimeException("No constant " + string

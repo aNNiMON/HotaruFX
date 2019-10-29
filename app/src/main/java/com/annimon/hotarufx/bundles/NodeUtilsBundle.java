@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.scene.shape.Shape;
-import lombok.val;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
@@ -32,15 +31,15 @@ public class NodeUtilsBundle implements Bundle {
 
     private static Function strokePattern(Context context) {
         return args -> {
-            val validator = Validator.with(args);
+            final var validator = Validator.with(args);
             validator.checkOrOr(1, 2);
             if (args[0].type() != Types.NODE || !(args[0].raw() instanceof ShapeNode)) {
                 throw new TypeException("Shape required at first argument");
             }
-            val shape = (Shape) ((ShapeNode) args[0].raw()).getFxNode();
+            final var shape = (Shape) ((ShapeNode) args[0].raw()).getFxNode();
             if (args.length == 2) {
-                val array = validator.requireArrayAt(1);
-                val dashList = array.stream()
+                final var array = validator.requireArrayAt(1);
+                final var dashList = array.stream()
                         .map(Value::asDouble)
                         .collect(Collectors.toList());
                 shape.getStrokeDashArray().setAll(dashList);

@@ -11,12 +11,9 @@ import javafx.animation.Interpolator;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import lombok.Getter;
-import lombok.val;
 
 public class PropertyValue implements Value {
 
-    @Getter
     private final Property property;
     private final Map<String, Value> fields;
 
@@ -27,13 +24,17 @@ public class PropertyValue implements Value {
         fields.put("clear", new FunctionValue(clear()));
     }
 
+    public Property getProperty() {
+        return property;
+    }
+
     @Override
     public int type() {
         return Types.PROPERTY;
     }
 
     public Value getField(String name) {
-        val field = fields.get(name);
+        final var field = fields.get(name);
         if (field == null) {
             throw new HotaruRuntimeException("PropertyValue does not have " + name + " field");
         }
@@ -53,7 +54,7 @@ public class PropertyValue implements Value {
                 }
                 interpolator = ((InterpolatorValue) args[2]).getInterpolator();
             }
-            val type = property.getType();
+            final var type = property.getType();
             switch (type) {
                 case BOOLEAN:
                     ((PropertyTimeline<Boolean>)property.getProperty().get()).add(

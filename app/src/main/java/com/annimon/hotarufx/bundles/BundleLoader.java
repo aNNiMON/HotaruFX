@@ -1,13 +1,13 @@
 package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.lib.Context;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import lombok.val;
 
 public final class BundleLoader {
 
@@ -26,7 +26,7 @@ public final class BundleLoader {
     }
 
     public static Map<String, FunctionType> functions() {
-        val functions = new HashMap<String, FunctionType>();
+        final var functions = new HashMap<String, FunctionType>();
         apply(runtimeBundles(), functions, ((bundle, map) -> map.putAll(bundle.functions())));
         return functions;
     }
@@ -43,9 +43,11 @@ public final class BundleLoader {
 
         for (Class<? extends Bundle> clazz : bundles) {
             try {
-                val bundle = clazz.newInstance();
+                final var ctor = clazz.getDeclaredConstructor();
+                final var bundle = ctor.newInstance();
                 action.accept(bundle, obj);
-            } catch (IllegalAccessException | InstantiationException ignore) {}
+            } catch (IllegalAccessException | InstantiationException
+                    | NoSuchMethodException | InvocationTargetException ignore) {}
         }
     }
 }

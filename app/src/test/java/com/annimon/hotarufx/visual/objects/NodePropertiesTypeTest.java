@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -52,36 +51,36 @@ class NodePropertiesTypeTest {
     @SuppressWarnings("unchecked")
     void testNode(ObjectNode node, String name, Property property, String nodeName) {
         try {
-            val value = property.getProperty().get().getProperty();
+            final var value = property.getProperty().get().getProperty();
             switch (property.getType()) {
                 case BOOLEAN:
-                    val booleanValue = (WritableValue<Boolean>) value;
+                    final var booleanValue = (WritableValue<Boolean>) value;
                     booleanValue.setValue(true);
                     assertTrue(booleanValue.getValue());
                     break;
                 case NUMBER:
-                    val numberValue = (WritableValue<Number>) value;
+                    final var numberValue = (WritableValue<Number>) value;
                     numberValue.setValue(2);
                     assertThat(numberValue.getValue().intValue(), is(2));
                     break;
                 case STRING:
-                    val stringValue = (WritableValue<String>) value;
+                    final var stringValue = (WritableValue<String>) value;
                     stringValue.setValue("0");
                     assertThat(stringValue.getValue(), is("0"));
                     break;
                 case NODE:
                 case CLIP_NODE:
-                    val nodeValue = (WritableValue<Node>) value;
+                    final var nodeValue = (WritableValue<Node>) value;
                     nodeValue.setValue(new Text("test"));
                     assertThat(((Text) nodeValue.getValue()).getText(), is("test"));
                     break;
                 case PAINT:
-                    val paintValue = (WritableValue<Paint>) value;
+                    final var paintValue = (WritableValue<Paint>) value;
                     paintValue.setValue(Color.BLUE);
                     assertThat(paintValue.getValue(), is(Color.BLUE));
                     break;
                 case FONT:
-                    val fontValue = (WritableValue<Font>) value;
+                    final var fontValue = (WritableValue<Font>) value;
                     fontValue.setValue(Font.getDefault());
                     assertThat(fontValue.getValue().getFamily(), is(Font.getDefault().getFamily()));
                     break;

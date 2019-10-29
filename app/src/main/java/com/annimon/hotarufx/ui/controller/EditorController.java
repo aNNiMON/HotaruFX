@@ -20,7 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -43,12 +42,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import lombok.val;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 @SuppressWarnings("unused")
 public class EditorController implements Initializable, DocumentListener {
+
+    private static final int DEFAULT_FONT_SIZE = 14;
 
     @FXML
     private Menu examplesMenu;
@@ -73,6 +73,7 @@ public class EditorController implements Initializable, DocumentListener {
     private Stage primaryStage;
     private SyntaxHighlighter syntaxHighlighter;
     private DocumentManager documentManager;
+    private int fontSize = DEFAULT_FONT_SIZE;
 
     @FXML
     private void handleMenuNew(ActionEvent event) {
@@ -83,7 +84,7 @@ public class EditorController implements Initializable, DocumentListener {
 
     @FXML
     private void handleMenuOpen(ActionEvent event) {
-        val isOpened = documentManager.open(primaryStage, editor::replaceText);
+        final var isOpened = documentManager.open(primaryStage, editor::replaceText);
         if (isOpened) {
             updateTitle();
         }
@@ -120,13 +121,13 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     private boolean confirmExit() {
-        val alert = new Alert(Alert.AlertType.CONFIRMATION);
+        final var alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
         alert.setHeaderText("Are you sure you want to exit?");
         alert.initOwner(primaryStage);
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.getDialogPane().setContent(new Group());
-        val icon = new FontAwesomeIcon(FontAwesome.QUESTION_CIRCLE);
+        final var icon = new FontAwesomeIcon(FontAwesome.QUESTION_CIRCLE);
         alert.getDialogPane().setGraphic(icon);
         return alert.showAndWait()
                 .filter(b -> b == ButtonType.OK)
@@ -144,22 +145,22 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     private void changeFontSize(int delta) {
-        if (editor.getFont() == null) return;
-        val newSize = (int) editor.getFont().getSize() + delta;
+        final int newSize = fontSize + delta;
         if (8 > newSize || newSize > 40) return;
+        fontSize = newSize;
         editor.setStyle("-fx-font-size: " + newSize + "px");
     }
 
     @FXML
     private void handleMenuAbout(ActionEvent event) {
-        val stage = new Stage();
+        final var stage = new Stage();
         stage.setTitle("About");
         stage.setResizable(false);
         stage.initOwner(primaryStage);
         stage.initModality(Modality.WINDOW_MODAL);
         try {
-            val loader = new FXMLLoader(getClass().getResource("/fxml/About.fxml"));
-            val scene = new Scene(loader.load());
+            final var loader = new FXMLLoader(getClass().getResource("/fxml/About.fxml"));
+            final var scene = new Scene(loader.load());
             scene.getStylesheets().addAll(
                     getClass().getResource("/styles/theme-dark.css").toExternalForm(),
                     getClass().getResource("/styles/about.css").toExternalForm()
@@ -174,7 +175,7 @@ public class EditorController implements Initializable, DocumentListener {
     @FXML
     private void handleMenuPlay(ActionEvent event) {
         log.setText("");
-        val input = editor.getText();
+        final var input = editor.getText();
         if (input.isEmpty()) {
             return;
         }
@@ -185,14 +186,14 @@ public class EditorController implements Initializable, DocumentListener {
                     .evaluateWithRuntimeBundle()
                     .prepareStage(primaryStage)
                     .peek((stage, composition) -> {
-                        val timeline = composition.getTimeline();
+                        final var timeline = composition.getTimeline();
                         timeline.getFxTimeline().currentTimeProperty().addListener((o, oldValue, d) -> {
-                            val min = (int) d.toMinutes();
-                            val durationSec = d.subtract(Duration.minutes(min));
-                            val sec = (int) durationSec.toSeconds();
-                            val durationMs = durationSec.subtract(Duration.seconds(sec));
-                            val frame = (int) (durationMs.toMillis() * timeline.getFrameRate() / 1000d);
-                            val allFrame = (int) (d.toMillis() * timeline.getFrameRate() / 1000d);
+                            final var min = (int) d.toMinutes();
+                            final var durationSec = d.subtract(Duration.minutes(min));
+                            final var sec = (int) durationSec.toSeconds();
+                            final var durationMs = durationSec.subtract(Duration.seconds(sec));
+                            final var frame = (int) (durationMs.toMillis() * timeline.getFrameRate() / 1000d);
+                            final var allFrame = (int) (d.toMillis() * timeline.getFrameRate() / 1000d);
                             stage.setTitle(String.format("%02d:%02d.%02d   %d", min, sec, frame, allFrame));
                         });
 
@@ -209,7 +210,7 @@ public class EditorController implements Initializable, DocumentListener {
     @FXML
     private void handleMenuRender(ActionEvent event) {
         log.setText("");
-        val input = editor.getText();
+        final var input = editor.getText();
         if (input.isEmpty()) {
             return;
         }
@@ -220,18 +221,18 @@ public class EditorController implements Initializable, DocumentListener {
                     .evaluateForRender()
                     .prepareStage(primaryStage)
                     .peek((stage, composition) -> {
-                        val chooser = new DirectoryChooser();
+                        final var chooser = new DirectoryChooser();
                         chooser.setTitle("Choose directory for rendering frames");
-                        val directory = chooser.showDialog(primaryStage);
+                        final var directory = chooser.showDialog(primaryStage);
                         if (directory == null || !directory.exists() || !directory.isDirectory()) {
                             return;
                         }
 
-                        val fxTimeline = composition.getTimeline().getFxTimeline();
+                        final var fxTimeline = composition.getTimeline().getFxTimeline();
                         stage.setOnShown(e -> {
                             fxTimeline.playFromStart();
                             fxTimeline.pause();
-                            val task = new RenderTask(directory, composition, stage.getScene());
+                            final var task = new RenderTask(directory, composition, stage.getScene());
                             task.messageProperty().addListener(ev -> {
                                 stage.setTitle(task.getMessage());
                             });
@@ -257,6 +258,7 @@ public class EditorController implements Initializable, DocumentListener {
         documentManager = new FileManager();
         populateExamples();
         initSyntaxHighlighter();
+        changeFontSize(0);
         initUndoRedo();
         initCopyCutPaste();
         openExample();
@@ -266,7 +268,7 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     private void populateExamples() {
-        val map = new LinkedHashMap<String, String>();
+        final var map = new LinkedHashMap<String, String>();
         map.put("HotaruFX Logo", "hotarufx-logo.hfx");
         map.put("Font Awesome Icons", "font-awesome.hfx");
         map.put("HSV Color", "hsv.hfx");
@@ -280,19 +282,19 @@ public class EditorController implements Initializable, DocumentListener {
         map.put("Blend Modes", "blend-modes.hfx");
         map.put("Stroke Ants", "stroke-ants.hfx");
         examplesMenu.getItems().clear();
-        for (val entry : map.entrySet()) {
-            val item = new MenuItem(entry.getKey());
+        for (final var entry : map.entrySet()) {
+            final var item = new MenuItem(entry.getKey());
             item.setOnAction(e -> openExample("/examples/" + entry.getValue()));
             examplesMenu.getItems().add(item);
         }
     }
 
     private void initSyntaxHighlighter() {
-        val highlightProperty = syntaxHighlightingItem.selectedProperty();
+        final var highlightProperty = syntaxHighlightingItem.selectedProperty();
         highlightProperty.addListener((observable, oldValue, highlightEnabled) -> {
             if (highlightEnabled) {
                 // create event to reinit highlighter
-                val pos = editor.getCaretPosition();
+                final var pos = editor.getCaretPosition();
                 editor.insertText(pos, " ");
                 editor.replaceText(pos, pos + 1, "");
             } else {
@@ -304,16 +306,14 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     private void initUndoRedo() {
-        undoButton.disableProperty().bind(
-                Bindings.not(editor.undoAvailableProperty()));
-        redoButton.disableProperty().bind(
-                Bindings.not(editor.redoAvailableProperty()));
+        undoButton.disableProperty().bind(editor.undoAvailableProperty().map(x -> !x));
+        redoButton.disableProperty().bind(editor.redoAvailableProperty().map(x -> !x));
         undoButton.setOnAction(editorAction(editor::undo));
         redoButton.setOnAction(editorAction(editor::redo));
     }
 
     private void initCopyCutPaste() {
-        val selectionEmpty = new BooleanBinding() {
+        final var selectionEmpty = new BooleanBinding() {
             { bind(editor.selectionProperty()); }
             @Override
             protected boolean computeValue() {
@@ -367,7 +367,7 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     private void openExample(String path) {
-        val content = (path != null) ? readProgram(path) : fallbackProgram();
+        final var content = (path != null) ? readProgram(path) : fallbackProgram();
         editor.replaceText(content);
     }
 

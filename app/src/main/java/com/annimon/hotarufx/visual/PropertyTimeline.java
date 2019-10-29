@@ -4,9 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import javafx.animation.Interpolator;
 import javafx.beans.value.WritableValue;
-import lombok.Getter;
 
-@Getter
 public class PropertyTimeline<T> {
 
     private final WritableValue<T> property;
@@ -15,6 +13,14 @@ public class PropertyTimeline<T> {
     public PropertyTimeline(WritableValue<T> property) {
         this.property = property;
         keyFrames = new TreeMap<>();
+    }
+
+    public WritableValue<T> getProperty() {
+        return property;
+    }
+
+    public Map<KeyFrame, KeyFrameValue<T>> getKeyFrames() {
+        return keyFrames;
     }
 
     public PropertyTimeline<T> add(KeyFrame keyFrame, T value) {

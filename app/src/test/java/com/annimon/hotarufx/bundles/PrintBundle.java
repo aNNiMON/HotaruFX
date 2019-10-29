@@ -5,7 +5,6 @@ import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.NumberValue;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.val;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
@@ -46,13 +45,13 @@ public class PrintBundle implements Bundle {
 
     private static Function dump(Context context) {
         return args -> {
-            val maxVariableLength = context.variables()
+            final var maxVariableLength = context.variables()
                     .keySet().stream()
                     .mapToInt(String::length)
                     .max()
                     .orElse(20);
             System.out.println("\n\tVARIABLES");
-            val format = "%"+maxVariableLength+"s   %s%n";
+            final var format = "%"+maxVariableLength+"s   %s%n";
             context.variables().forEach((k, v) -> {
                 System.out.printf(format, k, v);
             });

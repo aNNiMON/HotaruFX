@@ -2,7 +2,6 @@ package com.annimon.hotarufx.exceptions;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import lombok.val;
 
 public final class Exceptions {
 
@@ -11,7 +10,7 @@ public final class Exceptions {
     }
 
     public static String stackTraceToString(Throwable throwable) {
-        val sw = new StringWriter();
+        final var sw = new StringWriter();
         throwable.printStackTrace(new PrintWriter(sw));
         return sw.toString();
     }

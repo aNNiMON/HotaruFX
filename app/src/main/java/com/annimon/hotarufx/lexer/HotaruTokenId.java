@@ -1,9 +1,5 @@
 package com.annimon.hotarufx.lexer;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public enum HotaruTokenId {
 
     NUMBER(Category.NUMBER),
@@ -40,6 +36,10 @@ public enum HotaruTokenId {
     }
 
     private final Category category;
+
+    HotaruTokenId(Category category) {
+        this.category = category;
+    }
 
     public String getPrimaryCategory() {
         return category.name().toLowerCase();

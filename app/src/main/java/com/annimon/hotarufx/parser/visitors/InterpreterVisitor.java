@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
-import lombok.val;
 
 public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
@@ -21,7 +20,7 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(ArrayNode node, Context context) {
-        val elements = node.elements.stream()
+        final var elements = node.elements.stream()
                 .map(el -> el.accept(this, context))
                 .toArray(Value[]::new);
         return new ArrayValue(elements);
@@ -29,7 +28,7 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(AssignNode node, Context context) {
-        val value = node.value.accept(this, context);
+        final var value = node.value.accept(this, context);
         return node.target.set(this, value, context);
     }
 
@@ -44,20 +43,20 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(FunctionNode node, Context context) {
-        val value = node.functionNode.accept(this, context);
+        final var value = node.functionNode.accept(this, context);
         final Function function;
         switch (value.type()) {
             case Types.FUNCTION:
                 function = ((FunctionValue) value).getValue();
                 break;
             default:
-                val functionName = value.asString();
+                final var functionName = value.asString();
                 function = context.functions().get(functionName);
                 if (function == null)
                     throw new FunctionNotFoundException(functionName, node.start(), node.end());
                 break;
         }
-        val args = node.arguments.stream()
+        final var args = node.arguments.stream()
                 .map(n -> n.accept(this, context))
                 .toArray(Value[]::new);
         return function.execute(args);
@@ -74,11 +73,11 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(PropertyNode node, Context context) {
-        val value = node.node.accept(this, context);
+        final var value = node.node.accept(this, context);
         if (value.type() != Types.NODE) {
             throw new TypeException("Node value expected");
         }
-        val nodeValue = (NodeValue) value;
+        final var nodeValue = (NodeValue) value;
         return nodeValue.getProperty(node.property);
     }
 
@@ -86,7 +85,7 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     public Value visit(UnaryNode node, Context context) {
         switch (node.operator) {
             case NEGATE:
-                val value = node.node.accept(this, context);
+                final var value = node.node.accept(this, context);
                 if (value.type() == Types.STRING) {
                     final StringBuilder sb = new StringBuilder(value.asString());
                     return new StringValue(sb.reverse().toString());
@@ -112,8 +111,8 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(UnitNode node, Context context) {
-        val value = node.value.accept(this, context);
-        val frameRate = context.composition().getTimeline().getFrameRate();
+        final var value = node.value.accept(this, context);
+        final var frameRate = context.composition().getTimeline().getFrameRate();
         final double frame;
         switch (node.operator) {
             case SECONDS:
@@ -155,12 +154,12 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
                 .orElseThrow(exceptionSupplier);
         switch (container.type()) {
             case Types.MAP: {
-                val key = node.indices.get(lastIndex).accept(this, context).asString();
+                final var key = node.indices.get(lastIndex).accept(this, context).asString();
                 ((MapValue) container).getMap().put(key, value);
             } break;
 
             case Types.NODE: {
-                val key = node.indices.get(lastIndex).accept(this, context).asString();
+                final var key = node.indices.get(lastIndex).accept(this, context).asString();
                 ((NodeValue) container).set(key, value);
             } break;
 
@@ -174,18 +173,18 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
         for (Node index : nodes) {
             switch (container.type()) {
                 case Types.MAP: {
-                    val key = index.accept(this, context).asString();
+                    final var key = index.accept(this, context).asString();
                     container = ((MapValue) container).getMap().get(key);
                 } break;
 
                 case Types.NODE: {
-                    val key = index.accept(this, context).asString();
+                    final var key = index.accept(this, context).asString();
                     container = ((NodeValue) container).get(key);
                 } break;
 
                 case Types.PROPERTY: {
-                    val key = index.accept(this, context).asString();
-                    val propertyValue = (PropertyValue) container;
+                    final var key = index.accept(this, context).asString();
+                    final var propertyValue = (PropertyValue) container;
                     container = propertyValue.getField(key);
                 } break;
 
@@ -198,7 +197,7 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value get(VariableNode node, Context context) {
-        val result = context.variables().get(node.name);
+        final var result = context.variables().get(node.name);
         if (result == null)
             throw new VariableNotFoundException(node.name, node.start(), node.end());
         return result;

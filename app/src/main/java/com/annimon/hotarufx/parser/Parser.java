@@ -7,7 +7,6 @@ import com.annimon.hotarufx.lexer.Token;
 import com.annimon.hotarufx.parser.ast.BlockNode;
 import com.annimon.hotarufx.parser.ast.Node;
 import java.util.List;
-import lombok.val;
 
 public abstract class Parser {
 
@@ -38,7 +37,7 @@ public abstract class Parser {
 
     public Node parse() {
         parseErrors.clear();
-        val result = new BlockNode();
+        final var result = new BlockNode();
         result.start(getSourcePosition());
         while (!match(HotaruTokenId.EOF)) {
             try {
@@ -77,7 +76,7 @@ public abstract class Parser {
     }
 
     protected Token consume(HotaruTokenId type) {
-        val current = get(0);
+        final var current = get(0);
         if (type != current.getType()) {
             throw new ParseException("Token " + current + " doesn't match " + type, current.getPosition());
         }
@@ -86,7 +85,7 @@ public abstract class Parser {
     }
 
     protected boolean match(HotaruTokenId type) {
-        val current = get(0);
+        final var current = get(0);
         if (type != current.getType()) return false;
         pos++;
         return true;
@@ -97,7 +96,7 @@ public abstract class Parser {
     }
 
     protected Token get(int relativePosition) {
-        val position = pos + relativePosition;
+        final var position = pos + relativePosition;
         if (position >= size) return EOF;
         return tokens.get(position);
     }

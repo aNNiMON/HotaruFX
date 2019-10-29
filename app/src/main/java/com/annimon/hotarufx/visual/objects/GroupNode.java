@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.scene.Group;
-import lombok.val;
 import static com.annimon.hotarufx.visual.PropertyType.BOOLEAN;
 
 public class GroupNode extends ObjectNode {
@@ -27,7 +26,7 @@ public class GroupNode extends ObjectNode {
         super(group);
         this.group = group;
         this.nodes = new ArrayList<>(nodes);
-        val fxNodes = nodes.stream()
+        final var fxNodes = nodes.stream()
                 .map(ObjectNode::getFxNode)
                 .collect(Collectors.toList());
         group.getChildren().addAll(fxNodes);

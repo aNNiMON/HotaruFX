@@ -5,25 +5,18 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import lombok.Getter;
-import lombok.val;
 
 public class Composition {
 
-    @Getter
     private final int
             virtualWidth, virtualHeight,
             sceneWidth, sceneHeight;
-    @Getter
     private final double factor;
 
-    @Getter
     private final TimeLine timeline;
 
-    @Getter
     private final VirtualScene scene;
 
-    @Getter
     private final Paint background;
 
     public Composition() {
@@ -53,17 +46,49 @@ public class Composition {
         scene = newScene();
     }
 
+    public int getVirtualWidth() {
+        return virtualWidth;
+    }
+
+    public int getVirtualHeight() {
+        return virtualHeight;
+    }
+
+    public int getSceneWidth() {
+        return sceneWidth;
+    }
+
+    public int getSceneHeight() {
+        return sceneHeight;
+    }
+
+    public double getFactor() {
+        return factor;
+    }
+
+    public TimeLine getTimeline() {
+        return timeline;
+    }
+
+    public VirtualScene getScene() {
+        return scene;
+    }
+
+    public Paint getBackground() {
+        return background;
+    }
+
     private VirtualScene newScene() {
-        val group = new NodesGroup(sceneWidth, sceneHeight);
+        final var group = new NodesGroup(sceneWidth, sceneHeight);
         group.setScaleX(1d / factor);
         group.setScaleY(1d / factor);
-        group.setTranslateX(sceneWidth / 2);
-        group.setTranslateY(sceneHeight / 2);
+        group.setTranslateX(sceneWidth / 2f);
+        group.setTranslateY(sceneHeight / 2f);
         return new VirtualScene(group, virtualWidth, virtualHeight);
     }
 
     public Scene producePreviewScene() {
-        val fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
+        final var fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
         fxScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case SPACE:
@@ -92,8 +117,6 @@ public class Composition {
     }
 
     public Scene produceRendererScene() {
-        val fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
-
-        return fxScene;
+        return new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
     }
 }

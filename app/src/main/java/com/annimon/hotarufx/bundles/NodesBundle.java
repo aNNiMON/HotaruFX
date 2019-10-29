@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import lombok.val;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.NODE;
 
@@ -41,8 +40,8 @@ public class NodesBundle implements Bundle {
 
     private static Function node(Supplier<? extends ObjectNode> supplier) {
         return args -> {
-            val map = Validator.with(args).requireMapAt(0);
-            val node = new NodeValue(supplier.get());
+            final var map = Validator.with(args).requireMapAt(0);
+            final var node = new NodeValue(supplier.get());
             node.fill(map);
             return node;
         };
@@ -50,12 +49,12 @@ public class NodesBundle implements Bundle {
 
     private static Function poly(java.util.function.Function<List<Double>, ObjectNode> ctor) {
         return args -> {
-            val validator = Validator.with(args);
-            val map = validator.requireMapAt(1);
-            val points = validator.requireArrayAt(0).stream()
+            final var validator = Validator.with(args);
+            final var map = validator.requireMapAt(1);
+            final var points = validator.requireArrayAt(0).stream()
                     .map(Value::asDouble)
                     .collect(Collectors.toList());
-            val node = new NodeValue(ctor.apply(points));
+            final var node = new NodeValue(ctor.apply(points));
             node.fill(map);
             return node;
         };
@@ -63,10 +62,10 @@ public class NodesBundle implements Bundle {
 
     private static Function image() {
         return args -> {
-            val validator = Validator.with(args);
-            val map = validator.requireMapAt(1);
-            val url = args[0].asString();
-            val node = new NodeValue(new ImageNode(url));
+            final var validator = Validator.with(args);
+            final var map = validator.requireMapAt(1);
+            final var url = args[0].asString();
+            final var node = new NodeValue(new ImageNode(url));
             node.fill(map);
             return node;
         };
@@ -74,7 +73,7 @@ public class NodesBundle implements Bundle {
 
     private static Function group() {
         return args -> {
-            val nodes = Arrays.stream(args)
+            final var nodes = Arrays.stream(args)
                     .filter(v -> v.type() == Types.NODE)
                     .map(v -> ((NodeValue) v).getNode())
                     .collect(Collectors.toList());

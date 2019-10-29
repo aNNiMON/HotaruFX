@@ -2,15 +2,17 @@ package com.annimon.hotarufx.lib;
 
 import com.annimon.hotarufx.exceptions.TypeException;
 import javafx.animation.Interpolator;
-import lombok.Getter;
 
 public class InterpolatorValue implements Value {
 
-    @Getter
     private final Interpolator interpolator;
 
     public InterpolatorValue(Interpolator interpolator) {
         this.interpolator = interpolator;
+    }
+
+    public Interpolator getInterpolator() {
+        return interpolator;
     }
 
     @Override

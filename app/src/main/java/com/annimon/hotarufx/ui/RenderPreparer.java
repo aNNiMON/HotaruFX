@@ -14,7 +14,6 @@ import java.util.function.Function;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.val;
 
 public class RenderPreparer {
 
@@ -71,8 +70,8 @@ public class RenderPreparer {
         }
 
         private void evaluate() {
-            val parser = new HotaruParser(HotaruLexer.tokenize(source.input));
-            val program = parser.parse();
+            final var parser = new HotaruParser(HotaruLexer.tokenize(source.input));
+            final var program = parser.parse();
             if (parser.getParseErrors().hasErrors()) {
                 throw new RendererException(parser.getParseErrors().toString());
             }
@@ -91,10 +90,10 @@ public class RenderPreparer {
 
         public WithStage prepareStage(Stage primaryStage) {
             checkCompositionExists();
-            val stage = new Stage();
+            final var stage = new Stage();
             stage.initOwner(primaryStage);
             stage.initModality(Modality.WINDOW_MODAL);
-            val composition = source.context.composition();
+            final var composition = source.context.composition();
             stage.setScene(sceneProvider().apply(composition));
             return new WithStage(composition, stage);
         }

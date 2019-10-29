@@ -14,7 +14,6 @@ import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.parser.HotaruParser;
 import java.util.Arrays;
 import java.util.Map;
-import lombok.val;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -120,7 +119,7 @@ class InterpreterVisitorTest {
 
     @Test
     void testUnits() {
-        val context = new Context();
+        final var context = new Context();
         BundleLoader.loadSingle(context, CompositionBundle.class);
         context.functions().put("rate", context.functions().get("composition"));
         Value value;

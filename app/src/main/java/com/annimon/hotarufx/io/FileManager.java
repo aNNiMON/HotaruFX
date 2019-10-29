@@ -13,7 +13,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lombok.val;
 
 public class FileManager implements DocumentManager {
 
@@ -55,7 +54,7 @@ public class FileManager implements DocumentManager {
             return false;
         }
 
-        val content = readFile(currentFile);
+        final var content = readFile(currentFile);
         if (content.isEmpty()) {
             return false;
         }
@@ -80,7 +79,7 @@ public class FileManager implements DocumentManager {
         } else {
             fileChooser.setInitialFileName("animation.hfx");
         }
-        val newFile = fileChooser.showSaveDialog(stage);
+        final var newFile = fileChooser.showSaveDialog(stage);
         if (newFile == null) {
             return false;
         }

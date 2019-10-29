@@ -3,12 +3,14 @@ package com.annimon.hotarufx.visual.visitors;
 import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.VirtualScene;
 import com.annimon.hotarufx.visual.objects.*;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
 
     private final TimeLine timeline;
+
+    public RenderVisitor(TimeLine timeline) {
+        this.timeline = timeline;
+    }
 
     @Override
     public Void visit(ArcNode node, VirtualScene scene) {

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
-import lombok.Getter;
 
 public enum FontAwesome {
 
@@ -28,7 +27,6 @@ public enum FontAwesome {
     SEARCH_MINUS("\uf010", "search-minus"),
     UNDO("\uf0e2", "undo");
 
-    @Getter
     private final String symbol;
     private final List<String> names;
 
@@ -39,6 +37,10 @@ public enum FontAwesome {
         if (aliases.length > 0) {
             names.addAll(Arrays.asList(aliases));
         }
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     public static String getIcon(String name) {

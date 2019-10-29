@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import lombok.val;
 
 public class Main extends Application {
 
@@ -20,8 +19,8 @@ public class Main extends Application {
         ClickableHyperLink.setHostServices(getHostServices());
         primaryStage.setTitle("HotaruFX");
         try {
-            val loader = new FXMLLoader(getClass().getResource("/fxml/Editor.fxml"));
-            val scene = new Scene(loader.load());
+            final var loader = new FXMLLoader(getClass().getResource("/fxml/Editor.fxml"));
+            final var scene = new Scene(loader.load());
             scene.getStylesheets().addAll(
                     getClass().getResource("/styles/theme-dark.css").toExternalForm(),
                     getClass().getResource("/styles/codearea.css").toExternalForm(),
@@ -33,7 +32,7 @@ public class Main extends Application {
             primaryStage.setOnCloseRequest(controller::onCloseRequest);
             primaryStage.setScene(scene);
         } catch (IOException ex) {
-            val text = new TextArea(Exceptions.stackTraceToString(ex));
+            final var text = new TextArea(Exceptions.stackTraceToString(ex));
             text.setEditable(false);
             primaryStage.setScene(new Scene(text));
         }

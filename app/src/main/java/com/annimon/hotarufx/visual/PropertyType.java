@@ -13,11 +13,7 @@ import java.util.function.Function;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 
-@SuppressWarnings("ConstantConditions")
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public enum PropertyType {
 
     BOOLEAN(Value::asBoolean, o -> NumberValue.fromBoolean(Boolean.TRUE.equals(o))),
@@ -27,6 +23,11 @@ public enum PropertyType {
     CLIP_NODE(toClipNode(), fromNode()),
     PAINT(v -> Color.valueOf(v.asString()), o -> new StringValue(o.toString())),
     FONT(toFont(), object -> new FontValue((Font) object));
+
+    PropertyType(Function<Value, Object> fromHFX, Function<Object, Value> toHFX) {
+        this.fromHFX = fromHFX;
+        this.toHFX = toHFX;
+    }
 
     private final Function<Value, Object> fromHFX;
     private final Function<Object, Value> toHFX;

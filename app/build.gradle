@@ -1,26 +1,33 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '2.0.1'
     id 'java'
     id 'application'
+    id "com.github.johnrengelman.shadow" version "5.1.0"
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 group 'HotaruFX'
-version '0.9.1'
+version '1.0.0'
 mainClassName = 'com.annimon.hotarufx.Main'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
 }
 
+javafx {
+    version = "11"
+    modules = ['javafx.controls', 'javafx.fxml', "javafx.swing"]
+}
+
+ext.junit5Version = '5.5.2'
+
 dependencies {
-    implementation 'org.fxmisc.richtext:richtextfx:0.6.10'
-    compileOnly 'org.projectlombok:lombok:1.16.18'
-    testCompileOnly 'org.projectlombok:lombok:1.16.18'
-    testRuntime 'org.junit.platform:junit-platform-launcher:1.0.0'
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.0'
-    testRuntime 'org.junit.vintage:junit-vintage-engine:4.12.0'
-    testRuntime 'org.junit.jupiter:junit-jupiter-params:5.0.0'
+    implementation 'org.fxmisc.richtext:richtextfx:0.10.2'
+    testRuntime 'org.junit.platform:junit-platform-launcher:1.5.2'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit5Version"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
+    testRuntime "org.junit.vintage:junit-vintage-engine:$junit5Version"
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
 }

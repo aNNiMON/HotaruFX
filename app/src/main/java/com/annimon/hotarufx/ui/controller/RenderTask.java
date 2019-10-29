@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.WritableImage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
-import lombok.val;
 
 public class RenderTask extends Task<Boolean> {
 
@@ -31,25 +30,25 @@ public class RenderTask extends Task<Boolean> {
 
     @Override
     protected Boolean call() throws Exception {
-        val fxTimeline = timeLine.getFxTimeline();
+        final var fxTimeline = timeLine.getFxTimeline();
 
-        val totalFrames = toFrame(fxTimeline.getTotalDuration());
+        final var totalFrames = toFrame(fxTimeline.getTotalDuration());
         int frame = 0;
         while (frame < totalFrames) {
             updateProgress(frame, totalFrames);
             updateMessage(String.format("%d / %d", frame + 1, totalFrames));
             fxTimeline.jumpTo(toDuration(frame));
 
-            val image = newImage();
+            final var image = newImage();
 
-            val latch = new CountDownLatch(1);
+            final var latch = new CountDownLatch(1);
             Platform.runLater(() -> {
                 scene.snapshot(image);
                 latch.countDown();
             });
             latch.await();
 
-            val file = new File(directory, String.format("frame_%05d.png", frame + 1));
+            final var file = new File(directory, String.format("frame_%05d.png", frame + 1));
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
             frame++;
         }

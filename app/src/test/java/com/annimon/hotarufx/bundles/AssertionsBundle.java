@@ -6,7 +6,6 @@ import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.Validator;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
@@ -30,7 +29,7 @@ public class AssertionsBundle implements Bundle {
     private static Function assertHasVariable(Context context) {
         return args -> {
             Validator.with(args).check(1);
-            val name = args[0].asString();
+            final var name = args[0].asString();
             Assertions.assertTrue(context.variables().containsKey(name));
             return NumberValue.ZERO;
         };
@@ -39,7 +38,7 @@ public class AssertionsBundle implements Bundle {
     private static Function assertHasFunction(Context context) {
         return args -> {
             Validator.with(args).check(1);
-            val name = args[0].asString();
+            final var name = args[0].asString();
             Assertions.assertTrue(context.functions().containsKey(name));
             return NumberValue.ZERO;
         };
@@ -56,8 +55,8 @@ public class AssertionsBundle implements Bundle {
     private static Function assertEquals(Context context) {
         return args -> {
             Validator.with(args).check(2);
-            val expectedValue = args[0];
-            val actualValue = args[1];
+            final var expectedValue = args[0];
+            final var actualValue = args[1];
             Assertions.assertEquals(expectedValue, actualValue);
             return NumberValue.ZERO;
         };

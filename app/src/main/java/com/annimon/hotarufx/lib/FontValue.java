@@ -4,17 +4,16 @@ import com.annimon.hotarufx.exceptions.TypeException;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import lombok.val;
 
 public class FontValue extends MapValue {
 
     public static Font toFont(MapValue mapValue) {
-        val map = mapValue.getMap();
-        val family = map.getOrDefault("family", new StringValue(Font.getDefault().getFamily())).asString();
-        val weight = map.getOrDefault("weight", NumberValue.of(FontWeight.NORMAL.getWeight())).asInt();
-        val isItalic = map.getOrDefault("italic", NumberValue.ZERO).asBoolean();
-        val posture = isItalic ? FontPosture.ITALIC : FontPosture.REGULAR;
-        val size = map.getOrDefault("size", NumberValue.MINUS_ONE).asDouble();
+        final var map = mapValue.getMap();
+        final var family = map.getOrDefault("family", new StringValue(Font.getDefault().getFamily())).asString();
+        final var weight = map.getOrDefault("weight", NumberValue.of(FontWeight.NORMAL.getWeight())).asInt();
+        final var isItalic = map.getOrDefault("italic", NumberValue.ZERO).asBoolean();
+        final var posture = isItalic ? FontPosture.ITALIC : FontPosture.REGULAR;
+        final var size = map.getOrDefault("size", NumberValue.MINUS_ONE).asDouble();
         return Font.font(family, FontWeight.findByWeight(weight), posture, size);
     }
 
@@ -27,10 +26,10 @@ public class FontValue extends MapValue {
     }
 
     private void init() {
-        val map = super.getMap();
+        final var map = super.getMap();
         map.put("family", new StringValue(font.getFamily()));
         map.put("isItalic", NumberValue.fromBoolean(font.getStyle().toLowerCase().contains("italic")));
-        val weight = FontWeight.findByName(font.getStyle());
+        final var weight = FontWeight.findByName(font.getStyle());
         map.put("weight", NumberValue.of(weight != null
                 ? (weight.getWeight())
                 : FontWeight.NORMAL.getWeight()));

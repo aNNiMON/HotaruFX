@@ -2,13 +2,18 @@ package com.annimon.hotarufx.lib;
 
 import com.annimon.hotarufx.exceptions.ArgumentsMismatchException;
 import com.annimon.hotarufx.exceptions.TypeException;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
 
-@RequiredArgsConstructor(staticName = "with")
 public class Validator {
 
+    public static Validator with(Value[] args) {
+        return new Validator(args);
+    }
+
     private final Value[] args;
+
+    private Validator(Value[] args) {
+        this.args = args;
+    }
 
     public Validator check(int expected) {
         if (args.length != expected) throw new ArgumentsMismatchException(String.format(
@@ -38,7 +43,7 @@ public class Validator {
 
     public ArrayValue requireArrayAt(int index) {
         checkAtLeast(index + 1);
-        val value = args[index];
+        final var value = args[index];
         if (value.type() != Types.ARRAY) {
             throw new TypeException(String.format("Array required at %d argument", index));
         }
@@ -47,7 +52,7 @@ public class Validator {
 
     public MapValue requireMapAt(int index) {
         checkAtLeast(index + 1);
-        val value = args[index];
+        final var value = args[index];
         if (value.type() != Types.MAP) {
             throw new TypeException(String.format("Map required at %d argument", index));
         }
