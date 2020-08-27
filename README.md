@@ -127,10 +127,10 @@ See other examples in [examples folder](app/src/main/resources/examples) or in `
 ## Build
 
 ```
-./gradlew  shadowJar
+./gradlew shadowJar
 ```
 
-Build requires JDK-8u60 or higher and Java FX support. Assembled binaries are stored in `app/build/libs` directory.
+Build requires JDK 11 or higher and Java FX support. Assembled binaries are stored in `app/build/libs` directory.
 
 
 ## Run
@@ -139,7 +139,7 @@ Build requires JDK-8u60 or higher and Java FX support. Assembled binaries are st
 ./gradlew run
 ```
 
-Application requires JRE-8u60 or higher and Java FX support. Works properly on Oracle JDK 8 and OpenJDK 8 + openjfx.
+Application requires JRE 11 or higher and Java FX support.
 
 ## License
 
