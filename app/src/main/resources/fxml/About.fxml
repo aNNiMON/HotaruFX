@@ -16,7 +16,7 @@
         <LineText />
 
         <LineText />
-        <LineText styleClass="bold" content="1.0.0" />
+        <LineText styleClass="bold" content="1.1.0" />
 
         <LineText />
         <LineText content="Programming language for creating animations" />
@@ -32,7 +32,7 @@
 
         <LineText />
         <FontAwesomeIcon icon="copyright" />
-        <LineText styleClass="h4" content=" 2017 aNNiMON" />
+        <LineText styleClass="h4" content=" 2024 aNNiMON" />
         <LineText />
 
 
@@ -52,7 +52,7 @@
         <LineText />
         <LineText styleClass="copyright">
             <content>
-                Copyright (c) 2013-2017, Tomas Mikula and contributors\n
+                Copyright (c) 2013-2023, Tomas Mikula and contributors\n
                 All rights reserved.\n
                 \n
                 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\n

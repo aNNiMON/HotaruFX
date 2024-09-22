@@ -3,8 +3,6 @@ HotaruFX
 
 Programming language for creating animations
 
-[![Build Status](https://travis-ci.org/aNNiMON/HotaruFX.svg?branch=master)](https://travis-ci.org/aNNiMON/HotaruFX)
-
 
 ![App running on Linux Mint](art/screenshot.png)
 
@@ -130,7 +128,7 @@ See other examples in [examples folder](app/src/main/resources/examples) or in `
 ./gradlew shadowJar
 ```
 
-Build requires JDK 11 or higher and Java FX support. Assembled binaries are stored in `app/build/libs` directory.
+Build requires JDK 17 or higher and Java FX support. Assembled binaries are stored in `app/build/libs` directory.
 
 
 ## Run
@@ -139,7 +137,7 @@ Build requires JDK 11 or higher and Java FX support. Assembled binaries are stor
 ./gradlew run
 ```
 
-Application requires JRE 11 or higher and Java FX support.
+Application requires JRE 17 or higher and Java FX support.
 
 ## License
 
