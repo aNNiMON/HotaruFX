@@ -164,7 +164,7 @@
                                 __y: -75,\n
                                 __width: 100,\n
                                 __height: 150,\n
-                                __fill: '#4233c0'\n
+                                __fill: '#4233c0',\n
                                 __strokeWidth: 4,\n
                                 __stroke: '#819bed',\n
                                 __rotate: 30\n
@@ -186,7 +186,7 @@
                                 __height: 200,\n
                                 __arcWidth: 25,\n
                                 __arcHeight: 25,\n
-                                __fill: '#4233c0'\n
+                                __fill: '#4233c0',\n
                                 __strokeWidth: 4,\n
                                 __stroke: '#819bed'\n
                                 })
@@ -263,7 +263,7 @@
                                 __50, -50,\n
                                 __50, 50,\n
                                 __0, 25,\n
-                                __-50, 50\n
+                                __-50, 50,\n
                                 __-50,-50\n
                                 ]\n
                                 polyline(points, {\n
@@ -298,7 +298,7 @@
                                 LINE = line({\n
                                 __startX: -600,\n
                                 __startY: -300,\n
-                                __endX: 600\n
+                                __endX: 600,\n
                                 __endY: 300,\n
                                 __stroke: "#AAA",\n
                                 __strokeWidth: 5\n
@@ -323,7 +323,7 @@
                                 __radiusY: 50,\n
                                 __startAngle: 60,\n
                                 __length: 240\n
-                                __type: "ROUND" # OPEN, CHORD, ROUND\n
+                                __type: "ROUND", # OPEN, CHORD, ROUND\n
                                 __fill: "#1b8118",\n
                                 __strokeWidth: 4,\n
                                 __stroke: "#4cbc72"\n

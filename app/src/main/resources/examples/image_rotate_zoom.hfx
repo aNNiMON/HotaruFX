@@ -1,6 +1,6 @@
 composition(1280, 720, 30)
 
-IMG = image("http://lorempixel.com/1280/720/city", {
+IMG = image("https://picsum.photos/1280/720", {
   x: -160,
   y: -120,
   smooth: true,
