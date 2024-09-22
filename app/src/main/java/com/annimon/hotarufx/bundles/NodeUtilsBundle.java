@@ -11,7 +11,6 @@ import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.ShapeNode;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javafx.scene.shape.Shape;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
@@ -41,7 +40,7 @@ public class NodeUtilsBundle implements Bundle {
                 final var array = validator.requireArrayAt(1);
                 final var dashList = array.stream()
                         .map(Value::asDouble)
-                        .collect(Collectors.toList());
+                        .toList();
                 shape.getStrokeDashArray().setAll(dashList);
                 return NumberValue.ZERO;
             } else {

@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.NODE;
 
@@ -53,7 +52,7 @@ public class NodesBundle implements Bundle {
             final var map = validator.requireMapAt(1);
             final var points = validator.requireArrayAt(0).stream()
                     .map(Value::asDouble)
-                    .collect(Collectors.toList());
+                    .toList();
             final var node = new NodeValue(ctor.apply(points));
             node.fill(map);
             return node;
@@ -76,7 +75,7 @@ public class NodesBundle implements Bundle {
             final var nodes = Arrays.stream(args)
                     .filter(v -> v.type() == Types.NODE)
                     .map(v -> ((NodeValue) v).getNode())
-                    .collect(Collectors.toList());
+                    .toList();
             return new NodeValue(new GroupNode(nodes));
         };
     }

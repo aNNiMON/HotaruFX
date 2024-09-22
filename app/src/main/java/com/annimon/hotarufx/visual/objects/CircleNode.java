@@ -12,7 +12,9 @@ public class CircleNode extends ShapeNode {
 
     public final Circle circle;
 
-    private PropertyTimelineHolder<Number> centerX, centerY, radius;
+    private final PropertyTimelineHolder<Number> centerX;
+    private final PropertyTimelineHolder<Number> centerY;
+    private final PropertyTimelineHolder<Number> radius;
 
     public CircleNode() {
         this(new Circle());

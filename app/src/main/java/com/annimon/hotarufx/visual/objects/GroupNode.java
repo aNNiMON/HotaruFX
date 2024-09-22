@@ -7,7 +7,6 @@ import com.annimon.hotarufx.visual.TimeLine;
 import com.annimon.hotarufx.visual.visitors.NodeVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javafx.scene.Group;
 import static com.annimon.hotarufx.visual.PropertyType.BOOLEAN;
 
@@ -16,7 +15,7 @@ public class GroupNode extends ObjectNode {
     public final Group group;
     public final List<ObjectNode> nodes;
 
-    private PropertyTimelineHolder<Boolean> autoSizeChildren;
+    private final PropertyTimelineHolder<Boolean> autoSizeChildren;
 
     public GroupNode(List<ObjectNode> nodes) {
         this(new Group(), nodes);
@@ -28,7 +27,7 @@ public class GroupNode extends ObjectNode {
         this.nodes = new ArrayList<>(nodes);
         final var fxNodes = nodes.stream()
                 .map(ObjectNode::getFxNode)
-                .collect(Collectors.toList());
+                .toList();
         group.getChildren().addAll(fxNodes);
         autoSizeChildren = PropertyTimelineHolder.empty();
     }

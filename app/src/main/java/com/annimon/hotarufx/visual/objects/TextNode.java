@@ -17,13 +17,18 @@ public class TextNode extends ShapeNode {
 
     public final Text text;
 
-    private PropertyTimelineHolder<Number> x, y;
-    private PropertyTimelineHolder<String> textProperty;
-    private PropertyTimelineHolder<Font> font;
-    private PropertyTimelineHolder<Number> lineSpacing, wrappingWidth;
-    private PropertyTimelineHolder<Boolean> strikethrough, underline;
-    private PropertyTimelineHolder<String> boundsType, fontSmoothingType;
-    private PropertyTimelineHolder<String> textAlignment, textOrigin;
+    private final PropertyTimelineHolder<Number> x;
+    private final PropertyTimelineHolder<Number> y;
+    private final PropertyTimelineHolder<String> textProperty;
+    private final PropertyTimelineHolder<Font> font;
+    private final PropertyTimelineHolder<Number> lineSpacing;
+    private final PropertyTimelineHolder<Number> wrappingWidth;
+    private final PropertyTimelineHolder<Boolean> strikethrough;
+    private final PropertyTimelineHolder<Boolean> underline;
+    private final PropertyTimelineHolder<String> boundsType;
+    private final PropertyTimelineHolder<String> fontSmoothingType;
+    private final PropertyTimelineHolder<String> textAlignment;
+    private final PropertyTimelineHolder<String> textOrigin;
 
     public TextNode() {
         this(new Text());

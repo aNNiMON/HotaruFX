@@ -14,8 +14,12 @@ public class ImageNode extends ObjectNode {
 
     public final ImageView imageView;
 
-    private PropertyTimelineHolder<Number> x, y, fitWidth, fitHeight;
-    private PropertyTimelineHolder<Boolean> preserveRatio, smooth;
+    private final PropertyTimelineHolder<Number> x;
+    private final PropertyTimelineHolder<Number> y;
+    private final PropertyTimelineHolder<Number> fitWidth;
+    private final PropertyTimelineHolder<Number> fitHeight;
+    private final PropertyTimelineHolder<Boolean> preserveRatio;
+    private final PropertyTimelineHolder<Boolean> smooth;
 
     public ImageNode(String url) {
         this(url, new ImageView());

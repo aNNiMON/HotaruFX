@@ -19,18 +19,18 @@ import static com.annimon.hotarufx.visual.PropertyType.*;
 public abstract class ObjectNode {
 
     private final Node node;
-    private PropertyTimelineHolder<Boolean> visible;
-    private PropertyTimelineHolder<Number> opacity;
-    private PropertyTimelineHolder<Node> clip;
-    private PropertyTimelineHolder<String> style;
-    private PropertyTimelineHolder<Number> rotate;
-    private PropertyTimelineHolder<Number> translateX, translateY, translateZ;
-    private PropertyTimelineHolder<Number> scaleX, scaleY, scaleZ;
-    private PropertyTimelineHolder<Number> layoutX, layoutY;
-    private PropertyTimelineHolder<String> blendMode;
+    private final PropertyTimelineHolder<Boolean> visible;
+    private final PropertyTimelineHolder<Number> opacity;
+    private final PropertyTimelineHolder<Node> clip;
+    private final PropertyTimelineHolder<String> style;
+    private final PropertyTimelineHolder<Number> rotate;
+    private final PropertyTimelineHolder<Number> translateX, translateY, translateZ;
+    private final PropertyTimelineHolder<Number> scaleX, scaleY, scaleZ;
+    private final PropertyTimelineHolder<Number> layoutX, layoutY;
+    private final PropertyTimelineHolder<String> blendMode;
     private boolean isRenderable;
 
-    public ObjectNode(Node node) {
+    protected ObjectNode(Node node) {
         this.node = node;
         visible = PropertyTimelineHolder.empty();
         opacity = PropertyTimelineHolder.empty();

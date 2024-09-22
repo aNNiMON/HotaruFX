@@ -12,7 +12,10 @@ public class EllipseNode extends ShapeNode {
 
     public final Ellipse ellipse;
 
-    private PropertyTimelineHolder<Number> centerX, centerY, radiusX, radiusY;
+    private final PropertyTimelineHolder<Number> centerX;
+    private final PropertyTimelineHolder<Number> centerY;
+    private final PropertyTimelineHolder<Number> radiusX;
+    private final PropertyTimelineHolder<Number> radiusY;
 
     public EllipseNode() {
         this(new Ellipse());

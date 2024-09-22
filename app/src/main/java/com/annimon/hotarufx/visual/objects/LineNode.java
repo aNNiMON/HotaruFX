@@ -12,7 +12,10 @@ public class LineNode extends ShapeNode {
 
     public final Line line;
 
-    private PropertyTimelineHolder<Number> startX, startY, endX, endY;
+    private final PropertyTimelineHolder<Number> startX;
+    private final PropertyTimelineHolder<Number> startY;
+    private final PropertyTimelineHolder<Number> endX;
+    private final PropertyTimelineHolder<Number> endY;
 
     public LineNode() {
         this(new Line());

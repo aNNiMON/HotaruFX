@@ -4,6 +4,9 @@ import com.annimon.hotarufx.exceptions.Exceptions;
 import com.annimon.hotarufx.ui.control.ClickableHyperLink;
 import com.annimon.hotarufx.ui.controller.EditorController;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,11 +25,11 @@ public class Main extends Application {
             final var loader = new FXMLLoader(getClass().getResource("/fxml/Editor.fxml"));
             final var scene = new Scene(loader.load());
             scene.getStylesheets().addAll(
-                    getClass().getResource("/styles/theme-dark.css").toExternalForm(),
-                    getClass().getResource("/styles/codearea.css").toExternalForm(),
-                    getClass().getResource("/styles/hotarufx-keywords.css").toExternalForm(),
-                    getClass().getResource("/styles/color-picker-box.css").toExternalForm()
-                    );
+                    Stream.of("theme-dark", "codearea", "hotarufx-keywords", "color-picker-box")
+                            .map(s -> getClass().getResource("/styles/" + s + ".css"))
+                            .filter(Objects::nonNull)
+                            .map(URL::toExternalForm)
+                            .toList());
             controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
             primaryStage.setOnCloseRequest(controller::onCloseRequest);

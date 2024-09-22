@@ -12,7 +12,12 @@ public class RectangleNode extends ShapeNode {
 
     public final Rectangle rectangle;
 
-    private PropertyTimelineHolder<Number> x, y, width, height, arcWidth, arcHeight;
+    private final PropertyTimelineHolder<Number> x;
+    private final PropertyTimelineHolder<Number> y;
+    private final PropertyTimelineHolder<Number> width;
+    private final PropertyTimelineHolder<Number> height;
+    private final PropertyTimelineHolder<Number> arcWidth;
+    private final PropertyTimelineHolder<Number> arcHeight;
 
     public RectangleNode() {
         this(new Rectangle());

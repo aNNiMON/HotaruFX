@@ -32,9 +32,16 @@ import javafx.scene.paint.Stop;
 import javafx.util.StringConverter;
 
 /**
- * See https://stackoverflow.com/questions/27171885
+ * See <a href="https://stackoverflow.com/questions/27171885">JavaFX ColorPicker</a>
  */
 public class ColorPickerBox extends VBox {
+
+    private static final String CLASS_COLOR_PICKER_BOX = "color-picker-box";
+    private static final String CLASS_HUE_BAR = "hue-bar";
+    private static final String CLASS_HUE_BAR_INDICATOR = "hue-bar-indicator";
+    private static final String CLASS_COLOR_RECT = "color-rect";
+    private static final String CLASS_COLOR_NEW_RECT = "color-new-rect";
+    private static final String CLASS_COLOR_RECT_BORDER = "color-rect-border";
 
     private final ObjectProperty<Color> currentColorProperty = new SimpleObjectProperty<>(Color.WHITE);
     private final ObjectProperty<Color> customColorProperty = new SimpleObjectProperty<>(Color.TRANSPARENT);
@@ -56,28 +63,28 @@ public class ColorPickerBox extends VBox {
     private final Region colorRectIndicator;
 
     public ColorPickerBox() {
-        getStyleClass().add("color-picker-box");
+        getStyleClass().add(CLASS_COLOR_PICKER_BOX);
 
         customColorProperty().addListener((ov, t, t1) -> colorChanged());
 
         /* Hue bar */
         final Pane hueBar = new Pane();
-        hueBar.getStyleClass().add("hue-bar");
+        hueBar.getStyleClass().add(CLASS_HUE_BAR);
         hueBar.setBackground(new Background(new BackgroundFill(
                 createHueGradient(),
                 CornerRadii.EMPTY, Insets.EMPTY)));
 
         final Region hueBarIndicator = new Region();
-        hueBarIndicator.setId("hue-bar-indicator");
+        hueBarIndicator.setId(CLASS_HUE_BAR_INDICATOR);
         hueBarIndicator.setMouseTransparent(true);
         hueBarIndicator.setCache(true);
 
         /* Saturation and value rect */
         final Pane colorRect = new StackPane();
-        colorRect.getStyleClass().add("color-rect");
+        colorRect.getStyleClass().add(CLASS_COLOR_RECT);
 
         final Pane colorRectBg = new Pane();
-        colorRectBg.backgroundProperty().bind(new ObjectBinding<Background>() {
+        colorRectBg.backgroundProperty().bind(new ObjectBinding<>() {
             {
                 bind(hue);
             }
@@ -90,7 +97,7 @@ public class ColorPickerBox extends VBox {
         });
 
         final Pane colorRectOverlayWhite = new Pane();
-        colorRectOverlayWhite.getStyleClass().add("color-rect");
+        colorRectOverlayWhite.getStyleClass().add(CLASS_COLOR_RECT);
         colorRectOverlayWhite.setBackground(new Background(new BackgroundFill(
                 new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
                         new Stop(0, Color.gray(1, 1)),
@@ -98,7 +105,7 @@ public class ColorPickerBox extends VBox {
                 CornerRadii.EMPTY, Insets.EMPTY)));
 
         final Pane colorRectOverlayBlack = new Pane();
-        colorRectOverlayBlack.getStyleClass().add("color-rect");
+        colorRectOverlayBlack.getStyleClass().add(CLASS_COLOR_RECT);
         colorRectOverlayBlack.setBackground(new Background(new BackgroundFill(
                 new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                         new Stop(0, Color.gray(0, 0)),
@@ -107,7 +114,7 @@ public class ColorPickerBox extends VBox {
 
         final Pane colorRectBlackBorder = new Pane();
         colorRectBlackBorder.setMouseTransparent(true);
-        colorRectBlackBorder.getStyleClass().addAll("color-rect", "color-rect-border");
+        colorRectBlackBorder.getStyleClass().addAll(CLASS_COLOR_RECT, CLASS_COLOR_RECT_BORDER);
 
         colorRectIndicator = new Region();
         colorRectIndicator.setId("color-rect-indicator");
@@ -117,9 +124,9 @@ public class ColorPickerBox extends VBox {
 
         /* New color rect */
         final Pane newColorRect = new Pane();
-        newColorRect.getStyleClass().addAll("color-new-rect");
+        newColorRect.getStyleClass().addAll(CLASS_COLOR_NEW_RECT);
         newColorRect.setId("new-color");
-        newColorRect.backgroundProperty().bind(new ObjectBinding<Background>() {
+        newColorRect.backgroundProperty().bind(new ObjectBinding<>() {
             {
                 bind(customColorProperty);
             }
@@ -252,8 +259,11 @@ public class ColorPickerBox extends VBox {
     }
 
     private static double clamp(double value) {
-        return (value < 0) ? 0
-                           : (value > 1) ? 1 : value;
+        if ((value < 0)) {
+            return 0;
+        } else {
+            return (value > 1) ? 1 : value;
+        }
     }
 
     private static LinearGradient createHueGradient() {

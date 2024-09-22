@@ -15,10 +15,15 @@ public abstract class ShapeNode extends ObjectNode {
 
     private final Shape shape;
 
-    private PropertyTimelineHolder<Boolean> smooth;
-    private PropertyTimelineHolder<Paint> fill, stroke;
-    private PropertyTimelineHolder<Number> strokeWidth, strokeDashOffset, strokeMiterLimit;
-    private PropertyTimelineHolder<String> strokeType, strokeLineCap, strokeLineJoin;
+    private final PropertyTimelineHolder<Boolean> smooth;
+    private final PropertyTimelineHolder<Paint> fill;
+    private final PropertyTimelineHolder<Paint> stroke;
+    private final PropertyTimelineHolder<Number> strokeWidth;
+    private final PropertyTimelineHolder<Number> strokeDashOffset;
+    private final PropertyTimelineHolder<Number> strokeMiterLimit;
+    private final PropertyTimelineHolder<String> strokeType;
+    private final PropertyTimelineHolder<String> strokeLineCap;
+    private final PropertyTimelineHolder<String> strokeLineJoin;
 
     public ShapeNode(Shape shape) {
         super(shape);

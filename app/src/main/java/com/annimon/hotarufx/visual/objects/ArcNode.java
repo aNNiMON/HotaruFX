@@ -14,9 +14,13 @@ public class ArcNode extends ShapeNode {
 
     public final Arc arc;
 
-    private PropertyTimelineHolder<Number> centerX, centerY, radiusX, radiusY;
-    private PropertyTimelineHolder<Number> startAngle, length;
-    private PropertyTimelineHolder<String> type;
+    private final PropertyTimelineHolder<Number> centerX;
+    private final PropertyTimelineHolder<Number> centerY;
+    private final PropertyTimelineHolder<Number> radiusX;
+    private final PropertyTimelineHolder<Number> radiusY;
+    private final PropertyTimelineHolder<Number> startAngle;
+    private final PropertyTimelineHolder<Number> length;
+    private final PropertyTimelineHolder<String> type;
 
     public ArcNode() {
         this(new Arc());

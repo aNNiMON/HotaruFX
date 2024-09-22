@@ -13,8 +13,8 @@ public class SVGPathNode extends ShapeNode {
 
     public final SVGPath svgPath;
 
-    private PropertyTimelineHolder<String> content;
-    private PropertyTimelineHolder<String> fillRule;
+    private final PropertyTimelineHolder<String> content;
+    private final PropertyTimelineHolder<String> fillRule;
 
     public SVGPathNode() {
         this(new SVGPath());
