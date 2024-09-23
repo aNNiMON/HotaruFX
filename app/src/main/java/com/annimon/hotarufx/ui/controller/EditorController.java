@@ -270,17 +270,18 @@ public class EditorController implements Initializable, DocumentListener {
     private void populateExamples() {
         final var map = new LinkedHashMap<String, String>();
         map.put("HotaruFX Logo", "hotarufx-logo.hfx");
+        map.put("Algorithm", "algorithm.hfx");
+        map.put("Blend Modes", "blend-modes.hfx");
+        map.put("Font", "font.hfx");
         map.put("Font Awesome Icons", "font-awesome.hfx");
         map.put("HSV Color", "hsv.hfx");
+        map.put("Image", "image.hfx");
+        map.put("Image Rotate & Zoom", "image_rotate_zoom.hfx");
         map.put("Line", "line.hfx");
         map.put("Rectangle", "rectangle.hfx");
         map.put("Round Rectangle", "round-rect.hfx");
-        map.put("Font", "font.hfx");
-        map.put("Image", "image.hfx");
-        map.put("Image Rotate & Zoom", "image_rotate_zoom.hfx");
-        map.put("Text Clipping", "clip-text.hfx");
-        map.put("Blend Modes", "blend-modes.hfx");
         map.put("Stroke Ants", "stroke-ants.hfx");
+        map.put("Text Clipping", "clip-text.hfx");
         examplesMenu.getItems().clear();
         for (final var entry : map.entrySet()) {
             final var item = new MenuItem(entry.getKey());

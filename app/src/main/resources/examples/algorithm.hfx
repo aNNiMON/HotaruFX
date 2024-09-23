@@ -1,0 +1,109 @@
+composition(1280, 720, 60, "#13111C")
+
+# own add package
+START = text({x:-170, y:-340, text:'', fill:'#8985DC', font:40})
+START_PA = text({x:0, y:-340, text:'', fill:'#85DC87', font:40})
+# text nodes
+LOCAL_REG = text({x:-178, y:-210, text:'local registry exists?', fill:'#a2a7bb', font:40, opacity: 0})
+REG_UPD = text({x:225, y:-110, text:'download global registry file', fill:'#9298ae', font:40, opacity: 0})
+EXISTS_CHECK = text({x:-215, y:-110, text:'exists in global registry?', fill:'#a2a7bb', font:40, opacity: 0})
+GET_INFO = text({x:-385, y:110, text:'get additional info (versions, download urls)', fill:'#a2a7bb', font:40, opacity: 0})
+DOWNLOAD = text({x:-320, y:340, text:'download to own-modules/package', fill:'#a2a7bb', font:40, opacity: 0})
+ERROR = text({x:-691, y:-10, text:'package doesn’t exist', fill:'#EB6E6E', font:40, opacity: 0})
+# lines
+LINE1 = line({startX:0, startY:-320, endX:0, endY:-320, stroke:'#49b672', strokeWidth:5, opacity: 0})
+LINE2 = line({startX:0, startY:-95, endX:0, endY:-95, stroke:'#49b672', strokeWidth:5, opacity: 0})
+LINE3 = line({startX:0, startY:130, endX:0, endY:130, stroke:'#49b672', strokeWidth:5, opacity: 0})
+LINE4 = line({startX:190, startY:-225, stroke:'#b64949', strokeWidth:5, opacity: 0}) # red right line
+LINE5 = line({startX:500, startY:-90, stroke:'#49b672', strokeWidth:5, opacity: 0}) # red + LINE6
+LINE6 = line({startX:0, startY:-195, endX:0, stroke:'#49b672', strokeWidth:5, opacity: 0}) # vertical green
+ERRLINE = line({startX:-230, startY:-115, stroke:'#b64949', strokeWidth:5, opacity: 0})
+
+# typing animation
+START@text
+  .add(400 ms, '', hold)
+  .add(450 ms, 'o', hold)
+  .add(500 ms, 'ow', hold)
+  .add(550 ms, 'own', hold)
+  .add(650 ms, 'own a', hold)
+  .add(700 ms, 'own ad', hold)
+  .add(750 ms, 'own add', hold)
+START_PA@text
+  .add(900 ms, '', hold)
+  .add(950 ms, 'p', hold)
+  .add(1000 ms, 'pa', hold)
+  .add(1050 ms, 'pac', hold)
+  .add(1100 ms, 'pack', hold)
+  .add(1150 ms, 'packa', hold)
+  .add(1200 ms, 'packag', hold)
+  .add(1250 ms, 'package', hold)
+# join next node with line
+LINE1@opacity.add(2 sec, 1, hold)
+LINE1@endY.add(2 sec, -320, hold).add(3 sec, -155, ease)
+EXISTS_CHECK@opacity
+  .add(3 sec, 0, hold)
+  .add(4 sec, 1, easeOut)
+LINE2@opacity.add(5 sec, 1, hold)
+LINE2@endY.add(5 sec, -95, hold).add(6 sec, 70, ease)
+GET_INFO@opacity
+  .add(6 sec, 0, hold)
+  .add(7 sec, 1, easeOut)
+LINE3@opacity.add(8 sec, 1, hold)
+LINE3@endY.add(8 sec, 130, hold).add(9 sec, 300, ease)
+DOWNLOAD@opacity
+  .add(9 sec, 0, hold)
+  .add(10 sec, 1, easeOut)
+ERRLINE@opacity.add(11 sec, 1, hold)
+ERRLINE@endX.add(11 sec, -230, hold).add(12 sec, -460, ease)
+ERRLINE@endY.add(11 sec, -115, hold).add(12 sec, -50, ease)
+ERROR@opacity
+  .add(12 sec, 0, hold)
+  .add(13 sec, 1, easeOut)
+
+## compact bottom nodes
+LINE1@endY.add(16 sec, -155, hold).add(17 sec, -50, ease)
+LINE2@startY.add(16 sec, -95, hold).add(17 sec, 10, ease)
+LINE2@endY.add(16 sec, 70, hold).add(17 sec, 135, ease)
+EXISTS_CHECK@y
+  .add(16 sec, -110, hold)
+  .add(17 sec, -5, easeOut)
+LINE3@startY.add(16 sec, 130, hold).add(17 sec, 190, ease)
+GET_INFO@y
+  .add(16 sec, 110, hold)
+  .add(17 sec, 175, easeOut)
+ERRLINE@startY.add(16 sec, -115, hold).add(17 sec, -10, ease)
+ERRLINE@endY.add(16 sec, -50, hold).add(17 sec, 45, ease)
+ERROR@y
+  .add(16 sec, -10, hold)
+  .add(17 sec, 80, easeOut)
+
+## new nodes appear
+LINE1@endY.add(17.5 sec, -50, hold).add(18 sec, -250, ease)
+LOCAL_REG@opacity
+  .add(18 sec, 0, hold)
+  .add(19 sec, 1, easeOut)
+LINE4@opacity.add(19.5 sec, 1, hold)
+LINE4@endX.add(19.5 sec, 190, hold).add(20 sec, 500, ease)
+LINE4@endY.add(19.5 sec, -225, hold).add(20 sec, -150, ease)
+REG_UPD@opacity
+  .add(20 sec, 0, hold)
+  .add(21 sec, 1, easeOut)
+
+## switch global -> local
+EXISTS_CHECK@opacity
+  .add(22.5 sec, 1, hold)
+  .add(23 sec, 0)
+  .add(23.5 sec, 1)
+LINE5@opacity.add(22 sec, 1, hold)
+LINE5@endX.add(22 sec, 500, hold).add(23 sec, 205, ease)
+LINE5@endY.add(22 sec, -90, hold).add(23 sec, -20, ease)
+LINE6@opacity.add(22 sec, 1, hold)
+LINE6@endY.add(22 sec, -195, hold).add(23 sec, -50, ease)
+
+EXISTS_CHECK@text
+  .add(23 sec, 'exists in local registry?', hold)
+EXISTS_CHECK@x
+  .add(23 sec, -205, hold)
+
+render(START, START_PA, LOCAL_REG, REG_UPD, EXISTS_CHECK, GET_INFO, DOWNLOAD, ERROR,
+       LINE1, LINE2, LINE3, LINE4, LINE5, LINE6, ERRLINE)
