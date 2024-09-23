@@ -2,9 +2,7 @@ package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.lib.Context;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public final class BundleLoader {
@@ -23,10 +21,10 @@ public final class BundleLoader {
         load(context, List.of(clazz));
     }
 
-    public static Map<String, FunctionType> functions() {
-        final var functions = new HashMap<String, FunctionType>();
-        apply(runtimeBundles(), functions, ((bundle, map) -> map.putAll(bundle.functions())));
-        return functions;
+    public static Map<IdentifierType, Set<String>> identifiers() {
+        final var identifiers = new EnumMap<IdentifierType, Set<String>>(IdentifierType.class);
+        apply(runtimeBundles(), identifiers, ((bundle, map) -> map.putAll(bundle.identifiers())));
+        return identifiers;
     }
 
     public static void load(Context context, List<Class<? extends Bundle>> bundles) {

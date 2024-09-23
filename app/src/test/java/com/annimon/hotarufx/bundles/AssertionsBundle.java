@@ -7,17 +7,16 @@ import com.annimon.hotarufx.lib.Validator;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
-import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
 public class AssertionsBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.ofEntries(
-                Map.entry("assertHasVariable", of(COMMON, AssertionsBundle::assertHasVariable)),
-                Map.entry("assertHasFunction", of(COMMON, AssertionsBundle::assertHasFunction)),
-                Map.entry("assertTrue", of(COMMON, AssertionsBundle::assertTrue)),
-                Map.entry("assertEquals", of(COMMON, AssertionsBundle::assertEquals))
+                Map.entry("assertHasVariable", of(AssertionsBundle::assertHasVariable)),
+                Map.entry("assertHasFunction", of(AssertionsBundle::assertHasFunction)),
+                Map.entry("assertTrue", of(AssertionsBundle::assertTrue)),
+                Map.entry("assertEquals", of(AssertionsBundle::assertEquals))
         );
     }
 

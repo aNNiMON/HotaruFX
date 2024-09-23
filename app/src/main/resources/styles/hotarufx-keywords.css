@@ -17,3 +17,6 @@
 	-fx-fill: #DF5452;
     -fx-font-weight: bold;
 }
+.interpolation {
+ 	-fx-fill: #cfc041;
+ }

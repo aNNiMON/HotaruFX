@@ -5,16 +5,15 @@ import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.NumberValue;
 import java.util.Map;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
-import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
 public class PrintBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.ofEntries(
-                Map.entry("print", of(COMMON, PrintBundle::print)),
-                Map.entry("println", of(COMMON, PrintBundle::println)),
-                Map.entry("dump", of(COMMON, PrintBundle::dump))
+                Map.entry("print", of(PrintBundle::print)),
+                Map.entry("println", of(PrintBundle::println)),
+                Map.entry("dump", of(PrintBundle::dump))
         );
     }
 

@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Map;
 import javafx.scene.paint.Paint;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
-import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 import static java.util.Map.entry;
 
 public class CompositionBundle implements Bundle {
@@ -20,8 +19,8 @@ public class CompositionBundle implements Bundle {
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.ofEntries(
-                entry("composition", of(COMMON, CompositionBundle::composition)),
-                entry("render", of(COMMON, CompositionBundle::render))
+                entry("composition", of(CompositionBundle::composition)),
+                entry("render", of(CompositionBundle::render))
         );
     }
 

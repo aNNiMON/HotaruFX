@@ -6,12 +6,9 @@ import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Validator;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
-import static com.annimon.hotarufx.bundles.FunctionType.NODE;
 import static java.util.Map.entry;
 
 public class NodesBundle implements Bundle {
@@ -19,23 +16,28 @@ public class NodesBundle implements Bundle {
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.ofEntries(
-                entry("arc", of(NODE, node(ArcNode::new))),
-                entry("circle", of(NODE, node(CircleNode::new))),
-                entry("ellipse", of(NODE, node(EllipseNode::new))),
-                entry("group", of(NODE, group())),
-                entry("image", of(NODE, image())),
-                entry("line", of(NODE, node(LineNode::new))),
-                entry("polygon", of(NODE, poly(PolygonNode::new))),
-                entry("polyline", of(NODE, poly(PolylineNode::new))),
-                entry("rectangle", of(NODE, node(RectangleNode::new))),
-                entry("svgPath", of(NODE, node(SVGPathNode::new))),
-                entry("text", of(NODE, node(TextNode::new)))
+                entry("arc", of(node(ArcNode::new))),
+                entry("circle", of(node(CircleNode::new))),
+                entry("ellipse", of(node(EllipseNode::new))),
+                entry("group", of(group())),
+                entry("image", of(image())),
+                entry("line", of(node(LineNode::new))),
+                entry("polygon", of(poly(PolygonNode::new))),
+                entry("polyline", of(poly(PolylineNode::new))),
+                entry("rectangle", of(node(RectangleNode::new))),
+                entry("svgPath", of(node(SVGPathNode::new))),
+                entry("text", of(node(TextNode::new)))
         );
     }
 
     @Override
     public Map<String, FunctionInfo> functionsInfo() {
         return FUNCTIONS;
+    }
+
+    @Override
+    public Map<IdentifierType, Set<String>> identifiers() {
+        return Map.of(IdentifierType.NODE, FUNCTIONS.keySet());
     }
 
     private static Function node(Supplier<? extends ObjectNode> supplier) {

@@ -9,14 +9,13 @@ import com.annimon.hotarufx.lib.Validator;
 import java.util.Map;
 import javafx.scene.text.Font;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
-import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
 public class FontBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.of(
-                "font", of(COMMON, FontBundle::newFont)
+                "font", of(FontBundle::newFont)
         );
     }
 

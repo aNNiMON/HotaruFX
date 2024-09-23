@@ -12,14 +12,13 @@ import com.annimon.hotarufx.visual.objects.ShapeNode;
 import java.util.Map;
 import javafx.scene.shape.Shape;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
-import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
 
 public class NodeUtilsBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.of(
-                "strokeDashArray", of(COMMON, NodeUtilsBundle::strokePattern)
+                "strokeDashArray", of(NodeUtilsBundle::strokePattern)
         );
     }
 

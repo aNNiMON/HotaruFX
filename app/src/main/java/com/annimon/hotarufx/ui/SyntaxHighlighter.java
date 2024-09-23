@@ -1,29 +1,24 @@
 package com.annimon.hotarufx.ui;
 
 import com.annimon.hotarufx.bundles.BundleLoader;
-import com.annimon.hotarufx.bundles.FunctionType;
+import com.annimon.hotarufx.bundles.IdentifierType;
 import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lexer.HotaruTokenId;
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
-import java.util.stream.Collectors;
 import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.Task;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
+import static java.util.Map.entry;
 
 public class SyntaxHighlighter {
 
     private final CodeArea editor;
     private final ExecutorService executor;
-    private Set<String> nodeFunctions;
+    private Map<String, Set<String>> identifierClasses;
     private Map<HotaruTokenId, String> operatorClasses;
 
     public SyntaxHighlighter(CodeArea editor, ExecutorService executor) {
@@ -32,12 +27,17 @@ public class SyntaxHighlighter {
     }
 
     public void init(BooleanProperty enabledProperty) {
-        operatorClasses = new HashMap<>();
-        operatorClasses.put(HotaruTokenId.AT, "keyframes-extractor");
-        nodeFunctions = BundleLoader.functions().entrySet().stream()
-                .filter(e -> e.getValue() == FunctionType.NODE)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        operatorClasses = new EnumMap<>(HotaruTokenId.class);
+        operatorClasses.put(HotaruTokenId.AT, CssStyles.KEYFRAMES_EXTRACTOR);
+
+        final var identifiers = BundleLoader.identifiers();
+        identifierClasses = Map.ofEntries(
+                entry(CssStyles.NODE_FUNCTION,
+                        identifiers.getOrDefault(IdentifierType.NODE, Set.of())),
+                entry(CssStyles.INTERPOLATION,
+                        identifiers.getOrDefault(IdentifierType.INTERPOLATION, Set.of()))
+        );
+
         editor.richChanges()
                 .filter(ch -> enabledProperty.get())
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
@@ -56,39 +56,36 @@ public class SyntaxHighlighter {
         final var text = editor.getText();
         final var task = new Task<StyleSpans<Collection<String>>>() {
             @Override
-            protected StyleSpans<Collection<String>> call() throws Exception {
+            protected StyleSpans<Collection<String>> call() {
                 final var spans = new StyleSpansBuilder<Collection<String>>();
                 for (final var t : new HotaruLexer(text).tokenize()) {
                     final var category = t.getType().getPrimaryCategory();
-                    switch (category) {
-                        case "string":
-                        case "keyword":
-                        case "comment":
-                        case "number":
-                            spans.add(Collections.singleton(category), t.getLength());
-                            break;
-
-                        case "identifier":
-                            if (nodeFunctions.contains(t.getText())) {
-                                spans.add(Collections.singleton("node-function"), t.getLength());
-                            } else {
-                                spans.add(Collections.emptyList(), t.getLength());
+                    final List<String> classes = switch (category) {
+                        case CssStyles.STRING,
+                             CssStyles.KEYWORD,
+                             CssStyles.COMMENT,
+                             CssStyles.NUMBER -> List.of(category);
+                        case "identifier" -> {
+                            for (var entry : identifierClasses.entrySet()) {
+                                final String className = entry.getKey();
+                                final Set<String> identifiers = entry.getValue();
+                                if (identifiers.contains(t.getText())) {
+                                    yield List.of(className);
+                                }
                             }
-                            break;
-
-                        case "operator":
+                            yield List.of();
+                        }
+                        case "operator" -> {
                             final var className = operatorClasses.get(t.getType());
                             if (className != null) {
-                                spans.add(Collections.singleton(className), t.getLength());
+                                yield List.of(className);
                             } else {
-                                spans.add(Collections.emptyList(), t.getLength());
+                                yield List.of();
                             }
-                            break;
-
-                        default:
-                            spans.add(Collections.emptyList(), t.getLength());
-                            break;
-                    }
+                        }
+                        default -> List.of();
+                    };
+                    spans.add(classes, t.getLength());
                 }
                 return spans.create();
             }
