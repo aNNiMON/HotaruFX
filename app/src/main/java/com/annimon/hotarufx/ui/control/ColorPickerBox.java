@@ -140,8 +140,8 @@ public class ColorPickerBox extends VBox {
         /* Color value and copy button */
         final HBox statusPane = new HBox();
         final TextField colorValue = new TextField();
-        colorValue.textProperty().bindBidirectional(customColorProperty, new StringConverter<Color>() {
-            final Pattern pattern = Pattern.compile("^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$");
+        colorValue.textProperty().bindBidirectional(customColorProperty, new StringConverter<>() {
+            final Pattern pattern = Pattern.compile("^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$", Pattern.CASE_INSENSITIVE);
             @Override
             public String toString(Color color) {
                 int r = (int) Math.round(color.getRed() * 255.0);
