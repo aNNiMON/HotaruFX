@@ -54,51 +54,38 @@ public class PropertyValue implements Value {
                 }
                 interpolator = ((InterpolatorValue) args[2]).getInterpolator();
             }
-            final var type = property.getType();
+            final var type = property.type();
             switch (type) {
-                case BOOLEAN:
-                    ((PropertyTimeline<Boolean>)property.getProperty().get()).add(
-                            KeyFrame.of(args[0].asInt()),
-                            type.<Boolean>getFromHFX().apply(args[1]),
-                            interpolator
-                    );
-                    break;
-                case NUMBER:
-                    ((PropertyTimeline<Number>)property.getProperty().get()).add(
-                            KeyFrame.of(args[0].asInt()),
-                            type.<Number>getFromHFX().apply(args[1]),
-                            interpolator
-                    );
-                    break;
-                case STRING:
-                    ((PropertyTimeline<String>)property.getProperty().get()).add(
-                            KeyFrame.of(args[0].asInt()),
-                            type.<String>getFromHFX().apply(args[1]),
-                            interpolator
-                    );
-                    break;
-                case NODE:
-                case CLIP_NODE:
-                    ((PropertyTimeline<Node>)property.getProperty().get()).add(
-                            KeyFrame.of(args[0].asInt()),
-                            type.<Node>getFromHFX().apply(args[1]),
-                            interpolator
-                    );
-                    break;
-                case PAINT:
-                    ((PropertyTimeline<Paint>)property.getProperty().get()).add(
-                            KeyFrame.of(args[0].asInt()),
-                            type.<Paint>getFromHFX().apply(args[1]),
-                            interpolator
-                    );
-                    break;
-                case FONT:
-                    ((PropertyTimeline<Font>)property.getProperty().get()).add(
-                            KeyFrame.of(args[0].asInt()),
-                            type.<Font>getFromHFX().apply(args[1]),
-                            interpolator
-                    );
-                    break;
+                case BOOLEAN -> ((PropertyTimeline<Boolean>) property.property().get()).add(
+                        KeyFrame.of(args[0].asInt()),
+                        type.<Boolean>getFromHFX().apply(args[1]),
+                        interpolator
+                );
+                case NUMBER -> ((PropertyTimeline<Number>) property.property().get()).add(
+                        KeyFrame.of(args[0].asInt()),
+                        type.<Number>getFromHFX().apply(args[1]),
+                        interpolator
+                );
+                case STRING -> ((PropertyTimeline<String>) property.property().get()).add(
+                        KeyFrame.of(args[0].asInt()),
+                        type.<String>getFromHFX().apply(args[1]),
+                        interpolator
+                );
+                case NODE, CLIP_NODE -> ((PropertyTimeline<Node>) property.property().get()).add(
+                        KeyFrame.of(args[0].asInt()),
+                        type.<Node>getFromHFX().apply(args[1]),
+                        interpolator
+                );
+                case PAINT -> ((PropertyTimeline<Paint>) property.property().get()).add(
+                        KeyFrame.of(args[0].asInt()),
+                        type.<Paint>getFromHFX().apply(args[1]),
+                        interpolator
+                );
+                case FONT -> ((PropertyTimeline<Font>) property.property().get()).add(
+                        KeyFrame.of(args[0].asInt()),
+                        type.<Font>getFromHFX().apply(args[1]),
+                        interpolator
+                );
             }
             return this;
         };
@@ -106,7 +93,7 @@ public class PropertyValue implements Value {
 
     private Function clear() {
         return args -> {
-            property.getProperty().get().clear();
+            property.property().get().clear();
             return this;
         };
     }

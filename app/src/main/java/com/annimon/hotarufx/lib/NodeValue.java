@@ -44,65 +44,43 @@ public class NodeValue implements Value {
             throw new HotaruRuntimeException("Unable to get property " + key + " from node value");
         }
         final Property property = bindings.get(key);
-        final var timeline = property.getProperty().get();
-        final var type = property.getType();
-        switch (type) {
-            case BOOLEAN:
-                return type.<Boolean>getToHFX().apply(
-                        ((PropertyTimeline<Boolean>) timeline).getProperty().getValue());
-            case NUMBER:
-                return type.<Number>getToHFX().apply(
-                        ((PropertyTimeline<Number>) timeline).getProperty().getValue());
-            case STRING:
-                return type.<String>getToHFX().apply(
-                        ((PropertyTimeline<String>) timeline).getProperty().getValue());
-            case NODE:
-            case CLIP_NODE:
-                return type.<Node>getToHFX().apply(
-                        ((PropertyTimeline<Node>) timeline).getProperty().getValue());
-            case PAINT:
-                return type.<Paint>getToHFX().apply(
-                        ((PropertyTimeline<Paint>) timeline).getProperty().getValue());
-            case FONT:
-                return type.<Font>getToHFX().apply(
-                        ((PropertyTimeline<Font>) timeline).getProperty().getValue());
-            default:
-                throw new TypeException("Unknown type of node property");
-        }
+        final var timeline = property.property().get();
+        final var type = property.type();
+        return switch (type) {
+            case BOOLEAN -> type.<Boolean>getToHFX().apply(
+                    ((PropertyTimeline<Boolean>) timeline).getProperty().getValue());
+            case NUMBER -> type.<Number>getToHFX().apply(
+                    ((PropertyTimeline<Number>) timeline).getProperty().getValue());
+            case STRING -> type.<String>getToHFX().apply(
+                    ((PropertyTimeline<String>) timeline).getProperty().getValue());
+            case NODE, CLIP_NODE -> type.<Node>getToHFX().apply(
+                    ((PropertyTimeline<Node>) timeline).getProperty().getValue());
+            case PAINT -> type.<Paint>getToHFX().apply(
+                    ((PropertyTimeline<Paint>) timeline).getProperty().getValue());
+            case FONT -> type.<Font>getToHFX().apply(
+                    ((PropertyTimeline<Font>) timeline).getProperty().getValue());
+        };
     }
 
     @SuppressWarnings("unchecked")
     public void set(String key, Value value) {
         if (!bindings.containsKey(key)) return;
         final Property property = bindings.get(key);
-        final var timeline = property.getProperty().get();
-        final var type = property.getType();
+        final var timeline = property.property().get();
+        final var type = property.type();
         switch (type) {
-            case BOOLEAN:
-                ((PropertyTimeline<Boolean>) timeline).getProperty().setValue(
-                        type.<Boolean>getFromHFX().apply(value));
-                break;
-            case NUMBER:
-                ((PropertyTimeline<Number>) timeline).getProperty().setValue(
-                        type.<Number>getFromHFX().apply(value));
-                break;
-            case STRING:
-                ((PropertyTimeline<String>) timeline).getProperty().setValue(
-                        type.<String>getFromHFX().apply(value));
-                break;
-            case PAINT:
-                ((PropertyTimeline<Paint>) timeline).getProperty().setValue(
-                        type.<Paint>getFromHFX().apply(value));
-                break;
-            case NODE:
-            case CLIP_NODE:
-                ((PropertyTimeline<Node>) timeline).getProperty().setValue(
-                        type.<Node>getFromHFX().apply(value));
-                break;
-            case FONT:
-                ((PropertyTimeline<Font>) timeline).getProperty().setValue(
-                        type.<Font>getFromHFX().apply(value));
-                break;
+            case BOOLEAN -> ((PropertyTimeline<Boolean>) timeline).getProperty().setValue(
+                    type.<Boolean>getFromHFX().apply(value));
+            case NUMBER -> ((PropertyTimeline<Number>) timeline).getProperty().setValue(
+                    type.<Number>getFromHFX().apply(value));
+            case STRING -> ((PropertyTimeline<String>) timeline).getProperty().setValue(
+                    type.<String>getFromHFX().apply(value));
+            case PAINT -> ((PropertyTimeline<Paint>) timeline).getProperty().setValue(
+                    type.<Paint>getFromHFX().apply(value));
+            case NODE, CLIP_NODE -> ((PropertyTimeline<Node>) timeline).getProperty().setValue(
+                    type.<Node>getFromHFX().apply(value));
+            case FONT -> ((PropertyTimeline<Font>) timeline).getProperty().setValue(
+                    type.<Font>getFromHFX().apply(value));
         }
     }
 

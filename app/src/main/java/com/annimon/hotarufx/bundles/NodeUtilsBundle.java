@@ -9,7 +9,6 @@ import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Validator;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.ShapeNode;
-import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.shape.Shape;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
@@ -19,8 +18,9 @@ public class NodeUtilsBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
-        FUNCTIONS = new HashMap<>();
-        FUNCTIONS.put("strokeDashArray", of(COMMON, NodeUtilsBundle::strokePattern));
+        FUNCTIONS = Map.of(
+                "strokeDashArray", of(COMMON, NodeUtilsBundle::strokePattern)
+        );
     }
 
     @Override

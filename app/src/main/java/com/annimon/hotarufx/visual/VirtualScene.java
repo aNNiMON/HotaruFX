@@ -3,11 +3,11 @@ package com.annimon.hotarufx.visual;
 import com.annimon.hotarufx.ui.control.NodesGroup;
 import javafx.scene.Node;
 
-public class VirtualScene {
+public final class VirtualScene {
 
     private final NodesGroup group;
-
-    private final int virtualWidth, virtualHeight;
+    private final int virtualWidth;
+    private final int virtualHeight;
 
     public VirtualScene(NodesGroup group, int virtualWidth, int virtualHeight) {
         this.group = group;

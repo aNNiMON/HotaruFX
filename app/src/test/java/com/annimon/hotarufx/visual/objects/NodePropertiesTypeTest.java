@@ -51,8 +51,8 @@ class NodePropertiesTypeTest {
     @SuppressWarnings("unchecked")
     void testNode(ObjectNode node, String name, Property property, String nodeName) {
         try {
-            final var value = property.getProperty().get().getProperty();
-            switch (property.getType()) {
+            final var value = property.property().get().getProperty();
+            switch (property.type()) {
                 case BOOLEAN:
                     final var booleanValue = (WritableValue<Boolean>) value;
                     booleanValue.setValue(true);

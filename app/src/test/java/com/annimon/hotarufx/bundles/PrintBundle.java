@@ -3,7 +3,6 @@ package com.annimon.hotarufx.bundles;
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.NumberValue;
-import java.util.HashMap;
 import java.util.Map;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.COMMON;
@@ -12,10 +11,11 @@ public class PrintBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
-        FUNCTIONS = new HashMap<>();
-        FUNCTIONS.put("print", of(COMMON, PrintBundle::print));
-        FUNCTIONS.put("println", of(COMMON, PrintBundle::println));
-        FUNCTIONS.put("dump", of(COMMON, PrintBundle::dump));
+        FUNCTIONS = Map.ofEntries(
+                Map.entry("print", of(COMMON, PrintBundle::print)),
+                Map.entry("println", of(COMMON, PrintBundle::println)),
+                Map.entry("dump", of(COMMON, PrintBundle::dump))
+        );
     }
 
     @Override

@@ -2,15 +2,15 @@ package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.InterpolatorValue;
-import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.Interpolator;
+import static java.util.Map.entry;
 
 public class InterpolatorsBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
-        FUNCTIONS = new HashMap<>();
+        FUNCTIONS = Map.of();
     }
 
     @Override
@@ -21,12 +21,14 @@ public class InterpolatorsBundle implements Bundle {
     @Override
     public void load(Context context) {
         Bundle.super.load(context);
-        context.variables().put("linear", new InterpolatorValue(Interpolator.LINEAR));
-        context.variables().put("hold", new InterpolatorValue(Interpolator.DISCRETE));
-        context.variables().put("discrete", new InterpolatorValue(Interpolator.DISCRETE));
-        context.variables().put("easeIn", new InterpolatorValue(Interpolator.EASE_IN));
-        context.variables().put("easeOut", new InterpolatorValue(Interpolator.EASE_OUT));
-        context.variables().put("ease", new InterpolatorValue(Interpolator.EASE_BOTH));
-        context.variables().put("easeBoth", new InterpolatorValue(Interpolator.EASE_BOTH));
+        context.variables().putAll(Map.ofEntries(
+                entry("linear", new InterpolatorValue(Interpolator.LINEAR)),
+                entry("hold", new InterpolatorValue(Interpolator.DISCRETE)),
+                entry("discrete", new InterpolatorValue(Interpolator.DISCRETE)),
+                entry("easeIn", new InterpolatorValue(Interpolator.EASE_IN)),
+                entry("easeOut", new InterpolatorValue(Interpolator.EASE_OUT)),
+                entry("ease", new InterpolatorValue(Interpolator.EASE_BOTH)),
+                entry("easeBoth", new InterpolatorValue(Interpolator.EASE_BOTH))
+        ));
     }
 }

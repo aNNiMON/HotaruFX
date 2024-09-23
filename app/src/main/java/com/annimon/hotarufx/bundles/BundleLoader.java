@@ -2,8 +2,6 @@ package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.lib.Context;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +10,7 @@ import java.util.function.BiConsumer;
 public final class BundleLoader {
 
     public static List<Class<? extends Bundle>> runtimeBundles() {
-        return Arrays.asList(
+        return List.of(
                 CompositionBundle.class,
                 NodesBundle.class,
                 NodeUtilsBundle.class,
@@ -22,7 +20,7 @@ public final class BundleLoader {
     }
 
     public static void loadSingle(Context context, Class<? extends Bundle> clazz) {
-        load(context, Collections.singletonList(clazz));
+        load(context, List.of(clazz));
     }
 
     public static Map<String, FunctionType> functions() {
@@ -47,7 +45,11 @@ public final class BundleLoader {
                 final var bundle = ctor.newInstance();
                 action.accept(bundle, obj);
             } catch (IllegalAccessException | InstantiationException
-                    | NoSuchMethodException | InvocationTargetException ignore) {}
+                    | NoSuchMethodException | InvocationTargetException ignored) {
+                // ignored
+            }
         }
     }
+
+    private BundleLoader() { }
 }

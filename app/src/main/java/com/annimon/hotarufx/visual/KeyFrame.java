@@ -2,7 +2,7 @@ package com.annimon.hotarufx.visual;
 
 import java.util.Objects;
 
-public class KeyFrame implements Comparable<KeyFrame> {
+public final class KeyFrame implements Comparable<KeyFrame> {
 
     public static KeyFrame of(int frame) {
         return new KeyFrame(frame);

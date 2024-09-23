@@ -8,15 +8,14 @@ import javafx.scene.paint.Paint;
 
 public class Composition {
 
-    private final int
-            virtualWidth, virtualHeight,
-            sceneWidth, sceneHeight;
+    private final int virtualWidth;
+    private final int virtualHeight;
+    private final int sceneWidth;
+    private final int sceneHeight;
     private final double factor;
 
     private final TimeLine timeline;
-
     private final VirtualScene scene;
-
     private final Paint background;
 
     public Composition() {

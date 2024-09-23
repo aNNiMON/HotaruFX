@@ -7,29 +7,30 @@ import com.annimon.hotarufx.lib.Validator;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.*;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static com.annimon.hotarufx.bundles.FunctionType.NODE;
+import static java.util.Map.entry;
 
 public class NodesBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
-        FUNCTIONS = new HashMap<>();
-        FUNCTIONS.put("arc", of(NODE, node(ArcNode::new)));
-        FUNCTIONS.put("circle", of(NODE, node(CircleNode::new)));
-        FUNCTIONS.put("ellipse", of(NODE, node(EllipseNode::new)));
-        FUNCTIONS.put("group", of(NODE, group()));
-        FUNCTIONS.put("image", of(NODE, image()));
-        FUNCTIONS.put("line", of(NODE, node(LineNode::new)));
-        FUNCTIONS.put("polygon", of(NODE, poly(PolygonNode::new)));
-        FUNCTIONS.put("polyline", of(NODE, poly(PolylineNode::new)));
-        FUNCTIONS.put("rectangle", of(NODE, node(RectangleNode::new)));
-        FUNCTIONS.put("svgPath", of(NODE, node(SVGPathNode::new)));
-        FUNCTIONS.put("text", of(NODE, node(TextNode::new)));
+        FUNCTIONS = Map.ofEntries(
+                entry("arc", of(NODE, node(ArcNode::new))),
+                entry("circle", of(NODE, node(CircleNode::new))),
+                entry("ellipse", of(NODE, node(EllipseNode::new))),
+                entry("group", of(NODE, group())),
+                entry("image", of(NODE, image())),
+                entry("line", of(NODE, node(LineNode::new))),
+                entry("polygon", of(NODE, poly(PolygonNode::new))),
+                entry("polyline", of(NODE, poly(PolylineNode::new))),
+                entry("rectangle", of(NODE, node(RectangleNode::new))),
+                entry("svgPath", of(NODE, node(SVGPathNode::new))),
+                entry("text", of(NODE, node(TextNode::new)))
+        );
     }
 
     @Override

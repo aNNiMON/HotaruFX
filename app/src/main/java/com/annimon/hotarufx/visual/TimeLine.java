@@ -4,10 +4,9 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class TimeLine {
+public final class TimeLine {
 
     private final double frameRate;
-
     private final Timeline fxTimeline;
 
     public TimeLine(double frameRate) {
@@ -34,15 +33,9 @@ public class TimeLine {
 
     public void togglePause() {
         switch (fxTimeline.getStatus()) {
-            case PAUSED:
-                fxTimeline.play();
-                break;
-            case RUNNING:
-                fxTimeline.pause();
-                break;
-            case STOPPED:
-                fxTimeline.playFromStart();
-                break;
+            case PAUSED -> fxTimeline.play();
+            case RUNNING -> fxTimeline.pause();
+            case STOPPED -> fxTimeline.playFromStart();
         }
     }
 

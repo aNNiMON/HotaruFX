@@ -2,7 +2,7 @@ package com.annimon.hotarufx.visual;
 
 import javafx.animation.Interpolator;
 
-public class KeyFrameValue<T> {
+public final class KeyFrameValue<T> {
 
     private final T value;
     private final Interpolator interpolator;

@@ -384,19 +384,21 @@ public class EditorController implements Initializable, DocumentListener {
     }
 
     private String fallbackProgram() {
-        return "composition(1280, 720, 30)\n" +
-                "\n" +
-                "A = circle({\n" +
-                "  cx: 0,\n" +
-                "  cy: 0,\n" +
-                "  radius: 100,\n" +
-                "  fill: '#9bc747'\n" +
-                "})\n" +
-                "\n" +
-                "A@radius\n" +
-                "  .add(300 ms, 200)\n" +
-                "  .add(1 sec, 50)\n" +
-                "\n" +
-                "render(A)\n";
+        return """
+                composition(1280, 720, 30)
+                
+                A = circle({
+                  cx: 0,
+                  cy: 0,
+                  radius: 100,
+                  fill: '#9bc747'
+                })
+                
+                A@radius
+                  .add(300 ms, 200)
+                  .add(1 sec, 50)
+                
+                render(A)
+                """.stripIndent();
     }
 }

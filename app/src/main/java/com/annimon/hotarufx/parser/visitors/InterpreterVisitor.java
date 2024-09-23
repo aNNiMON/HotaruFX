@@ -45,16 +45,13 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     public Value visit(FunctionNode node, Context context) {
         final var value = node.functionNode.accept(this, context);
         final Function function;
-        switch (value.type()) {
-            case Types.FUNCTION:
-                function = ((FunctionValue) value).getValue();
-                break;
-            default:
-                final var functionName = value.asString();
-                function = context.functions().get(functionName);
-                if (function == null)
-                    throw new FunctionNotFoundException(functionName, node.start(), node.end());
-                break;
+        if (value.type() == Types.FUNCTION) {
+            function = ((FunctionValue) value).getValue();
+        } else {
+            final var functionName = value.asString();
+            function = context.functions().get(functionName);
+            if (function == null)
+                throw new FunctionNotFoundException(functionName, node.start(), node.end());
         }
         final var args = node.arguments.stream()
                 .map(n -> n.accept(this, context))

@@ -6,7 +6,6 @@ import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.MapValue;
 import com.annimon.hotarufx.lib.Types;
 import com.annimon.hotarufx.lib.Validator;
-import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.text.Font;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
@@ -16,8 +15,9 @@ public class FontBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
-        FUNCTIONS = new HashMap<>();
-        FUNCTIONS.put("font", of(COMMON, FontBundle::newFont));
+        FUNCTIONS = Map.of(
+                "font", of(COMMON, FontBundle::newFont)
+        );
     }
 
     @Override

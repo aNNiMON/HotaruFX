@@ -4,7 +4,6 @@ import com.annimon.hotarufx.lib.Context;
 import com.annimon.hotarufx.lib.Function;
 import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.Validator;
-import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
@@ -14,11 +13,12 @@ public class AssertionsBundle implements Bundle {
 
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
-        FUNCTIONS = new HashMap<>();
-        FUNCTIONS.put("assertHasVariable", of(COMMON, AssertionsBundle::assertHasVariable));
-        FUNCTIONS.put("assertHasFunction", of(COMMON, AssertionsBundle::assertHasFunction));
-        FUNCTIONS.put("assertTrue", of(COMMON, AssertionsBundle::assertTrue));
-        FUNCTIONS.put("assertEquals", of(COMMON, AssertionsBundle::assertEquals));
+        FUNCTIONS = Map.ofEntries(
+                Map.entry("assertHasVariable", of(COMMON, AssertionsBundle::assertHasVariable)),
+                Map.entry("assertHasFunction", of(COMMON, AssertionsBundle::assertHasFunction)),
+                Map.entry("assertTrue", of(COMMON, AssertionsBundle::assertTrue)),
+                Map.entry("assertEquals", of(COMMON, AssertionsBundle::assertEquals))
+        );
     }
 
     @Override
