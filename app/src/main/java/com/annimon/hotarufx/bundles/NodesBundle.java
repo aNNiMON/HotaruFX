@@ -1,10 +1,7 @@
 package com.annimon.hotarufx.bundles;
 
-import com.annimon.hotarufx.lib.Function;
-import com.annimon.hotarufx.lib.NodeValue;
-import com.annimon.hotarufx.lib.Types;
-import com.annimon.hotarufx.lib.Validator;
-import com.annimon.hotarufx.lib.Value;
+import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
+import com.annimon.hotarufx.lib.*;
 import com.annimon.hotarufx.visual.objects.*;
 import java.util.*;
 import java.util.function.Supplier;
@@ -20,6 +17,7 @@ public class NodesBundle implements Bundle {
                 entry("circle", of(node(CircleNode::new))),
                 entry("ellipse", of(node(EllipseNode::new))),
                 entry("group", of(group())),
+                entry("guideGrid", of(guideGrid())),
                 entry("image", of(image())),
                 entry("line", of(node(LineNode::new))),
                 entry("polygon", of(poly(PolygonNode::new))),
@@ -80,6 +78,31 @@ public class NodesBundle implements Bundle {
                     .map(v -> ((NodeValue) v).getNode())
                     .toList();
             return new NodeValue(new GroupNode(nodes));
+        };
+    }
+
+    private static Function guideGrid() {
+        return args -> {
+            final var validator = Validator.with(args);
+            final var map = validator.requireMapAt(0);
+
+            final var config = map.getMap();
+            final int stepX = config.getOrDefault("stepX", NumberValue.of(100)).asInt();
+            final int stepY = config.getOrDefault("stepY", NumberValue.of(100)).asInt();
+            final int width = config.getOrDefault("width", NumberValue.of(1920)).asInt();
+            final int height = config.getOrDefault("height", NumberValue.of(1080)).asInt();
+            if (stepX < 5 || stepX > 1920)
+                throw new HotaruRuntimeException("stepX should be within 5...1920 px");
+            if (stepY < 5 || stepY > 1080)
+                throw new HotaruRuntimeException("stepY should be within 5...1080 px");
+            if (width < stepX || width > 10000)
+                throw new HotaruRuntimeException("width should be within stepX(%d)...10000 px".formatted(stepX));
+            if (height < stepY || height > 10000)
+                throw new HotaruRuntimeException("height should be within stepY(%d)...10000 px".formatted(stepY));
+
+            final var node = new NodeValue(new GuideGridNode(stepX, stepY, width, height));
+            node.fill(map);
+            return node;
         };
     }
 }

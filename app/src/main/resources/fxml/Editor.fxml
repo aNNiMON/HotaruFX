@@ -13,6 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.Group?>
 <?import org.fxmisc.richtext.CodeArea?>
 <?import com.annimon.hotarufx.ui.control.ColorPickerBox?>
 <?import com.annimon.hotarufx.ui.control.LibraryItem?>
@@ -327,6 +328,28 @@
                                 __fill: "#1b8118",\n
                                 __strokeWidth: 4,\n
                                 __stroke: "#4cbc72"\n
+                                })
+                            </code>
+                        </LibraryItem>
+                        <LibraryItem text="Grid">
+                            <graphic>
+                                <Group autoSizeChildren="false">
+                                    <Line startX="-12" startY="-6" endX="12" endY="-6" stroke="#10a6c2" />
+                                    <Line startX="-12" endX="12" stroke="#10a6c2" />
+                                    <Line startX="-12" startY="6" endX="12" endY="6" stroke="#10a6c2" />
+                                    <Line startX="-6" startY="-12" endX="-6" endY="12" stroke="#10a6c2" />
+                                    <Line startY="-12" endY="12" stroke="#10a6c2" />
+                                    <Line startX="6" startY="-12" endX="6" endY="12" stroke="#10a6c2" />
+                                </Group>
+                            </graphic>
+                            <code>
+                                guideGrid({\n
+                                __stepX: 100,\n
+                                __stepY: 100,\n
+                                __width: Width,\n
+                                __height: Height,\n
+                                __stroke: '#10a6c2',\n
+                                __opacity: 1\n
                                 })
                             </code>
                         </LibraryItem>

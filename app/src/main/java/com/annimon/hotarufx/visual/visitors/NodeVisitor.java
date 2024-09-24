@@ -8,6 +8,7 @@ public interface NodeVisitor<R, T> {
     R visit(CircleNode node, T input);
     R visit(EllipseNode node, T input);
     R visit(GroupNode node, T input);
+    R visit(GuideGridNode node, T input);
     R visit(ImageNode node, T input);
     R visit(LineNode node, T input);
     R visit(PolygonNode node, T input);
