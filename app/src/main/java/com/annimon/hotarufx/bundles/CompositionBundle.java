@@ -59,10 +59,10 @@ public class CompositionBundle implements Bundle {
             final var scene = composition.getScene();
             context.composition(composition);
             context.variables().putAll(Map.ofEntries(
-                    entry("Width", NumberValue.of(scene.getVirtualWidth())),
-                    entry("Height", NumberValue.of(scene.getVirtualHeight())),
-                    entry("HalfWidth", NumberValue.of(scene.getVirtualWidth() / 2)),
-                    entry("HalfHeight", NumberValue.of(scene.getVirtualHeight() / 2))
+                    entry("Width", NumberValue.of(scene.virtualWidth())),
+                    entry("Height", NumberValue.of(scene.virtualHeight())),
+                    entry("HalfWidth", NumberValue.of(scene.virtualWidth() / 2)),
+                    entry("HalfHeight", NumberValue.of(scene.virtualHeight() / 2))
             ));
             return NumberValue.ZERO;
         };

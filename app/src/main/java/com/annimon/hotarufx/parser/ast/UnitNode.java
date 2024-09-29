@@ -4,7 +4,7 @@ import com.annimon.hotarufx.parser.visitors.ResultVisitor;
 
 public class UnitNode extends ASTNode {
 
-    public enum Unit {MILLISECONDS, SECONDS};
+    public enum Unit {MILLISECONDS, SECONDS}
 
     public final Node value;
     public final Unit operator;

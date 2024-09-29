@@ -34,8 +34,8 @@ class HotaruParserTest {
 
         BlockNode block = (BlockNode) node;
         assertThat(block.statements.size(), is(1));
-        assertThat(block.start().getPosition(), is(1));
-        assertThat(block.end().getPosition(), is(input.length()));
+        assertThat(block.start().position(), is(1));
+        assertThat(block.end().position(), is(input.length()));
 
         Node firstNode = block.statements.get(0);
         assertThat(firstNode, instanceOf(AssignNode.class));

@@ -36,11 +36,6 @@ public class FontValue extends MapValue {
         map.put("size", NumberValue.of(font.getSize()));
     }
 
-    @Override
-    public int type() {
-        return Types.MAP;
-    }
-
     public Font getFont() {
         return font;
     }

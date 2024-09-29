@@ -1,23 +1,17 @@
 package com.annimon.hotarufx.ui.control;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Group;
-import javafx.scene.Node;
 
 public class NodesGroup extends Group {
 
-    private final double width, height;
+    private final double width;
+    private final double height;
 
     public NodesGroup(double width, double height) {
         this.width = width;
         this.height = height;
         setAutoSizeChildren(false);
         setManaged(false);
-    }
-
-    @Override
-    public ObservableList<Node> getChildren() {
-        return super.getChildren();
     }
 
     @Override

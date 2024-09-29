@@ -51,6 +51,7 @@ public class NumberValue implements Value {
         return value;
     }
 
+    @Override
     public boolean asBoolean() {
         return value.intValue() != 0;
     }

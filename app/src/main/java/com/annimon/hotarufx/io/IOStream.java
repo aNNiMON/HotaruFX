@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class IOStream {
+public final class IOStream {
+
+    private IOStream() { }
 
     public static String readContent(InputStream is) throws IOException {
         final var baos = new ByteArrayOutputStream();

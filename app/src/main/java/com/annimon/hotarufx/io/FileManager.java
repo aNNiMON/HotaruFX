@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -105,7 +106,7 @@ public class FileManager implements DocumentManager {
 
     private boolean writeFile(File file, Supplier<String> contentSupplier) {
         try (OutputStream os = new FileOutputStream(file);
-             Writer writer = new OutputStreamWriter(os, "UTF-8")) {
+             Writer writer = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
             writer.write(contentSupplier.get());
             writer.flush();
             return true;

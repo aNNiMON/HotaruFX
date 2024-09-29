@@ -87,18 +87,15 @@ public class Composition {
     }
 
     public Scene producePreviewScene() {
-        final var fxScene = new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
+        final var fxScene = new Scene(scene.group(), sceneWidth, sceneHeight, background);
         fxScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-                case SPACE:
-                    timeline.togglePause();
-                    break;
-                case BACK_SPACE:
+                case SPACE -> timeline.togglePause();
+                case BACK_SPACE -> {
                     timeline.getFxTimeline().stop();
                     timeline.getFxTimeline().playFromStart();
-                    break;
-                case LEFT:
-                case RIGHT:
+                }
+                case LEFT, RIGHT -> {
                     int sign = e.getCode() == KeyCode.LEFT ? -1 : 1;
                     if (e.isShiftDown()) {
                         timeline.seek(sign);
@@ -109,13 +106,13 @@ public class Composition {
                     } else {
                         timeline.seekFrame(sign);
                     }
-                    break;
+                }
             }
         });
         return fxScene;
     }
 
     public Scene produceRendererScene() {
-        return new Scene(scene.getGroup(), sceneWidth, sceneHeight, background);
+        return new Scene(scene.group(), sceneWidth, sceneHeight, background);
     }
 }

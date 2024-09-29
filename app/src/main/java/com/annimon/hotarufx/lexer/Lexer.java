@@ -16,7 +16,7 @@ public abstract class Lexer {
     private int pos;
     private int row, col;
 
-    public Lexer(String input) {
+    protected Lexer(String input) {
         this.input = input;
         length = input.length();
         tokens = new ArrayList<>();

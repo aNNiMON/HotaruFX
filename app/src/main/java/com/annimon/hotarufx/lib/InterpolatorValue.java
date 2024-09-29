@@ -39,4 +39,9 @@ public class InterpolatorValue implements Value {
     public int compareTo(Value o) {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return interpolator.toString();
+    }
 }

@@ -4,7 +4,7 @@ import com.annimon.hotarufx.parser.visitors.ResultVisitor;
 
 public class UnaryNode extends ASTNode {
 
-    public enum Operator { NEGATE };
+    public enum Operator { NEGATE }
 
     public final Operator operator;
     public final Node node;
