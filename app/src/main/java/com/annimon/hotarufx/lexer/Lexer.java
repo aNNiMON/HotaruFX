@@ -105,8 +105,12 @@ public abstract class Lexer {
         return new LexerException(currentPosition(), message);
     }
 
+    protected boolean isNumber(char current) {
+        return ('0' <= current && current <= '9');
+    }
+
     protected boolean isHexNumber(char current) {
-        return Character.isDigit(current)
+        return isNumber(current)
                 || ('a' <= current && current <= 'f')
                 || ('A' <= current && current <= 'F');
     }

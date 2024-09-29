@@ -48,7 +48,7 @@ public class HotaruLexer extends Lexer {
 
     public Token nextToken() {
         final var current = peek(0);
-        if (Character.isDigit(current)) return tokenizeNumber();
+        if (isNumber(current)) return tokenizeNumber();
         else if (Character.isJavaIdentifierStart(current)) return tokenizeWord();
         else if (current == '#') return tokenizeComment();
         else if (current == '/' && peek(1) == '*') {
@@ -77,7 +77,7 @@ public class HotaruLexer extends Lexer {
             if (current == '.') {
                 if (getBuffer().indexOf(".") != -1)
                     throw error("Invalid float number");
-            } else if (!Character.isDigit(current)) {
+            } else if (!isNumber(current)) {
                 break;
             }
             getBuffer().append(current);
