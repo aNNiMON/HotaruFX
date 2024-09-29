@@ -77,6 +77,16 @@ public class RenderVisitor implements NodeVisitor<Void, VirtualScene> {
         return render(node, scene);
     }
 
+    @Override
+    public Void visit(TextFlowNode textFlow, VirtualScene scene) {
+        render(textFlow, scene);
+        for (ObjectNode node : textFlow.nodes) {
+            node.setRenderable(false);
+            node.accept(this, scene);
+        }
+        return null;
+    }
+
     private Void render(ObjectNode node, VirtualScene scene) {
         node.buildTimeline(timeline);
         if (node.isRenderable()) {

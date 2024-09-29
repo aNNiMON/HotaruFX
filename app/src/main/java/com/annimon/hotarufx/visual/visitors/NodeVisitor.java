@@ -16,4 +16,5 @@ public interface NodeVisitor<R, T> {
     R visit(RectangleNode node, T input);
     R visit(SVGPathNode node, T input);
     R visit(TextNode node, T input);
+    R visit(TextFlowNode node, T input);
 }

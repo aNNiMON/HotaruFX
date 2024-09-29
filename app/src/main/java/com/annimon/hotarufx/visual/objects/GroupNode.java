@@ -43,7 +43,6 @@ public class GroupNode extends ObjectNode {
         for (ObjectNode node : nodes) {
             node.buildTimeline(timeline);
         }
-
     }
 
     @Override

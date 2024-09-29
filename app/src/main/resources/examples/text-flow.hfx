@@ -1,0 +1,24 @@
+composition(640, 640, 60, "#222222")
+
+T1 = text({text: 'THIS', fill: '#5670f9', font: 70, rotate: 6})
+T2 = text({text: '\nIS', fill: '#c6ca39', font: 65})
+T3 = text({text: '\tJUST', fill: '#a350f6', font: 30})
+T4 = text({text: '\tA', fill: '#ff53b7', font: 45})
+T5 = text({text: '\nTEXT', fill: '#56f287', font: 55, rotate: -6})
+TEXTFLOW = textFlow(T1, T2, T3, T4, T5)
+TEXTFLOW.halign = 'CENTER'
+TEXTFLOW.css = '-fx-background-color: #374252;'
+TEXTFLOW.minWidth = 400
+TEXTFLOW.translateX = -200
+TEXTFLOW.translateY = -160
+TEXTFLOW.tabSize = 4
+TEXTFLOW.lineSpacing = 5
+TEXTFLOW@lineSpacing
+  .add(2 sec, 25, ease)
+  .add(3 sec, 0, easeOut)
+
+T3@fill
+  .add(2 sec, '#ffd2f2', ease)
+  .add(3 sec, '#a350f6', easeOut)
+
+render(TEXTFLOW)

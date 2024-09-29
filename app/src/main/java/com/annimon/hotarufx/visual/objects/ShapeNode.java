@@ -25,7 +25,7 @@ public abstract class ShapeNode extends ObjectNode {
     private final PropertyTimelineHolder<String> strokeLineCap;
     private final PropertyTimelineHolder<String> strokeLineJoin;
 
-    public ShapeNode(Shape shape) {
+    protected ShapeNode(Shape shape) {
         super(shape);
         this.shape = shape;
         smooth = PropertyTimelineHolder.empty();

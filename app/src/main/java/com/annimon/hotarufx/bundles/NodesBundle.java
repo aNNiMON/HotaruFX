@@ -16,7 +16,7 @@ public class NodesBundle implements Bundle {
                 entry("arc", of(node(ArcNode::new))),
                 entry("circle", of(node(CircleNode::new))),
                 entry("ellipse", of(node(EllipseNode::new))),
-                entry("group", of(group())),
+                entry("group", of(group(GroupNode::new))),
                 entry("guideGrid", of(guideGrid())),
                 entry("image", of(image())),
                 entry("line", of(node(LineNode::new))),
@@ -24,7 +24,8 @@ public class NodesBundle implements Bundle {
                 entry("polyline", of(poly(PolylineNode::new))),
                 entry("rectangle", of(node(RectangleNode::new))),
                 entry("svgPath", of(node(SVGPathNode::new))),
-                entry("text", of(node(TextNode::new)))
+                entry("text", of(node(TextNode::new))),
+                entry("textFlow", of(group(TextFlowNode::new)))
         );
     }
 
@@ -71,13 +72,13 @@ public class NodesBundle implements Bundle {
         };
     }
 
-    private static Function group() {
+    private static Function group(java.util.function.Function<List<ObjectNode>, ObjectNode> ctor) {
         return args -> {
             final var nodes = Arrays.stream(args)
                     .filter(v -> v.type() == Types.NODE)
                     .map(v -> ((NodeValue) v).getNode())
                     .toList();
-            return new NodeValue(new GroupNode(nodes));
+            return new NodeValue(ctor.apply(nodes));
         };
     }
 
