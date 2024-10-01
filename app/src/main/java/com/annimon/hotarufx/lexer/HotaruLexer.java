@@ -111,40 +111,43 @@ public class HotaruLexer extends Lexer {
             if (current == '\\') {
                 final var buffer = getBuffer();
                 current = next();
+                if ("\r\n\0".indexOf(current) != -1) {
+                    throw error("Reached end of line while parsing text");
+                }
                 if (current == openChar) {
                     current = next();
                     buffer.append(openChar);
                     continue;
                 }
-                switch (current) {
-                    case '0': current = next(); buffer.append('\0'); continue;
-                    case 'b': current = next(); buffer.append('\b'); continue;
-                    case 'f': current = next(); buffer.append('\f'); continue;
-                    case 'n': current = next(); buffer.append('\n'); continue;
-                    case 'r': current = next(); buffer.append('\r'); continue;
-                    case 't': current = next(); buffer.append('\t'); continue;
-                    case 'u': // http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.3
-                        int rollbackPosition = getPos();
-                        while (current == 'u') {
-                            current = next();
-                        }
-                        int escapedValue = 0;
-                        for (int i = 12; i >= 0 && escapedValue != -1; i -= 4) {
-                            if (isHexNumber(current)) {
-                                escapedValue |= (Character.digit(current, 16) << i);
-                            } else {
-                                escapedValue = -1;
-                            }
-                            current = next();
-                        }
-                        if (escapedValue >= 0) {
-                            buffer.append((char) escapedValue);
+                int idx = "\\0bfnrt".indexOf(current);
+                if (idx != -1) {
+                    current = next();
+                    buffer.append("\\\0\b\f\n\r\t".charAt(idx));
+                    continue;
+                }
+                if (current == 'u') {
+                    // http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.3
+                    int rollbackPosition = getPos();
+                    while (current == 'u') {
+                        current = next();
+                    }
+                    int escapedValue = 0;
+                    for (int i = 12; i >= 0 && escapedValue != -1; i -= 4) {
+                        if (isHexNumber(current)) {
+                            escapedValue |= (Character.digit(current, 16) << i);
                         } else {
-                            // rollback
-                            buffer.append("\\u");
-                            setPos(rollbackPosition);
+                            escapedValue = -1;
                         }
-                        continue;
+                        current = next();
+                    }
+                    if (escapedValue >= 0) {
+                        buffer.append((char) escapedValue);
+                    } else {
+                        // rollback
+                        buffer.append("\\u");
+                        setPos(rollbackPosition);
+                    }
+                    continue;
                 }
                 buffer.append('\\');
                 continue;

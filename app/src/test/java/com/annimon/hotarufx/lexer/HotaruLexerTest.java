@@ -2,6 +2,8 @@ package com.annimon.hotarufx.lexer;
 
 import com.annimon.hotarufx.exceptions.LexerException;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Test;
@@ -68,10 +70,20 @@ class HotaruLexerTest {
         assertThrows(LexerException.class, () -> {
             all("' ... ");
         });
-        assertThat(single("'\\\''").getText(), is("'"));
-        assertThat(single("\'\\\"\'").getText(), is("\\\""));
+        final UnaryOperator<String> ff = s -> s.replace('|', '\\')
+                .replace('q', '\'')
+                .replace('Q', '"');
+        assertThat(single(ff.apply("q|qq")).getText(), is(ff.apply("q")));
+        assertThat(single(ff.apply("q|Qq")).getText(), is(ff.apply("|Q")));
+        assertThat(single(ff.apply("Q|QQ")).getText(), is(ff.apply("Q")));
+        assertThat(single(ff.apply("Q|qQ")).getText(), is(ff.apply("|q")));
+        assertThat(single(ff.apply("Q|r|nQ")).getText(), is(ff.apply("\r\n")));
+        // Same as above
+        assertThat(single("'\\''").getText(), is("'"));
+        assertThat(single("'\\\"'").getText(), is("\\\""));
         assertThat(single("\"\\\"\"").getText(), is("\""));
-        assertThat(single("\"\\\'\"").getText(), is("\\\'"));
+        assertThat(single("\"\\'\"").getText(), is("\\'"));
+        assertThat(single("\"\\r\\n\"").getText(), is("\r\n"));
     }
 
     @Test
@@ -159,7 +171,7 @@ class HotaruLexerTest {
     }
 
     Matcher<Token> tokenId(Matcher<HotaruTokenId> matcher) {
-        return new FeatureMatcher<Token, HotaruTokenId>(matcher, "tokenId", "tokenId") {
+        return new FeatureMatcher<>(matcher, "tokenId", "tokenId") {
 
             @Override
             protected HotaruTokenId featureValueOf(Token actual) {
