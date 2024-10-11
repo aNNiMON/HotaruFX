@@ -110,17 +110,10 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     public Value visit(UnitNode node, Context context) {
         final var value = node.value.accept(this, context);
         final var frameRate = context.composition().getTimeline().getFrameRate();
-        final double frame;
-        switch (node.operator) {
-            case SECONDS:
-                frame = value.asDouble() * frameRate;
-                break;
-
-            case MILLISECONDS:
-            default:
-                frame = (value.asDouble() * frameRate) / 1000d;
-                break;
-        }
+        final double frame = switch (node.operator) {
+            case MILLISECONDS -> (value.asDouble() * frameRate) / 1000d;
+            case SECONDS -> value.asDouble() * frameRate;
+        };
         return NumberValue.of(frame);
     }
 

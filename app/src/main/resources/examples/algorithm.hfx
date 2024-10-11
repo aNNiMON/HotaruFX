@@ -20,23 +20,8 @@ LINE6 = line({startX:0, startY:-195, endX:0, stroke:'#49b672', strokeWidth:5, op
 ERRLINE = line({startX:-230, startY:-115, stroke:'#b64949', strokeWidth:5, opacity: 0})
 
 # typing animation
-START@text
-  .add(400 ms, '', hold)
-  .add(450 ms, 'o', hold)
-  .add(500 ms, 'ow', hold)
-  .add(550 ms, 'own', hold)
-  .add(650 ms, 'own a', hold)
-  .add(700 ms, 'own ad', hold)
-  .add(750 ms, 'own add', hold)
-START_PA@text
-  .add(900 ms, '', hold)
-  .add(950 ms, 'p', hold)
-  .add(1000 ms, 'pa', hold)
-  .add(1050 ms, 'pac', hold)
-  .add(1100 ms, 'pack', hold)
-  .add(1150 ms, 'packa', hold)
-  .add(1200 ms, 'packag', hold)
-  .add(1250 ms, 'package', hold)
+typewriter(START, 'own add', 400 ms, 50 ms)
+typewriter(START_PA, 'package', 900 ms, 50 ms)
 # join next node with line
 LINE1@opacity.add(2 sec, 1, hold)
 LINE1@endY.add(2 sec, -320, hold).add(3 sec, -155, ease)
