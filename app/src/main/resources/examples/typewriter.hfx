@@ -1,0 +1,20 @@
+composition(640, 640, 30, "#999")
+
+str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+
+T1 = text({fill: '#000', font: 30})
+typewriter(T1, str, 100 ms, 30 ms)
+
+
+TEXTFLOW = textFlow(T1)
+TEXTFLOW.halign = 'CENTER'
+TEXTFLOW.css = '
+  -fx-background-color: #e6e6e6;
+  -fx-effect: dropshadow(three-pass-box, rgba(25,25,25,0.5), 50, 0, 15, 20);
+'
+TEXTFLOW.minWidth = 500
+TEXTFLOW.minHeight = 530
+TEXTFLOW.translateX = -250
+TEXTFLOW.translateY = -265
+
+render(TEXTFLOW)
