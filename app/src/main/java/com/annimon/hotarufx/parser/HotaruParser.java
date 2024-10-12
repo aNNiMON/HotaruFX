@@ -25,24 +25,6 @@ public class HotaruParser extends Parser {
         super(tokens);
     }
 
-    private Node block() {
-        final var block = new BlockNode();
-        block.start(getSourcePosition());
-        consume(HotaruTokenId.LBRACE);
-        while (!match(HotaruTokenId.RBRACE)) {
-            block.add(statement());
-        }
-        block.end(getSourcePosition());
-        return block;
-    }
-
-    private Node statementOrBlock() {
-        if (lookMatch(0, HotaruTokenId.LBRACE)) {
-            return block();
-        }
-        return statement();
-    }
-
     @Override
     protected Node statement() {
         return assignmentStatement();
@@ -64,7 +46,7 @@ public class HotaruParser extends Parser {
     private Node objectAccess(Node expr) {
         if (lookMatch(0, HotaruTokenId.DOT)) {
             final var indices = variableSuffix();
-            if (indices == null || indices.isEmpty())
+            if (indices.isEmpty())
                 return expr;
 
             if (lookMatch(0, HotaruTokenId.LPAREN)) {
@@ -198,7 +180,7 @@ public class HotaruParser extends Parser {
 
         final Node qualifiedNameExpr = qualifiedName();
         if (qualifiedNameExpr != null) {
-            // variable(args) || arr["key"](args) || obj.key(args)
+            // variable(args) || obj.key(args)
             if (lookMatch(0, HotaruTokenId.LPAREN)) {
                 return functionChain(qualifiedNameExpr);
             }
@@ -221,7 +203,7 @@ public class HotaruParser extends Parser {
     }
 
     private Node qualifiedName() {
-        // var || var.key[index].key2
+        // var || var.key.key2
         final Token current = get(0);
         if (!match(HotaruTokenId.WORD)) return null;
 

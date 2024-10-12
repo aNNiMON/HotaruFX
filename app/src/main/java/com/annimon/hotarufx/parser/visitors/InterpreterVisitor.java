@@ -39,16 +39,11 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
         if (type1 == Types.NUMBER && type2 == Types.NUMBER) {
             final Number number1 = value1.asNumber();
             final Number number2 = value2.asNumber();
-            if (number1 instanceof Double || number2 instanceof Double) {
+            if (number1 instanceof Double || number2 instanceof Double
+                    || number1 instanceof Float || number2 instanceof Float) {
                 return NumberValue.of(switch (node.operator) {
                     case ADDITION -> number1.doubleValue() + number2.doubleValue();
                     case SUBTRACTION -> number1.doubleValue() - number2.doubleValue();
-                });
-            }
-            if (number1 instanceof Float || number2 instanceof Float) {
-                return NumberValue.of(switch (node.operator) {
-                    case ADDITION -> number1.floatValue() + number2.floatValue();
-                    case SUBTRACTION -> number1.floatValue() - number2.floatValue();
                 });
             }
             if (number1 instanceof Long || number2 instanceof Long) {
@@ -114,30 +109,24 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
 
     @Override
     public Value visit(UnaryNode node, Context context) {
-        switch (node.operator) {
-            case NEGATE:
-                final var value = node.node.accept(this, context);
-                if (value.type() == Types.STRING) {
-                    final StringBuilder sb = new StringBuilder(value.asString());
-                    return new StringValue(sb.reverse().toString());
+        if (Objects.requireNonNull(node.operator) == UnaryNode.Operator.NEGATE) {
+            final var value = node.node.accept(this, context);
+            if (value.type() == Types.STRING) {
+                final StringBuilder sb = new StringBuilder(value.asString());
+                return new StringValue(sb.reverse().toString());
+            }
+            if (value.type() == Types.NUMBER) {
+                final Number number = (Number) value.raw();
+                if (number instanceof Double || number instanceof Float) {
+                    return NumberValue.of(-number.doubleValue());
                 }
-                if (value.type() == Types.NUMBER) {
-                    final Number number = (Number) value.raw();
-                    if (number instanceof Double) {
-                        return NumberValue.of(-number.doubleValue());
-                    }
-                    if (number instanceof Float) {
-                        return NumberValue.of(-number.floatValue());
-                    }
-                    if (number instanceof Long) {
-                        return NumberValue.of(-number.longValue());
-                    }
+                if (number instanceof Long) {
+                    return NumberValue.of(-number.longValue());
                 }
-                return NumberValue.of(-value.asInt());
-
-            default:
-                return NumberValue.ZERO;
+            }
+            return NumberValue.of(-value.asInt());
         }
+        return NumberValue.ZERO;
     }
 
     @Override
