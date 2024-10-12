@@ -3,6 +3,7 @@ package com.annimon.hotarufx.parser.visitors;
 import com.annimon.hotarufx.bundles.BundleLoader;
 import com.annimon.hotarufx.bundles.CompositionBundle;
 import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
+import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lexer.HotaruLexer;
 import com.annimon.hotarufx.lib.ArrayValue;
@@ -46,6 +47,15 @@ class InterpreterVisitorTest {
     }
 
     @Test
+    void testBinaryOps() {
+        assertThat(eval("A = 1 + 2").asInt(), is(3));
+        assertThat(eval("A = 1 + -3").asInt(), is(-2));
+        assertThat(eval("A = -1 + -3").asInt(), is(-4));
+        assertThat(eval("A = 4 - 3").asInt(), is(1));
+        assertThat(eval("A = -1 - -3").asInt(), is(2));
+    }
+
+    @Test
     void testUnaryOps() {
         assertThat(eval("A = -1").asInt(), is(-1));
     }
@@ -79,10 +89,11 @@ class InterpreterVisitorTest {
     @Test
     void testMapAccess() {
         Context context = new Context();
-        eval("A = {x: 0, y: 22, z: 0, text: 'hello'}\n" +
-                "A.x = 20\n" +
-                "A.z = A.y\n" +
-                "A.newKey = 'newValue'", context);
+        eval("""
+                A = {x: 0, y: 22, z: 0, text: 'hello'}
+                A.x = 20
+                A.z = A.y
+                A.newKey = 'newValue'""", context);
         Value value = context.variables().get("A");
 
         assertThat(value, instanceOf(MapValue.class));
@@ -150,5 +161,6 @@ class InterpreterVisitorTest {
     void testRuntimeErrors() {
         assertThrows(VariableNotFoundException.class, () -> eval("A = B"));
         assertThrows(FunctionNotFoundException.class, () -> eval("test()"));
+        assertThrows(HotaruRuntimeException.class, () -> eval("A = '2' + 70"));
     }
 }

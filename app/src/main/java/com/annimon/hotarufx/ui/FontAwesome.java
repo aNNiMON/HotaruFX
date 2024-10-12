@@ -35,7 +35,7 @@ public enum FontAwesome {
         names = new ArrayList<>();
         names.add(name);
         if (aliases.length > 0) {
-            names.addAll(Arrays.asList(aliases));
+            names.addAll(List.of(aliases));
         }
     }
 

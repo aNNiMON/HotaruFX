@@ -7,8 +7,8 @@ import com.annimon.hotarufx.lib.NumberValue;
 import com.annimon.hotarufx.lib.StringValue;
 import com.annimon.hotarufx.lib.Value;
 import com.annimon.hotarufx.visual.objects.CircleNode;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +19,7 @@ class NodesBundleTest {
     @Test
     void testBundle() {
         final var context = new Context();
-        BundleLoader.load(context, Arrays.asList(
+        BundleLoader.load(context, List.of(
                 CompositionBundle.class,
                 NodesBundle.class
         ));

@@ -1,8 +1,7 @@
 package com.annimon.hotarufx.visual.objects;
 
 import com.annimon.hotarufx.visual.Property;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 import javafx.beans.value.WritableValue;
 import javafx.scene.Node;
@@ -26,13 +25,15 @@ class NodePropertiesTypeTest {
                 new ArcNode(),
                 new CircleNode(),
                 new EllipseNode(),
-                new GroupNode(Collections.singletonList(new TextNode())),
+                new GroupNode(List.of(new TextNode())),
+                new GuideGridNode(50, 50, 900, 900),
                 new LineNode(),
-                new PolygonNode(Arrays.asList(0d, 0d, 20d, 20d, 30d, 30d)),
-                new PolylineNode(Arrays.asList(0d, 0d, 20d, 20d, 30d, 30d, 0d, 0d)),
+                new PolygonNode(List.of(0d, 0d, 20d, 20d, 30d, 30d)),
+                new PolylineNode(List.of(0d, 0d, 20d, 20d, 30d, 30d, 0d, 0d)),
                 new RectangleNode(),
                 new SVGPathNode(),
-                new TextNode()
+                new TextNode(),
+                new TextFlowNode(List.of(new TextNode()))
         ).flatMap(node -> node.propertyBindings()
                         .entrySet()
                         .stream()

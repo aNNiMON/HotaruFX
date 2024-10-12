@@ -4,6 +4,7 @@ import com.annimon.hotarufx.exceptions.TypeException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -18,27 +19,9 @@ public class ArrayValue implements Value, Iterable<Value> {
 
     private final Value[] elements;
 
-    public ArrayValue(int size) {
-        this.elements = new Value[size];
-    }
-
     public ArrayValue(Value[] elements) {
         this.elements = new Value[elements.length];
         System.arraycopy(elements, 0, this.elements, 0, elements.length);
-    }
-
-    public ArrayValue(ArrayValue array) {
-        this(array.elements);
-    }
-
-    public Value[] getElements() {
-        return elements;
-    }
-
-    public Value[] getCopyElements() {
-        final Value[] result = new Value[elements.length];
-        System.arraycopy(elements, 0, result, 0, elements.length);
-        return result;
     }
 
     @Override
@@ -75,7 +58,7 @@ public class ArrayValue implements Value, Iterable<Value> {
 
     @Override
     public Iterator<Value> iterator() {
-        return Arrays.asList(elements).iterator();
+        return List.of(elements).iterator();
     }
 
     public Stream<Value> stream() {

@@ -11,7 +11,7 @@ import com.annimon.hotarufx.parser.ast.Node;
 import com.annimon.hotarufx.parser.ast.UnitNode;
 import com.annimon.hotarufx.parser.ast.ValueNode;
 import com.annimon.hotarufx.parser.ast.VariableNode;
-import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
@@ -71,7 +71,7 @@ class HotaruParserTest {
         final var block = (BlockNode) node;
         assertThat(block.statements.size(), is(2));
 
-        final var expectedValues = Arrays.asList(
+        final var expectedValues = List.of(
                 NumberValue.fromBoolean(true),
                 NumberValue.fromBoolean(false)
         );
@@ -98,7 +98,7 @@ class HotaruParserTest {
         final var block = (BlockNode) node;
         assertThat(block.statements.size(), is(2));
 
-        final var expectedValues = Arrays.asList(
+        final var expectedValues = List.of(
                 NumberValue.of(500),
                 NumberValue.of(0.5)
         );
