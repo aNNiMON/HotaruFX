@@ -123,25 +123,41 @@ public class HotaruParser extends Parser {
         if (assignment != null) {
             return assignment;
         }
-        return unary();
+        return additive();
     }
 
     private Node assignmentStrict() {
         final int position = pos;
         final var startSourcePosition = getSourcePosition();
         final var targetExpr = qualifiedName();
-        if ((targetExpr == null) || !(targetExpr instanceof Accessible)) {
+        if (targetExpr instanceof Accessible accessible) {
+            if (!match(HotaruTokenId.EQ)) {
+                pos = position;
+                return null;
+            }
+            return new AssignNode(accessible, expression())
+                    .start(startSourcePosition)
+                    .end(getSourcePosition());
+        } else {
             pos = position;
             return null;
         }
+    }
 
-        if (!match(HotaruTokenId.EQ)) {
-            pos = position;
-            return null;
+    private Node additive() {
+        Node result = unary();
+        while (true) {
+            if (match(HotaruTokenId.PLUS)) {
+                result = new BinaryNode(BinaryNode.Operator.ADDITION, result, expression());
+                continue;
+            }
+            if (match(HotaruTokenId.MINUS)) {
+                result = new BinaryNode(BinaryNode.Operator.SUBTRACTION, result, expression());
+                continue;
+            }
+            break;
         }
-        return new AssignNode((Accessible) targetExpr, expression())
-                .start(startSourcePosition)
-                .end(getSourcePosition());
+        return result;
     }
 
     private Node unary() {
@@ -210,7 +226,7 @@ public class HotaruParser extends Parser {
         if (!match(HotaruTokenId.WORD)) return null;
 
         final List<Node> indices = variableSuffix();
-        if ((indices == null) || indices.isEmpty()) {
+        if (indices.isEmpty()) {
             return new VariableNode(current.getText());
         }
         return new AccessNode(current.getText(), indices);

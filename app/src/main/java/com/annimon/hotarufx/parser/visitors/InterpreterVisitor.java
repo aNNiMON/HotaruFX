@@ -1,14 +1,12 @@
 package com.annimon.hotarufx.parser.visitors;
 
 import com.annimon.hotarufx.exceptions.FunctionNotFoundException;
+import com.annimon.hotarufx.exceptions.HotaruRuntimeException;
 import com.annimon.hotarufx.exceptions.TypeException;
 import com.annimon.hotarufx.exceptions.VariableNotFoundException;
 import com.annimon.hotarufx.lib.*;
 import com.annimon.hotarufx.parser.ast.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class InterpreterVisitor implements ResultVisitor<Value, Context> {
@@ -30,6 +28,42 @@ public class InterpreterVisitor implements ResultVisitor<Value, Context> {
     public Value visit(AssignNode node, Context context) {
         final var value = node.value.accept(this, context);
         return node.target.set(this, value, context);
+    }
+
+    @Override
+    public Value visit(BinaryNode node, Context context) {
+        final var value1 = node.node1.accept(this, context);
+        final var value2 = node.node2.accept(this, context);
+        final int type1 = value1.type();
+        final int type2 = value2.type();
+        if (type1 == Types.NUMBER && type2 == Types.NUMBER) {
+            final Number number1 = value1.asNumber();
+            final Number number2 = value2.asNumber();
+            if (number1 instanceof Double || number2 instanceof Double) {
+                return NumberValue.of(switch (node.operator) {
+                    case ADDITION -> number1.doubleValue() + number2.doubleValue();
+                    case SUBTRACTION -> number1.doubleValue() - number2.doubleValue();
+                });
+            }
+            if (number1 instanceof Float || number2 instanceof Float) {
+                return NumberValue.of(switch (node.operator) {
+                    case ADDITION -> number1.floatValue() + number2.floatValue();
+                    case SUBTRACTION -> number1.floatValue() - number2.floatValue();
+                });
+            }
+            if (number1 instanceof Long || number2 instanceof Long) {
+                return NumberValue.of(switch (node.operator) {
+                    case ADDITION -> number1.longValue() + number2.longValue();
+                    case SUBTRACTION -> number1.longValue() - number2.longValue();
+                });
+            }
+            return NumberValue.of(switch (node.operator) {
+                case ADDITION -> number1.intValue() + number2.intValue();
+                case SUBTRACTION -> number1.intValue() - number2.intValue();
+            });
+        }
+        throw new HotaruRuntimeException("Operation %s is not supported for %s and %s"
+                .formatted(node.operator, value1, value2));
     }
 
     @Override

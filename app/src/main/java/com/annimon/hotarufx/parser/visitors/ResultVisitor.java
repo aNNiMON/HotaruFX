@@ -8,6 +8,7 @@ public interface ResultVisitor<R, T> {
     R visit(AccessNode node, T t);
     R visit(ArrayNode node, T t);
     R visit(AssignNode node, T t);
+    R visit(BinaryNode node, T t);
     R visit(BlockNode node, T t);
     R visit(FunctionNode node, T t);
     R visit(MapNode node, T t);
