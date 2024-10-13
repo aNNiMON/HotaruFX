@@ -1,0 +1,48 @@
+composition(640, 640, 30, "#221336")
+
+BG = rectangle({
+  x: -HalfWidth,
+  y: -75,
+  width: Width,
+  height: 150,
+  fill: '#463da8'
+})
+HOTARUFX = text({
+  x: -500,
+  text: 'HotaruFX',
+  fill: '#bae516',
+  valign: 'CENTER',
+  font: 50
+})
+IS = text({
+  x: -275,
+  fill: '#ccc',
+  text: ' is ',
+  valign: 'CENTER',
+  font: 50
+})
+str = 'awesome!'
+AWESOME = text({
+  x: -200,
+  fill: '#fff',
+  text: str,
+  valign: 'CENTER',
+  font: 50
+})
+
+typingSpeed = 90 ms
+waitTime = 400 ms
+t = typewriter(AWESOME, str, waitTime, typingSpeed, true)
+str = 'easy!'
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed)
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed, true)
+str = 'fantastic!'
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed)
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed, true)
+str = 'cool!'
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed)
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed, true)
+str = 'awesome!'
+t = typewriter(AWESOME, str, t + waitTime, typingSpeed)
+
+render(BG, HOTARUFX, IS, AWESOME)

@@ -284,6 +284,7 @@ public class EditorController implements Initializable, DocumentListener {
         map.put("Text Clipping", "clip-text.hfx");
         map.put("Text Flow", "text-flow.hfx");
         map.put("Typewriter", "typewriter.hfx");
+        map.put("Typewriter 2", "typewriter2.hfx");
         examplesMenu.getItems().clear();
         for (final var entry : map.entrySet()) {
             final var item = new MenuItem(entry.getKey());

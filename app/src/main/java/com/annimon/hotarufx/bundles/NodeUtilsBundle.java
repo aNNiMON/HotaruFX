@@ -55,9 +55,9 @@ public class NodeUtilsBundle implements Bundle {
 
     private static Function typewriter(Context context) {
         return args -> {
-            // (textNode, text, startAt, step = 50 ms) -> endFrame
+            // (textNode, text, startAt, step = 50 ms, reverse = false) -> endFrame
             final var validator = Validator.with(args);
-            validator.checkOrOr(3, 4);
+            validator.checkRange(3, 5);
             if (args[0].type() != Types.NODE || !(args[0].raw() instanceof TextNode textNode)) {
                 throw new TypeException("TextNode required at first argument");
             }
@@ -65,22 +65,23 @@ public class NodeUtilsBundle implements Bundle {
             final String text = args[1].asString();
             final double startAt = args[2].asDouble();
             final double step;
-            if (args.length == 4) {
+            if (args.length >= 4) {
                 step = args[3].asDouble();
             } else {
                 final var frameRate = context.composition().getTimeline().getFrameRate();
                 step = 50 * frameRate / 1000d;
             }
+            final boolean reverse = args.length == 5 && (args[4].asBoolean());
 
             double frame = startAt;
             textNode.textProperty()
-                    .add(KeyFrame.of((int) frame), "", Interpolator.DISCRETE);
-            final var sb = new StringBuilder();
-            for (char ch : text.toCharArray()) {
+                    .add(KeyFrame.of((int) frame), reverse ? text : "", Interpolator.DISCRETE);
+            final int last = text.length() - 1;
+            for (int i = 0; i <= last; i++) {
                 frame += step;
-                sb.append(ch);
+                final String s = text.substring(0, reverse ? (last - i) : i + 1);
                 textNode.textProperty()
-                        .add(KeyFrame.of((int) frame), sb.toString(), Interpolator.DISCRETE);
+                        .add(KeyFrame.of((int) frame), s, Interpolator.DISCRETE);
             }
             return NumberValue.of(frame);
         };
