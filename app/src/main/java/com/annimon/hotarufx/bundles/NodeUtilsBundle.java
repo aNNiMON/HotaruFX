@@ -1,19 +1,14 @@
 package com.annimon.hotarufx.bundles;
 
 import com.annimon.hotarufx.exceptions.TypeException;
-import com.annimon.hotarufx.lib.ArrayValue;
-import com.annimon.hotarufx.lib.Context;
-import com.annimon.hotarufx.lib.Function;
-import com.annimon.hotarufx.lib.NumberValue;
-import com.annimon.hotarufx.lib.Types;
-import com.annimon.hotarufx.lib.Validator;
-import com.annimon.hotarufx.lib.Value;
+import com.annimon.hotarufx.lib.*;
 import com.annimon.hotarufx.visual.KeyFrame;
 import com.annimon.hotarufx.visual.objects.ShapeNode;
 import java.util.Map;
 import com.annimon.hotarufx.visual.objects.TextNode;
 import javafx.animation.Interpolator;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import static com.annimon.hotarufx.bundles.FunctionInfo.of;
 import static java.util.Map.entry;
 
@@ -22,6 +17,7 @@ public class NodeUtilsBundle implements Bundle {
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.ofEntries(
+                entry("font", of(NodeUtilsBundle::newFont)),
                 entry("strokeDashArray", of(NodeUtilsBundle::strokePattern)),
                 entry("typewriter", of(NodeUtilsBundle::typewriter))
         );
@@ -30,6 +26,17 @@ public class NodeUtilsBundle implements Bundle {
     @Override
     public Map<String, FunctionInfo> functionsInfo() {
         return FUNCTIONS;
+    }
+
+    private static Function newFont(Context context) {
+        return args -> {
+            final var validator = Validator.with(args);
+            validator.check(1);
+            if (args[0].type() == Types.MAP) {
+                return new FontValue(FontValue.toFont((MapValue) args[0]));
+            }
+            return new FontValue(Font.font(args[0].asDouble()));
+        };
     }
 
     private static Function strokePattern(Context context) {
