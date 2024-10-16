@@ -55,6 +55,9 @@ Utility and animation functions for nodes.
 
 #### Functions:
 
+`bounds(node) : Map`  
+Calculates bounds of the given node. Returns a Map with fields: `minX`, `minY`, `minZ`, `maxX`, `maxY`, `maxZ`, `centerX`, `centerY`, `centerZ`, `width`, `height`, `depth`
+
 `font(properties={}) : Font`  
 Creates a Font object.
 

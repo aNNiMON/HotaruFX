@@ -17,6 +17,7 @@ public class NodeUtilsBundle implements Bundle {
     private static final Map<String, FunctionInfo> FUNCTIONS;
     static {
         FUNCTIONS = Map.ofEntries(
+                entry("bounds", of(NodeUtilsBundle::bounds)),
                 entry("font", of(NodeUtilsBundle::newFont)),
                 entry("strokeDashArray", of(NodeUtilsBundle::strokePattern)),
                 entry("typewriter", of(NodeUtilsBundle::typewriter))
@@ -26,6 +27,33 @@ public class NodeUtilsBundle implements Bundle {
     @Override
     public Map<String, FunctionInfo> functionsInfo() {
         return FUNCTIONS;
+    }
+
+    private static Function bounds(Context context) {
+        return args -> {
+            final var validator = Validator.with(args);
+            validator.check(1);
+            if (args[0].type() != Types.NODE) {
+                throw new TypeException("Node required at first argument");
+            }
+            final var node = ((NodeValue) args[0]).getNode().getFxNode();
+            final var bounds = node.getLayoutBounds();
+
+            return new MapValue(Map.ofEntries(
+                    entry("minX", NumberValue.of(bounds.getMinX())),
+                    entry("minY", NumberValue.of(bounds.getMinY())),
+                    entry("minZ", NumberValue.of(bounds.getMinZ())),
+                    entry("maxX", NumberValue.of(bounds.getMaxX())),
+                    entry("maxY", NumberValue.of(bounds.getMaxY())),
+                    entry("maxZ", NumberValue.of(bounds.getMaxZ())),
+                    entry("centerX", NumberValue.of(bounds.getCenterX())),
+                    entry("centerY", NumberValue.of(bounds.getCenterY())),
+                    entry("centerZ", NumberValue.of(bounds.getCenterZ())),
+                    entry("width", NumberValue.of(bounds.getWidth())),
+                    entry("height", NumberValue.of(bounds.getHeight())),
+                    entry("depth", NumberValue.of(bounds.getDepth()))
+            ));
+        };
     }
 
     private static Function newFont(Context context) {
