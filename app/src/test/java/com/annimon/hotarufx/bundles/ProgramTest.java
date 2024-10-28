@@ -45,8 +45,7 @@ class ProgramTest {
     @ParameterizedTest
     void testProgram(Path path) {
         final var context = new Context();
-        final var bundles = new ArrayList<Class<? extends Bundle>>();
-        bundles.addAll(BundleLoader.runtimeBundles());
+        final var bundles = new ArrayList<>(BundleLoader.runtimeBundles());
         bundles.add(AssertionsBundle.class);
         bundles.add(PrintBundle.class);
         BundleLoader.load(context, bundles);

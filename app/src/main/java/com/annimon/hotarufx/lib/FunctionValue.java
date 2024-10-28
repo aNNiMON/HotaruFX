@@ -5,8 +5,6 @@ import java.util.Objects;
 
 public class FunctionValue implements Value {
 
-    public static final FunctionValue EMPTY = new FunctionValue(args -> NumberValue.ZERO);
-
     private final Function value;
 
     public FunctionValue(Function value) {

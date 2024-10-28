@@ -59,7 +59,7 @@ public class SyntaxHighlighter {
             protected StyleSpans<Collection<String>> call() {
                 final var spans = new StyleSpansBuilder<Collection<String>>();
                 for (final var t : new HotaruLexer(text).tokenize()) {
-                    final var category = t.getType().getPrimaryCategory();
+                    final var category = t.type().getPrimaryCategory();
                     final List<String> classes = switch (category) {
                         case CssStyles.STRING,
                              CssStyles.KEYWORD,
@@ -69,14 +69,14 @@ public class SyntaxHighlighter {
                             for (var entry : identifierClasses.entrySet()) {
                                 final String className = entry.getKey();
                                 final Set<String> identifiers = entry.getValue();
-                                if (identifiers.contains(t.getText())) {
+                                if (identifiers.contains(t.text())) {
                                     yield List.of(className);
                                 }
                             }
                             yield List.of();
                         }
                         case "operator" -> {
-                            final var className = operatorClasses.get(t.getType());
+                            final var className = operatorClasses.get(t.type());
                             if (className != null) {
                                 yield List.of(className);
                             } else {
@@ -85,7 +85,7 @@ public class SyntaxHighlighter {
                         }
                         default -> List.of();
                     };
-                    spans.add(classes, t.getLength());
+                    spans.add(classes, t.length());
                 }
                 return spans.create();
             }

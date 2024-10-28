@@ -27,7 +27,7 @@ public class LibraryItem extends Button {
 
     private void init() {
         setMnemonicParsing(false);
-        tooltipProperty().bind(new ObjectBinding<Tooltip>() {
+        tooltipProperty().bind(new ObjectBinding<>() {
             { bind(code); }
             @Override
             protected Tooltip computeValue() {

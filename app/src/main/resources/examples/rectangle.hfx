@@ -1,4 +1,4 @@
-composition(1280, 720, 30)
+composition(1280, 720, 60)
 
 A = rectangle({
   x: -700,

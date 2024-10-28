@@ -2,7 +2,6 @@ package com.annimon.hotarufx.lexer;
 
 import com.annimon.hotarufx.exceptions.LexerException;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
@@ -73,17 +72,17 @@ class HotaruLexerTest {
         final UnaryOperator<String> ff = s -> s.replace('|', '\\')
                 .replace('q', '\'')
                 .replace('Q', '"');
-        assertThat(single(ff.apply("q|qq")).getText(), is(ff.apply("q")));
-        assertThat(single(ff.apply("q|Qq")).getText(), is(ff.apply("|Q")));
-        assertThat(single(ff.apply("Q|QQ")).getText(), is(ff.apply("Q")));
-        assertThat(single(ff.apply("Q|qQ")).getText(), is(ff.apply("|q")));
-        assertThat(single(ff.apply("Q|r|nQ")).getText(), is(ff.apply("\r\n")));
+        assertThat(single(ff.apply("q|qq")).text(), is(ff.apply("q")));
+        assertThat(single(ff.apply("q|Qq")).text(), is(ff.apply("|Q")));
+        assertThat(single(ff.apply("Q|QQ")).text(), is(ff.apply("Q")));
+        assertThat(single(ff.apply("Q|qQ")).text(), is(ff.apply("|q")));
+        assertThat(single(ff.apply("Q|r|nQ")).text(), is(ff.apply("\r\n")));
         // Same as above
-        assertThat(single("'\\''").getText(), is("'"));
-        assertThat(single("'\\\"'").getText(), is("\\\""));
-        assertThat(single("\"\\\"\"").getText(), is("\""));
-        assertThat(single("\"\\'\"").getText(), is("\\'"));
-        assertThat(single("\"\\r\\n\"").getText(), is("\r\n"));
+        assertThat(single("'\\''").text(), is("'"));
+        assertThat(single("'\\\"'").text(), is("\\\""));
+        assertThat(single("\"\\\"\"").text(), is("\""));
+        assertThat(single("\"\\'\"").text(), is("\\'"));
+        assertThat(single("\"\\r\\n\"").text(), is("\r\n"));
     }
 
     @Test
@@ -175,7 +174,7 @@ class HotaruLexerTest {
 
             @Override
             protected HotaruTokenId featureValueOf(Token actual) {
-                return actual.getType();
+                return actual.type();
             }
         };
     }

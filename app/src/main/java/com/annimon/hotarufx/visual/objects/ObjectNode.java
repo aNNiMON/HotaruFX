@@ -160,7 +160,7 @@ public abstract class ObjectNode {
     protected <T extends Enum<T>> Supplier<WritableValue<String>> enumToString(Class<T> enumClass, ObjectProperty<T> property) {
         return () -> {
             final var stringProperty = new SimpleStringProperty();
-            stringProperty.bindBidirectional(property, new StringConverter<T>() {
+            stringProperty.bindBidirectional(property, new StringConverter<>() {
                 @Override
                 public String toString(T object) {
                     if (object == null) {

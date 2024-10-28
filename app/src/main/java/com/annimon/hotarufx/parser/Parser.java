@@ -56,8 +56,8 @@ public abstract class Parser {
 
     protected SourcePosition getSourcePosition() {
         if (size == 0) return new SourcePosition(0, 0, 0);
-        if (pos >= size) return tokens.get(size - 1).getPosition();
-        return tokens.get(pos).getPosition();
+        if (pos >= size) return tokens.get(size - 1).position();
+        return tokens.get(pos).position();
     }
 
     private void recover() {
@@ -77,8 +77,8 @@ public abstract class Parser {
 
     protected Token consume(HotaruTokenId type) {
         final var current = get(0);
-        if (type != current.getType()) {
-            throw new ParseException("Token " + current + " doesn't match " + type, current.getPosition());
+        if (type != current.type()) {
+            throw new ParseException("Token " + current + " doesn't match " + type, current.position());
         }
         pos++;
         return current;
@@ -86,13 +86,13 @@ public abstract class Parser {
 
     protected boolean match(HotaruTokenId type) {
         final var current = get(0);
-        if (type != current.getType()) return false;
+        if (type != current.type()) return false;
         pos++;
         return true;
     }
 
     protected boolean lookMatch(int pos, HotaruTokenId type) {
-        return get(pos).getType() == type;
+        return get(pos).type() == type;
     }
 
     protected Token get(int relativePosition) {

@@ -86,7 +86,7 @@ public class HotaruParser extends Parser {
         consume(HotaruTokenId.LBRACE);
         final Map<String, Node> elements = new HashMap<>();
         while (!match(HotaruTokenId.RBRACE)) {
-            final var key = consume(HotaruTokenId.WORD).getText();
+            final var key = consume(HotaruTokenId.WORD).text();
             consume(HotaruTokenId.COLON);
             final var value = expression();
             elements.put(key, value);
@@ -175,7 +175,7 @@ public class HotaruParser extends Parser {
     private Node variable() {
         // function(...
         if (lookMatch(0, HotaruTokenId.WORD) && lookMatch(1, HotaruTokenId.LPAREN)) {
-            return functionChain(new ValueNode(consume(HotaruTokenId.WORD).getText()));
+            return functionChain(new ValueNode(consume(HotaruTokenId.WORD).text()));
         }
 
         final Node qualifiedNameExpr = qualifiedName();
@@ -186,7 +186,7 @@ public class HotaruParser extends Parser {
             }
             // node@prop || map.node@prop
             if (match(HotaruTokenId.AT)) {
-                final var propName = consume(HotaruTokenId.WORD).getText();
+                final var propName = consume(HotaruTokenId.WORD).text();
                 final var expr = new PropertyNode(qualifiedNameExpr, propName);
                 return objectAccess(expr);
             }
@@ -209,16 +209,16 @@ public class HotaruParser extends Parser {
 
         final List<Node> indices = variableSuffix();
         if (indices.isEmpty()) {
-            return new VariableNode(current.getText());
+            return new VariableNode(current.text());
         }
-        return new AccessNode(current.getText(), indices);
+        return new AccessNode(current.text(), indices);
     }
 
     private List<Node> variableSuffix() {
         final List<Node> indices = new ArrayList<>();
         while (lookMatch(0, HotaruTokenId.DOT)) {
             if (match(HotaruTokenId.DOT)) {
-                final var fieldName = consume(HotaruTokenId.WORD).getText();
+                final var fieldName = consume(HotaruTokenId.WORD).text();
                 final var key = new ValueNode(fieldName);
                 indices.add(key);
             }
@@ -235,10 +235,10 @@ public class HotaruParser extends Parser {
             return new ValueNode(NumberValue.ZERO);
         }
         if (match(HotaruTokenId.NUMBER)) {
-            return new ValueNode(createNumber(current.getText(), 10));
+            return new ValueNode(createNumber(current.text(), 10));
         }
         if (match(HotaruTokenId.TEXT)) {
-            return new ValueNode(current.getText());
+            return new ValueNode(current.text());
         }
         throw new ParseException("Unknown expression: " + current, getSourcePosition());
     }

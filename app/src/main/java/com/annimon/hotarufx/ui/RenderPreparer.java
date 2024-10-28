@@ -122,7 +122,7 @@ public class RenderPreparer {
         }
     }
 
-    public class WithStage {
+    public static class WithStage {
 
         private final Composition composition;
         private final Stage stage;

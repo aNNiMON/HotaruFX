@@ -3,7 +3,6 @@ package com.annimon.hotarufx.visual.objects;
 import com.annimon.hotarufx.visual.*;
 import javafx.scene.layout.Region;
 import static com.annimon.hotarufx.visual.PropertyType.*;
-import static com.annimon.hotarufx.visual.PropertyType.BOOLEAN;
 
 public abstract class RegionNode extends ObjectNode {
 

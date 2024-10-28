@@ -35,11 +35,12 @@ public class HotaruLexer extends Lexer {
 
     private static final Map<String, HotaruTokenId> KEYWORDS;
     static {
-        KEYWORDS = new HashMap<>();
-        KEYWORDS.put("true", HotaruTokenId.TRUE);
-        KEYWORDS.put("false", HotaruTokenId.FALSE);
-        KEYWORDS.put("ms", HotaruTokenId.MS);
-        KEYWORDS.put("sec", HotaruTokenId.SEC);
+        KEYWORDS = Map.ofEntries(
+                Map.entry("true", HotaruTokenId.TRUE),
+                Map.entry("false", HotaruTokenId.FALSE),
+                Map.entry("ms", HotaruTokenId.MS),
+                Map.entry("sec", HotaruTokenId.SEC)
+        );
     }
 
     public HotaruLexer(String input) {
@@ -126,27 +127,7 @@ public class HotaruLexer extends Lexer {
                     continue;
                 }
                 if (current == 'u') {
-                    // http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.3
-                    int rollbackPosition = getPos();
-                    while (current == 'u') {
-                        current = next();
-                    }
-                    int escapedValue = 0;
-                    for (int i = 12; i >= 0 && escapedValue != -1; i -= 4) {
-                        if (isHexNumber(current)) {
-                            escapedValue |= (Character.digit(current, 16) << i);
-                        } else {
-                            escapedValue = -1;
-                        }
-                        current = next();
-                    }
-                    if (escapedValue >= 0) {
-                        buffer.append((char) escapedValue);
-                    } else {
-                        // rollback
-                        buffer.append("\\u");
-                        setPos(rollbackPosition);
-                    }
+                    current = tokenizeUnicodeString(current, buffer);
                     continue;
                 }
                 buffer.append('\\');
@@ -162,6 +143,31 @@ public class HotaruLexer extends Lexer {
         next(); // "
         int actualLength = getPos() - startPos;
         return addToken(HotaruTokenId.TEXT, getBuffer().toString(), actualLength);
+    }
+
+    private char tokenizeUnicodeString(char current, StringBuilder buffer) {
+        // http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.3
+        int rollbackPosition = getPos();
+        while (current == 'u') {
+            current = next();
+        }
+        int escapedValue = 0;
+        for (int i = 12; i >= 0 && escapedValue != -1; i -= 4) {
+            if (isHexNumber(current)) {
+                escapedValue |= (Character.digit(current, 16) << i);
+            } else {
+                escapedValue = -1;
+            }
+            current = next();
+        }
+        if (escapedValue >= 0) {
+            buffer.append((char) escapedValue);
+        } else {
+            // rollback
+            buffer.append("\\u");
+            setPos(rollbackPosition);
+        }
+        return current;
     }
 
     private Token tokenizeOperator() {
@@ -195,8 +201,7 @@ public class HotaruLexer extends Lexer {
         clearBuffer();
         getBuffer().append("/*");
         char current = peek(0);
-        while (true) {
-            if (current == '*' && peek(1) == '/') break;
+        while (current != '*' || peek(1) != '/') {
             if (current == '\0') {
                 throw error("Reached end of file while parsing multiline comment");
             }
